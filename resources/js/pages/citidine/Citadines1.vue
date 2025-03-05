@@ -13,13 +13,13 @@
         </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-const textVisible = ref(false);
-const imageVisible = ref(false);
-const textSection = ref(null);
-const imageSection = ref(null);
+const textVisible = ref<boolean>(false);
+const imageVisible = ref<boolean>(false);
+const textSection = ref<HTMLElement | null>(null);
+const imageSection = ref<HTMLElement | null>(null);
 
 // Intersection Observer for Scroll Animation
 onMounted(() => {
@@ -41,6 +41,7 @@ onMounted(() => {
     if (imageSection.value) observer.observe(imageSection.value);
 });
 </script>
+
 
 <style scoped>
 /* Import Custom Font */

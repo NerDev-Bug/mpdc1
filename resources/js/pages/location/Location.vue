@@ -12,7 +12,7 @@
     </AppLayout>
   </template>
   
-  <script setup>
+  <script setup lang="ts">
   import heroImage from '../../images/ame2.jpg';
   import AppLayout from '@/layouts/AppLayout.vue';
   </script>

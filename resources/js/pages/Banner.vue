@@ -50,34 +50,45 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts">
 import { ref, onMounted } from 'vue';
 
-const isImageVisible = ref(false);
-const isTextVisible = ref(false);
-const imageContainer = ref(null);
-const textContainer = ref(null);
+export default {
+  setup() {
+    const isImageVisible = ref(false);
+    const isTextVisible = ref(false);
+    const imageContainer = ref<HTMLElement | null>(null);
+    const textContainer = ref<HTMLElement | null>(null);
 
-// Intersection Observer for smooth fade-in when scrolling
-const handleIntersection = (entries, observer) => {
-    entries.forEach((entry) => {
+    // Intersection Observer for smooth fade-in when scrolling
+    const handleIntersection = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            if (entry.target === imageContainer.value) {
-                isImageVisible.value = true;
-            }
-            if (entry.target === textContainer.value) {
-                isTextVisible.value = true;
-            }
+          if (entry.target === imageContainer.value) {
+            isImageVisible.value = true;
+          }
+          if (entry.target === textContainer.value) {
+            isTextVisible.value = true;
+          }
         }
+      });
+    };
+
+    onMounted(() => {
+      const observer = new IntersectionObserver(handleIntersection, { threshold: 0.3 });
+
+      if (imageContainer.value) observer.observe(imageContainer.value);
+      if (textContainer.value) observer.observe(textContainer.value);
     });
+
+    return {
+      isImageVisible,
+      isTextVisible,
+      imageContainer,
+      textContainer,
+    };
+  }
 };
-
-onMounted(() => {
-    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.3 });
-
-    if (imageContainer.value) observer.observe(imageContainer.value);
-    if (textContainer.value) observer.observe(textContainer.value);
-});
 </script>
 
 <style scoped>

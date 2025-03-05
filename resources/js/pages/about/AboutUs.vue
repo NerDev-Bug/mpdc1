@@ -40,7 +40,7 @@
     </AppLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import heroImage from '../../images/ame3.jpg';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -49,16 +49,16 @@ import AboutBanner1 from './AboutBanner1.vue';
 import AboutBanner2 from './AboutBanner2.vue';
 
 // Refs for scroll animations
-const heroText = ref(null);
-const heroTextBox = ref(null);
+const heroText = ref<HTMLElement | null>(null);
+const heroTextBox = ref<HTMLElement | null>(null);
 
 onMounted(() => {
-    const observerOptions = {
+    const observerOptions: IntersectionObserverInit = {
         root: null,
         threshold: 0.2, // Triggers when 20% is visible
     };
 
-    const handleIntersect = (entries, observer) => {
+    const handleIntersect = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('opacity-100', 'translate-y-0');
@@ -73,6 +73,8 @@ onMounted(() => {
     if (heroTextBox.value) observer.observe(heroTextBox.value);
 });
 </script>
+
+
 
 <style scoped>
 /* Custom Font */

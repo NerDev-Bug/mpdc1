@@ -26,29 +26,29 @@
   </template>
   
 
-<script setup>
-import { ref, onMounted } from "vue";
-import heroImage from '../../images/ame2.jpg';
-import AppLayout from '@/layouts/AppLayout.vue';
-
-const heroTextVisible = ref(false);
-const heroText = ref(null);
-
-// Intersection Observer for Scroll Animation
-onMounted(() => {
-    const observer = new IntersectionObserver((entries) => {
-        console.log("Observed:", entries[0].isIntersecting); // Debugging log
-        if (entries[0].isIntersecting) {
-            heroTextVisible.value = true;
-            observer.disconnect(); // Ensures it only runs once
-        }
-    }, { threshold: 0.2 }); // Lowered threshold for quicker visibility
-
-    if (heroText.value) {
-        observer.observe(heroText.value);
-    }
-});
-</script>
+  <script setup lang="ts">
+  import { ref, onMounted } from "vue";
+  import heroImage from '../../images/ame2.jpg';
+  import AppLayout from '@/layouts/AppLayout.vue';
+  
+  const heroTextVisible = ref<boolean>(false);
+  const heroText = ref<HTMLElement | null>(null);
+  
+  // Intersection Observer for Scroll Animation
+  onMounted(() => {
+      const observer = new IntersectionObserver((entries) => {
+          console.log("Observed:", entries[0].isIntersecting); // Debugging log
+          if (entries[0].isIntersecting) {
+              heroTextVisible.value = true;
+              observer.disconnect(); // Ensures it only runs once
+          }
+      }, { threshold: 0.2 }); // Lowered threshold for quicker visibility
+  
+      if (heroText.value) {
+          observer.observe(heroText.value);
+      }
+  });
+  </script>
 
 <style scoped>
 /* Import Custom Font */

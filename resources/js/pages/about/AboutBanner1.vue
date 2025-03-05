@@ -35,12 +35,12 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-const titleVisible = ref(false);
-const milestoneTitle = ref(null);
-const milestoneRefs = ref([]);
+const titleVisible = ref<boolean>(false);
+const milestoneTitle = ref<HTMLElement | null>(null);
+const milestoneRefs = ref<(HTMLElement | null)[]>([]);
 
 const milestones = ref([
     { year: "2019", descriptions: ["The birth of Malveda Properties and Development Corporation"], visible: false },
@@ -62,30 +62,33 @@ const milestones = ref([
 
 // Intersection Observer for Scroll Animation
 onMounted(() => {
-    const observer = new IntersectionObserver((entries) => {
+    const observerOptions: IntersectionObserverInit = { threshold: 0.3 }; // Trigger when 30% of an item is visible
+    const observer = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
                 milestones.value[index].visible = true;
             }
         });
-    }, { threshold: 0.3 }); // Trigger when 30% of an item is visible
+    }, observerOptions);
 
     milestoneRefs.value.forEach((el) => {
         if (el) observer.observe(el);
     });
 
     // Observer for Milestone Title
-    const titleObserver = new IntersectionObserver((entries) => {
+    const titleObserverOptions: IntersectionObserverInit = { threshold: 0.5 }; // Title appears when 50% visible
+    const titleObserver = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
         if (entries[0].isIntersecting) {
             titleVisible.value = true;
         }
-    }, { threshold: 0.5 }); // Title appears when 50% visible
+    }, titleObserverOptions);
 
     if (milestoneTitle.value) {
         titleObserver.observe(milestoneTitle.value);
     }
 });
 </script>
+
 
 <style scoped>
 /* Import Custom Font */

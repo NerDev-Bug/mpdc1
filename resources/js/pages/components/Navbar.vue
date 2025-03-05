@@ -15,11 +15,13 @@
       About us
     </Link>
 
-    <li class="relative dropdown-container" @mouseenter="isDropdownOpen = true" @mouseleave="closeDropdown">
+    <li class="relative dropdown-container" 
+        @mouseenter="isDropdownOpen = true" 
+        @mouseleave="closeDropdown"
+        @click="toggleDropdown">
       <Link 
         :href="route('citadines')" 
         class="relative block px-4 py-2 transition-all duration-300 text-center underline-effect focus:outline-none"
-        @click.prevent="handleCitadinesClick"
       >
         Citadines <br class="hidden sm:block" /> Southwoods
         <span class="inline-block text-xs transform transition-transform" :class="{'rotate-180': isDropdownOpen}">▾</span>
@@ -113,38 +115,49 @@
   </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3'; // Inertia Link
+import { Inertia } from '@inertiajs/inertia'; // Import Inertia directly for navigation
 
-const isMenuOpen = ref(false);
-const isDropdownOpen = ref(false);
+const isMenuOpen = ref<boolean>(false);
+const isDropdownOpen = ref<boolean>(false);
 
-const toggleMenu = () => {
+const toggleMenu = (): void => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
+const toggleDropdown = (): void => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
+
 // Close the dropdown menu when the user scrolls
-const closeDropdownOnScroll = () => {
+const closeDropdownOnScroll = (): void => {
   if (isDropdownOpen.value) {
     isDropdownOpen.value = false;
   }
 };
 
 // Handle Citadines Click (Closes dropdown before navigating)
-const handleCitadinesClick = () => {
+const handleCitadinesClick = (): void => {
   isDropdownOpen.value = false; // Close dropdown before navigating
 
-  router.visit(route('citadines'), {
+  Inertia.visit(route('citadines'), {
     preserveState: false, // Prevents keeping UI state
   });
 };
 
 // Close dropdown when clicking outside
-const closeDropdown = (event) => {
-  if (!event.target.closest('.dropdown-container')) {
+const closeDropdown = (event: MouseEvent): void => {
+  const target = event.target as Element;
+  if (target && !target.closest('.dropdown-container')) {
     isDropdownOpen.value = false;
   }
+};
+
+// Close menu (you need this method if you're calling closeMenu)
+const closeMenu = (): void => {
+  isMenuOpen.value = false;
 };
 
 // Attach and remove event listeners
@@ -158,6 +171,8 @@ onUnmounted(() => {
   window.removeEventListener('scroll', closeDropdownOnScroll);
 });
 </script>
+
+
 
 
 

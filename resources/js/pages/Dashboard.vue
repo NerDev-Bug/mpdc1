@@ -32,33 +32,51 @@
   </AppLayout>
 </template>
 
-<script setup>
+<script lang="ts">
 import { ref, onMounted } from "vue";
 import heroImage from '../images/ame1.jpg';
 import Banner from '../pages/Banner.vue';
 import News from '../pages/News.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 
-const heroTextVisible = ref(false);
-const heroText = ref(null);
+export default {
+  components: {
+    Banner,
+    News,
+    AppLayout
+  },
+  setup() {
+    const heroTextVisible = ref(false);
+    const heroText = ref<HTMLElement | null>(null); // Ensure ref is correctly typed
 
-// Intersection Observer for Scroll Animation
-onMounted(() => {
-    const observer = new IntersectionObserver((entries) => {
-        console.log("Observed:", entries[0].isIntersecting); // Debugging log
-        if (entries[0].isIntersecting) {
+    // Intersection Observer for Scroll Animation
+    onMounted(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          console.log("Observed:", entries[0].isIntersecting); // Debugging log
+          if (entries[0].isIntersecting) {
             heroTextVisible.value = true;
             observer.disconnect(); // Ensures it only runs once
-        }
-    }, { threshold: 0.2 }); // Lowered threshold for quicker visibility
+          }
+        },
+        { threshold: 0.2 } // Lowered threshold for quicker visibility
+      );
 
-    if (heroText.value) {
+      if (heroText.value) {
         observer.observe(heroText.value);
-    }
-});
+      }
+    });
+
+    return {
+      heroImage,
+      heroText,
+      heroTextVisible,
+    };
+  }
+};
 </script>
 
-<style scoped>
+<style>
 /* Import Custom Font */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
 

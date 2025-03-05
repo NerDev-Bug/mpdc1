@@ -37,12 +37,12 @@
   </AppLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import heroImage from '../../images/ame5.jpg';
 import AppLayout from '@/layouts/AppLayout.vue';
 
-const showImages = ref(false);
+const showImages = ref<boolean>(false);
 
 onMounted(() => {
   setTimeout(() => {
@@ -50,6 +50,7 @@ onMounted(() => {
   }, 300); // Slight delay for a smooth effect
 });
 </script>
+
 
 <style scoped>
 /* Import Custom Font */

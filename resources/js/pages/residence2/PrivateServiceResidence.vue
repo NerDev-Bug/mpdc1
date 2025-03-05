@@ -39,7 +39,7 @@
 </template>
 
   
-  <script setup>
+  <script setup lang="ts">
   import { ref, onMounted } from 'vue';
   import heroImage from '../../images/ame8.jpg';
   import AppLayout from '@/layouts/AppLayout.vue';

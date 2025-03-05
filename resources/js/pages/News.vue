@@ -57,16 +57,23 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, Ref } from 'vue';
 
 // ✅ Import images properly
 import ame2 from '../images/ame2.jpg';
 import ame1 from '../images/ame1.jpg';
 import img1 from '../images/img1.png';
 
-// Array of images with correct paths
-const images = ref([
+// Array of images with correct paths and proper types
+interface Image {
+  src: string;
+  alt: string;
+  title: string;
+  description: string;
+}
+
+const images = ref<Image[]>([
   {
     src: ame2,
     alt: 'Cerise Tower',
@@ -87,29 +94,29 @@ const images = ref([
   }
 ]);
 
-const currentIndex = ref(0);
-const progressBarWidth = ref('0%');
-let autoSlideInterval;
-const isTextVisible = ref(false);
-const isTitleVisible = ref(false);
-const textContainer = ref(null);
-const titleContainer = ref(null);
+const currentIndex = ref<number>(0);
+const progressBarWidth = ref<string>('0%');
+let autoSlideInterval: NodeJS.Timeout;
+const isTextVisible = ref<boolean>(false);
+const isTitleVisible = ref<boolean>(false);
+const textContainer = ref<HTMLElement | null>(null);
+const titleContainer = ref<HTMLElement | null>(null);
 
 // Function to navigate to the next image
-const nextImage = () => {
+const nextImage = (): void => {
   currentIndex.value = (currentIndex.value + 1) % images.value.length;
   resetProgress();
 };
 
 // Auto-slide every 3 seconds
-const startAutoSlide = () => {
+const startAutoSlide = (): void => {
   autoSlideInterval = setInterval(() => {
     nextImage();
   }, 3000);
 };
 
 // Reset progress bar
-const resetProgress = () => {
+const resetProgress = (): void => {
   progressBarWidth.value = '0%';
   setTimeout(() => {
     progressBarWidth.value = '100%';
@@ -117,7 +124,7 @@ const resetProgress = () => {
 };
 
 // Scroll-based fade-in effects for text & title
-const handleIntersection = (entries, observer) => {
+const handleIntersection = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
   entries.forEach((entry) => {
     if (entry.target === textContainer.value && entry.isIntersecting) {
       isTextVisible.value = true;
@@ -141,6 +148,7 @@ onUnmounted(() => {
   clearInterval(autoSlideInterval);
 });
 </script>
+
 
 <style scoped>
 /* Import Custom Font */

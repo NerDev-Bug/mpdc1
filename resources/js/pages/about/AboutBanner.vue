@@ -46,15 +46,15 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
 // Refs for scroll animations
-const missionTitle = ref(null);
-const missionText = ref(null);
-const visionItem1 = ref(null);
-const visionItem2 = ref(null);
-const visionItem3 = ref(null);
+const missionTitle = ref<HTMLElement | null>(null);
+const missionText = ref<HTMLElement | null>(null);
+const visionItem1 = ref<HTMLElement | null>(null);
+const visionItem2 = ref<HTMLElement | null>(null);
+const visionItem3 = ref<HTMLElement | null>(null);
 
 onMounted(() => {
     const observerOptions = {
@@ -62,7 +62,7 @@ onMounted(() => {
         threshold: 0.2, // Triggers when 20% is visible
     };
 
-    const handleIntersect = (entries, observer) => {
+    const handleIntersect = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('opacity-100', 'translate-y-0');
@@ -80,6 +80,7 @@ onMounted(() => {
     if (visionItem3.value) observer.observe(visionItem3.value);
 });
 </script>
+
 
 <style scoped>
 /* Import Custom Font */

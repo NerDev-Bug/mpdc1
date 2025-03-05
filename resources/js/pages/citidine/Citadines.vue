@@ -32,13 +32,13 @@
   </AppLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import heroImage from '../../images/ame4.jpg';
 import AppLayout from '@/layouts/AppLayout.vue';
 import Citadines1 from './Citadines1.vue';
 
-const showLogo = ref(false);
+const showLogo = ref<boolean>(false);
 
 onMounted(() => {
   setTimeout(() => {
@@ -46,6 +46,7 @@ onMounted(() => {
   }, 300); // Delays the animation slightly for a smooth effect
 });
 </script>
+
 
 <style scoped>
 /* Import Custom Font */

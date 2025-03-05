@@ -33,21 +33,6 @@
   
   const heroTextVisible = ref<boolean>(false);
   const heroText = ref<HTMLElement | null>(null);
-  
-  // Intersection Observer for Scroll Animation
-  onMounted(() => {
-      const observer = new IntersectionObserver((entries) => {
-          console.log("Observed:", entries[0].isIntersecting); // Debugging log
-          if (entries[0].isIntersecting) {
-              heroTextVisible.value = true;
-              observer.disconnect(); // Ensures it only runs once
-          }
-      }, { threshold: 0.2 }); // Lowered threshold for quicker visibility
-  
-      if (heroText.value) {
-          observer.observe(heroText.value);
-      }
-  });
   </script>
 
 <style scoped>

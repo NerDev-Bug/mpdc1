@@ -50,24 +50,34 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue';
 
-export default {
-  setup() {
-    const isImageVisible = ref(false);
-    const isTextVisible = ref(false);
-    const imageContainer = ref<HTMLElement | null>(null);
-    const textContainer = ref<HTMLElement | null>(null);
+const isImageVisible = ref(false);
+const isTextVisible = ref(false);
+const imageContainer = ref(null);
+const textContainer = ref(null);
 
-    return {
-      isImageVisible,
-      isTextVisible,
-      imageContainer,
-      textContainer,
-    };
-  }
+// Intersection Observer for smooth fade-in when scrolling
+const handleIntersection = (entries, observer) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            if (entry.target === imageContainer.value) {
+                isImageVisible.value = true;
+            }
+            if (entry.target === textContainer.value) {
+                isTextVisible.value = true;
+            }
+        }
+    });
 };
+
+onMounted(() => {
+    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.3 });
+
+    if (imageContainer.value) observer.observe(imageContainer.value);
+    if (textContainer.value) observer.observe(textContainer.value);
+});
 </script>
 
 <style scoped>

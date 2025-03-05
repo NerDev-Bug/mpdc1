@@ -1,0 +1,24 @@
+services:
+  - name: laravel-vue
+    type: web
+    runtime: php
+    plan: free
+    region: oregon
+    buildCommand: 
+      - composer install --no-dev
+      - npm install
+      - npm run build
+    startCommand: php artisan migrate --force && php artisan serve --host 0.0.0.0 --port 10000
+    envVars:
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        value: 127.0.0.1
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        value: laravel-vue
+      - key: DB_USERNAME
+        value: root
+      - key: DB_PASSWORD
+        value: ""

@@ -25,7 +25,7 @@ import Navbar from "../pages/components/Navbar.vue";
 import Footer from "../pages/components/Footer.vue";
 
 const loading = ref(false);
-const page = usePage();
+
 
 // Trigger loading on route change
 watchEffect(() => {

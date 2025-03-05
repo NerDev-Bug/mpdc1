@@ -1,7 +1,7 @@
 <template>
     <div class="w-full min-h-screen bg-gray-900 flex flex-col md:flex-row items-center justify-center p-6">
         <!-- Left Section: Heading & Paragraph with Scroll Animation -->
-        < ref="textSection"
+        <div ref="textSection"
             class="md:w-1/2 text-white text-lg font-cormorant leading-relaxed p-6 text-center md:text-left opacity-0 translate-y-10 transition-all duration-700 ease-out"
             :class="{ 'fade-in': textVisible }">
             <h2 class="text-4xl md:text-5xl font-bold mb-6 md:mb-8">Our Conglomerate Map</h2>
@@ -11,6 +11,7 @@
                 into other industries where plans to establish a head office turned into an opportunity to go into real estate.
             </p>
         </div>
+    </div>
 </template>
 
 <script setup lang="ts">

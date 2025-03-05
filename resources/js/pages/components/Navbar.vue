@@ -118,7 +118,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import { Link } from '@inertiajs/vue3'; // Inertia Link
-import { Inertia } from '@inertiajs/inertia'; // Import Inertia directly for navigation
 
 const isMenuOpen = ref<boolean>(false);
 const isDropdownOpen = ref<boolean>(false);
@@ -136,15 +135,6 @@ const closeDropdownOnScroll = (): void => {
   if (isDropdownOpen.value) {
     isDropdownOpen.value = false;
   }
-};
-
-// Handle Citadines Click (Closes dropdown before navigating)
-const handleCitadinesClick = (): void => {
-  isDropdownOpen.value = false; // Close dropdown before navigating
-
-  Inertia.visit(route('citadines'), {
-    preserveState: false, // Prevents keeping UI state
-  });
 };
 
 // Close dropdown when clicking outside

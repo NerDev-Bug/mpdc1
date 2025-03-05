@@ -4,8 +4,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    return Inertia::render('Welcome');  // Adjust 'Welcome' to the correct component or view
+});
+
+Route::middleware('auth')->get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->name('home');
+})->name('dashboard');
 
 
 Route::get('/about', function () {

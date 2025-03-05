@@ -7,7 +7,6 @@ Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->name('home');
 
-
 Route::get('/about', function () {
     return Inertia::render('about/AboutUs'); // Adjusted to match the folder structure
 })->name('about');

@@ -124,7 +124,7 @@ const resetProgress = (): void => {
 };
 
 // Scroll-based fade-in effects for text & title
-const handleIntersection = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
+const handleIntersection = (entries: IntersectionObserverEntry[]): void => {
   entries.forEach((entry) => {
     if (entry.target === textContainer.value && entry.isIntersecting) {
       isTextVisible.value = true;

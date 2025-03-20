@@ -3,7 +3,7 @@
     <div class="flex flex-col min-h-screen bg-white">
       <!-- Hero Section -->
       <main class="relative bg-white">
-        <transition name="fade" appear>
+        <transition name="fade-out" appear>
           <div 
             class="w-full h-[50vh] sm:h-[65vh] md:h-[75vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative"
             :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }"
@@ -16,7 +16,9 @@
               :class="{ 'opacity-100 translate-y-0': heroTextVisible, 'opacity-0 translate-y-10': !heroTextVisible }"
             >
               <h2 class="text-4xl sm:text-[4rem] md:text-[4.5rem] lg:text-[5rem] xl:text-[5.5rem] font-bold leading-tight">
-                Purposeful Living <br /> Redefined
+                Enjoy the Revenue of <br>
+                 owning a hotel unit <br>
+                 with ease!
               </h2>
             </div>
           </div>

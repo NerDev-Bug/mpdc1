@@ -1,10 +1,14 @@
 <template>
-    <div class="w-full min-h-screen bg-gray-200 flex flex-col md:flex-row items-center justify-center p-6">
+    <div class="w-full min-h-screen bg-gray-200 flex flex-col md:flex-row items-center justify-center p-6 relative">
+        <!-- Title Section -->
+        <div class="absolute top-12 left-12">
+            <h2 class="text-4xl md:text-5xl text-gray-700 font-cormorant font-bold">Our Conglomerate Map</h2>
+        </div>
+
         <!-- Left Section: Heading & Paragraph with Scroll Animation -->
         <div ref="textSection"
-            class="md:w-1/2 text-gray-700 text-lg font-cormorant leading-relaxed p-6 text-center md:text-left opacity-0 translate-y-10 transition-all duration-700 ease-out"
+            class="md:w-1/2 text-gray-700 text-xl font-cormorant leading-relaxed p-6 text-center md:text-left opacity-0 translate-y-10 transition-all duration-700 ease-out"
             :class="{ 'fade-in': textVisible }">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6 md:mb-8">Our Conglomerate Map</h2>
             <p>
                 LEADS Agricultural Products Corporation, the lead subsidiary of MHC, capitalized on skills in distributing useful
                 and cost-effective farming solutions to grow the business beyond expectations. This opened new doors for expansion
@@ -20,6 +24,7 @@
         </div>
     </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";

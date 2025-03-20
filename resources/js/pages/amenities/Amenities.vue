@@ -12,26 +12,29 @@
           <!-- Overlay Container for Images with Slide-Up Animation -->
           <div class="absolute inset-0 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0">
             <transition name="fade-slide-up">
-              <img 
+              <img
                 v-if="showImages"
-                src="../../images/logo1.png" 
-                alt="Overlay Image 1" 
-                class="w-40 sm:w-52 md:w-64 lg:w-72 xl:w-80 
+                src="../../images/logo1.png"
+                alt="Overlay Image 1"
+                class="w-40 sm:w-52 md:w-64 lg:w-72 xl:w-80
                        md:absolute md:left-[25%] md:top-[35%]"
               />
             </transition>
 
             <transition name="fade-slide-up">
-              <img 
+              <img
                 v-if="showImages"
-                src="../../images/logo2.png" 
-                alt="Overlay Image 2" 
-                class="w-40 sm:w-52 md:w-64 lg:w-72 xl:w-80 
+                src="../../images/logo2.png"
+                alt="Overlay Image 2"
+                class="w-40 sm:w-52 md:w-64 lg:w-72 xl:w-80
                        md:absolute md:right-[25%] md:top-[35%]"
               />
             </transition>
           </div>
         </div>
+        <SlotsAmenities />
+
+        <UnitsAmenities />
       </main>
     </div>
   </AppLayout>
@@ -41,6 +44,8 @@
 import { ref, onMounted } from 'vue';
 import heroImage from '../../images/ame5.jpg';
 import AppLayout from '@/layouts/AppLayout.vue';
+import SlotsAmenities from './SlotsAmenities.vue';
+import UnitsAmenities from './UnitsAmenities.vue';
 
 const showImages = ref<boolean>(false);
 

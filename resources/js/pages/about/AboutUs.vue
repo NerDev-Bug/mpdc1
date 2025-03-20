@@ -13,9 +13,10 @@
                     <!-- Hero Title with Scroll Effect -->
                     <div ref="heroText" class="relative z-10 w-full max-w-4xl opacity-0 translate-y-10 transition-all duration-1000 ease-out">
                         <h2 class="text-white font-cormorant text-center md:text-left text-3xl sm:text-[4rem] md:text-[4.5rem] lg:text-[5rem] xl:text-[5.5rem] font-bold leading-tight">
-                            Malveda Properties <br />
-                            and Development <br />
-                            Corporation
+                            Purposeful 
+                            Living <br>
+                            Redefine
+
                         </h2>
                     </div>
 
@@ -24,8 +25,10 @@
                         <div class="bg-black bg-opacity-60 text-white font-cormorant p-6 sm:p-8 md:p-10 rounded-lg 
                                     w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl shadow-lg">
                             <p class="text-base sm:text-lg md:text-xl leading-relaxed tracking-wide">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Malveda Properties and Development Corporation (MPDC) is a subsidiary and the residential business of Malveda Holdings Corporation (MHC).
+                            </p>
+                            <p class="text-base sm:text-lg md:text-xl mt-2 leading-relaxed tracking-wide">
+                                Malveda Properties and Development Corporation aims to offer unique property investment to aspiring Filipino dreaming to own their own hotel unit!
                             </p>
                         </div>
                     </div>

@@ -1,12 +1,16 @@
 <template>
     <div
         class="bg-white w-full h-fit flex flex-col lg:flex-row items-center justify-center px-10 md:px-12 lg:px-12 py-12">
-        <video autoplay loop
-            class="w-full max-w-[100%] h-[12rem] md:h-[25rem] lg:h-[28rem] opacity-0 translate-y-10 transition-all duration-700 ease-out"
-            :class="{ 'fade-in': isImageVisible }">
-            <source src="../../images/videos/vid1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+<video autoplay loop muted
+    ref="videoElement"
+    class="w-full max-w-[100%] h-[12rem] md:h-[25rem] lg:h-[28rem] opacity-0 translate-y-10 transition-all duration-700 ease-out"
+    :class="{ 'fade-in': isImageVisible }"
+    @mouseover="playVideo"
+    @mouseleave="pauseVideo">
+    <source src="../../images/videos/vid1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
 
         <div ref="imageContainer"
             class="bg-[#98b9da] w-full max-w-[100%] h-[20rem] md:h-[25rem] lg:h-[26.5rem] -mt-1 md:-mt-3 lg:mt-6 opacity-0 translate-y-10 transition-all duration-700 ease-out"
@@ -25,7 +29,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-
 
 const isImageVisible = ref(false);
 const isTextVisible = ref(false);
@@ -52,7 +55,26 @@ onMounted(() => {
     if (imageContainer.value) observer.observe(imageContainer.value);
     if (textContainer.value) observer.observe(textContainer.value);
 });
+
+// Explicitly define the video ref type
+const videoElement = ref<HTMLVideoElement | null>(null);
+
+const playVideo = () => {
+    videoElement.value?.play(); // Use optional chaining to avoid null errors
+};
+
+const pauseVideo = () => {
+    videoElement.value?.pause();
+};
+
+// Ensure the video element is assigned when mounted
+onMounted(() => {
+    if (videoElement.value) {
+        videoElement.value.load(); // Reloads the video if needed
+    }
+});
 </script>
+
 
 
 <style scoped>

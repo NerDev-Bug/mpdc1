@@ -2,19 +2,21 @@
     <div
         class="bg-white w-full py-12 px-4 flex flex-col items-center md:flex-row md:justify-center md:space-x-6 lg:space-x-12">
         <h2 ref="textContainer"
-            class="text-[#1c3459] text-center text-3xl sm:text-4xl md:text-5xl font-serif leading-tight opacity-0 translate-y-10 transition-all duration-700 ease-out"
+            class="font-montserrat font-semibold text-[#1c3459] text-center text-3xl sm:text-4xl md:text-5xl font-serif leading-tight opacity-0 translate-y-10 transition-all duration-700 ease-out"
             :class="{ 'fade-in': isTextVisible }">
             Explore Our Unit
         </h2>
         <div ref="textContainer"
             class="flex flex-wrap justify-center gap-4 mt-4 md:mt-0 opacity-0 translate-y-10 transition-all duration-700 ease-out"
             :class="{ 'fade-in': isTextVisible }">
-            <a href="/service-residence"
-                class="bg-[#2db24a] text-white text-center px-6 py-3 rounded-2xl text-base sm:text-lg shadow-md transition duration-300 hover:bg-[#24993e]">
+            <a href="/serviced-residence"
+                :style="{ backgroundImage: `url(${goldbutton})`, backgroundSize: 'cover', backgroundPosition: 'center' }"
+            class="text-black font-montserrat font-semibold text-center px-12 py-3 rounded-2xl text-base sm:text-lg lg:text-xl shadow-lg shadow-black/50 transition duration-300">
                 Serviced Residences
             </a>
             <a href="/private-residence"
-                class="bg-[#2db24a] text-white text-center px-6 py-3 rounded-2xl text-base sm:text-lg shadow-md transition duration-300 hover:bg-[#24993e]">
+            :style="{ backgroundImage: `url(${goldbutton})`, backgroundSize: 'cover', backgroundPosition: 'center' }"
+            class="text-black font-montserrat font-semibold text-center px-12 py-3 rounded-2xl text-base sm:text-lg lg:text-xl shadow-lg shadow-black/50 transition duration-300">
                 Private Residences
             </a>
         </div>
@@ -23,6 +25,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import goldbutton from '../../images/goldbutton34.jpg';
 
 const isTextVisible = ref(false);
 const textContainer = ref<HTMLElement | null>(null);
@@ -48,10 +51,10 @@ onMounted(() => {
 
 <style scoped>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-.font-cormorant {
-    font-family: 'Cormorant Garamond', serif;
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Scroll-based Fade-in */

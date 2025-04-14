@@ -4,18 +4,18 @@
       <!-- Hero Section -->
       <main class="relative bg-white">
         <transition name="fade-out" appear>
-          <div 
+          <div
             class="w-full h-[50vh] sm:h-[65vh] md:h-[75vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative"
             :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }"
           >
             <div class="absolute inset-0 bg-black bg-opacity-20"></div>
-            
+
             <!-- Responsive Positioned Text with Scroll Animation -->
             <div ref="heroText"
-              class="absolute top-1/4 md:top-[30%] right-4 sm:right-8 md:right-16 lg:right-32 text-white text-right font-cormorant px-4 sm:px-6 transition-all duration-700 ease-out"
+              class="absolute top-1/4 md:top-[30%] right-4 sm:right-8 md:right-16 lg:right-32 py-8 text-white text-right font-montserrat px-4 sm:px-6 transition-all duration-700 ease-out"
               :class="{ 'opacity-100 translate-y-0': heroTextVisible, 'opacity-0 translate-y-10': !heroTextVisible }"
             >
-              <h2 class="text-4xl sm:text-[4rem] md:text-[4.5rem] lg:text-[5rem] xl:text-[5.5rem] font-bold leading-tight">
+              <h2 class="text-3xl sm:text-[2.5rem] md:text-[2.5rem] lg:text-[4rem] xl:text-[4.5rem] font-bold leading-tight">
                 Enjoy the Revenue of <br>
                  owning a hotel unit <br>
                  with ease!
@@ -80,10 +80,10 @@ export default {
 
 <style>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-.font-cormorant {
-  font-family: 'Cormorant Garamond', serif;
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Initial State */

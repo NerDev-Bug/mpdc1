@@ -3,11 +3,11 @@
     <Navbar />
 
     <!-- Loading Overlay with Logo (Black Background) -->
-    <transition name="loading-fade" mode="out-in">
+    <!-- <transition name="loading-fade" mode="out-in">
       <div v-if="loading" class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
         <img src="../images/logo.png" alt="Loading Logo" class="h-20 w-auto animate-pulse" />
       </div>
-    </transition>
+    </transition> -->
 
     <!-- Page Transition -->
     <transition name="fade" mode="out-in">
@@ -47,7 +47,7 @@ watchEffect(() => {
 
 /* Loading Screen Fade Effect */
 .loading-fade-enter-active, .loading-fade-leave-active {
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
 }
 
 .loading-fade-enter-from, .loading-fade-leave-to {

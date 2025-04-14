@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ContactsController;
+use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\Inquiry1Controller;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -8,7 +11,13 @@ Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->name('home');
 
-Route::resource('contact_us', ContactUsController::class);
+Route::resource('contacts', ContactsController::class);
+
+Route::resource('inquiry', InquiryController::class);
+
+Route::resource('inquiry1s', Inquiry1Controller::class);
+
+Route::resource('table_booking', BookingController::class);
 
 Route::get('/about', function () {
     return Inertia::render('about/AboutUs'); // Adjusted to match the folder structure
@@ -26,7 +35,7 @@ Route::get('/amenities', function () {
     return Inertia::render('amenities/Amenities'); // Or whatever the appropriate controller is
 })->name('Amenities');
 
-Route::get('/service-residence', function () {
+Route::get('/serviced-residence', function () {
     return Inertia::render('residence1/ServiceResidence'); // Or whatever the appropriate controller is
 })->name('ServiceResidence');
 

@@ -7,13 +7,15 @@
                 </div>
 
                 <div ref="textContainer"
-                    class="absolute bottom-32 md:bottom-[200px] left-4 sm:left-8 md:left-16 lg:left-32 text-white text-left font-cormorant px-4 sm:px-6 opacity-0 translate-y-10 transition-all duration-700 ease-out"
-                    :class="{ 'fade-in': isTextVisible }">
-                    <h2
-                        class="text-4xl sm:text-[4rem] md:text-[4.5rem] lg:text-[5rem] xl:text-[5.5rem] font-bold leading-tight">
-                        For Partners <br> and Brokers
-                    </h2>
-                </div>
+    class="absolute bottom-[30%] sm:bottom-[40%] left-4 sm:left-8 md:left-16 lg:left-32 text-white text-left font-montserrat px-4 sm:px-6 max-w-[90%] sm:max-w-[80%] md:max-w-[60%] opacity-0 translate-y-10 transition-all duration-700 ease-out"
+    :class="{ 'fade-in': isTextVisible }">
+    <h2 class="font-bold leading-tight" style="font-size: clamp(2rem, 6vw, 4.5rem);">
+        For Partners <br> and Brokers
+    </h2>
+</div>
+
+
+
             </div>
             <ForPartnersandBrokers />
             <ForPartnersandBrokers1 />
@@ -58,10 +60,10 @@ onMounted(() => {
 
 <style scoped>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-.font-cormorant {
-    font-family: 'Cormorant Garamond', serif;
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Initial State */

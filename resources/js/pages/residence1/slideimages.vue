@@ -1,178 +1,180 @@
 <template>
-    <div class="bg-gray-900 text-white py-12 px-4 sm:px-8 md:px-32">
-      <div class="max-w-screen-4xl mx-auto w-[95%]">
-        
-        <!-- News Container -->
-        <div class="relative w-full overflow-hidden">
-          <div class="relative group"> 
-            
-            <!-- Transition for Image -->
-            <transition name="fade" mode="out-in">
-              <img 
-                :key="currentIndex"
-                :src="images[currentIndex].src" 
-                :alt="images[currentIndex].alt"
-                class="w-full h-[50vh] sm:h-[60vh] md:h-[75vh] lg:h-[80vh] object-cover
-                      transition-transform duration-500 transform group-hover:scale-105"
-              />
-            </transition>
-  
-            <!-- Overlay -->
-            <div class="absolute inset-0 bg-black opacity-40"></div>
-  
-            <!-- Transition for News Content (Fade-in + Slide-up) -->
-            <div
-              ref="textContainer"
-              class="absolute top-[50%] left-[10%] text-white font-cormorant px-4 sm:px-6 max-w-[80%] sm:max-w-[60%]
-                     opacity-0 transform translate-y-10 transition-all duration-700 ease-out"
-              :class="{ 'fade-in': isTextVisible }"
-            >
-              <h3 class="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
-                {{ images[currentIndex].title }}
-              </h3>
-              <p class="mt-3 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed">
-                {{ images[currentIndex].description }}
-              </p>
+    <div class="w-full h-fit text-white py-12 px-4 md:px-12"
+        :style="{ backgroundImage: `url(${SRbg})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
+        <div class="max-w-screen-4xl mx-auto w-[95%]">
+            <!-- News Container -->
+            <div class="relative w-full overflow-hidden">
+                <div class="relative group">
+
+                   <!-- Responsive Wrapper with Aspect Ratio -->
+<div class="relative aspect-[16/9] sm:aspect-[16/9] md:aspect-[21/9] lg:aspect-[21/9] w-full overflow-hidden">
+    <!-- Image or Video Display -->
+    <transition name="fade" mode="out-in">
+        <template v-if="slides[currentIndex].type === 'image'">
+            <img :key="currentIndex" :src="slides[currentIndex].src" :alt="slides[currentIndex].alt"
+                class="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 transform group-hover:scale-105" />
+        </template>
+    </transition>
+</div>
+
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-black opacity-40"></div>
+
+                    <!-- Text Content (Only for images) -->
+                    <div v-if="slides[currentIndex].type === 'image'" ref="textContainer" class="absolute top-[50%] left-[10%] text-white font-montserrat px-4 sm:px-6 max-w-[80%] sm:max-w-[60%]
+              opacity-0 transform translate-y-10 transition-all duration-700 ease-out"
+                        :class="{ 'fade-in': isTextVisible }">
+                        <h3 class="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
+                            {{ slides[currentIndex].title }}
+                        </h3>
+                        <p class="mt-3 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed">
+                            {{ slides[currentIndex].description }}
+                        </p>
+                    </div>
+
+                    <!-- Progress Bar (Only for images) -->
+                    <div v-if="slides[currentIndex].type === 'image'"
+                        class="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-[40%]">
+                        <div class="h-[4px] bg-opacity-50">
+                            <div class="h-full transition-all duration-[3000ms]" :style="{ width: progressBarWidth }">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-  
-            <!-- Auto-Play Progress Bar -->
-            <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-[40%]">
-              <div 
-                class="transition-all duration-[3000ms]" 
-                :style="{ width: progressBarWidth }"
-              ></div>
+
+            <div class="mt-10">
+                <SRForm />
             </div>
-  
-          </div>
         </div>
-      </div>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref, onMounted, onUnmounted, Ref } from 'vue';
-  
-  // ✅ Import images properly
-  import SR1 from '../../images/SR1.jpg';
-  import SR2 from '../../images/SR2.jpg';
-  import SR3 from '../../images/SR3.jpg';
-  
-  // Array of images with correct paths and proper types
-  interface Image {
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue';
+import SRForm from './SRForm.vue';
+import SRbg from '../../images/SR-bg.png';
+
+// Images
+import SR1 from '../../images/SRst (1).jpg';
+import SR2 from '../../images/SRst (2).jpg';
+import SR3 from '../../images/SRst (3).jpg';
+import SR1B from '../../images/SR1b (1).jpg';
+import SR2B from '../../images/SR1b (2).jpg';
+import SR3B from '../../images/SR1b (3).jpg';
+import SR1D from '../../images/SR2d (1).jpg';
+import SR2D from '../../images/SR2d (2).jpg';
+import SR3D from '../../images/SR2d (3).jpg';
+import SR4D from '../../images/SR2d (4).jpg';
+import SR5D from '../../images/SR2d (5).jpg';
+
+interface Slide {
+    type: 'image';
     src: string;
-    alt: string;
-    title: string;
-    description: string;
-  }
-  
-  const images = ref<Image[]>([
-    {
-      src: SR1,
-      alt: 'Cerise Tower',
-      title: '',
-      description: ''
-    },
-    {
-      src: SR2,
-      alt: 'Skyline Expansion',
-      title: '',
-      description: ''
-    },
-    {
-      src: SR3,
-      alt: 'Modern Architecture',
-      title: '',
-      description: ''
-    }
+    alt?: string;
+    title?: string;
+    description?: string;
+}
+
+const slides = ref<Slide[]>([
+    // Studio
+    { type: 'image', src: SR1, alt: '', title: 'Studio Unit', description: 'Serviced Residences' },
+    { type: 'image', src: SR2, alt: '', title: 'Studio Unit', description: 'Serviced Residences' },
+    { type: 'image', src: SR3, alt: '', title: 'Studio Unit', description: 'Serviced Residences' },
+
+    // 1-Bedroom
+    { type: 'image', src: SR1B, alt: '', title: '1-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR2B, alt: '', title: '1-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR3B, alt: '', title: '1-Bedroom', description: 'Serviced Residences' },
+
+    // 2-Bedroom
+    { type: 'image', src: SR1D, alt: '', title: '2-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR2D, alt: '', title: '2-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR3D, alt: '', title: '2-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR4D, alt: '', title: '2-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR5D, alt: '', title: '2-Bedroom', description: 'Serviced Residences' },
 ]);
 
-  
-  const currentIndex = ref<number>(0);
-  const progressBarWidth = ref<string>('0%');
-  let autoSlideInterval: NodeJS.Timeout;
-  const isTextVisible = ref<boolean>(false);
-  const isTitleVisible = ref<boolean>(false);
-  const textContainer = ref<HTMLElement | null>(null);
-  const titleContainer = ref<HTMLElement | null>(null);
-  
-  // Function to navigate to the next image
-  const nextImage = (): void => {
-    currentIndex.value = (currentIndex.value + 1) % images.value.length;
+const currentIndex = ref<number>(0);
+const progressBarWidth = ref<string>('0%');
+let autoSlideInterval: NodeJS.Timeout;
+const isTextVisible = ref<boolean>(false);
+const textContainer = ref<HTMLElement | null>(null);
+
+// Show next slide
+const nextImage = (): void => {
+    currentIndex.value = (currentIndex.value + 1) % slides.value.length;
     resetProgress();
-  };
-  
-  // Auto-slide every 3 seconds
-  const startAutoSlide = (): void => {
+};
+
+// Auto-slide only images
+const startAutoSlide = (): void => {
     autoSlideInterval = setInterval(() => {
-      nextImage();
-    }, 3000);
-  };
-  
-  // Reset progress bar
-  const resetProgress = (): void => {
-    progressBarWidth.value = '0%';
-    setTimeout(() => {
-      progressBarWidth.value = '100%';
-    }, 50);
-  };
-  
-  // Scroll-based fade-in effects for text & title
-  const handleIntersection = (entries: IntersectionObserverEntry[]): void => {
+        if (slides.value[currentIndex.value].type === 'image') {
+            nextImage();
+        }
+    }, 4000);
+};
+
+// Reset progress bar for images only
+const resetProgress = (): void => {
+    if (slides.value[currentIndex.value].type === 'image') {
+        progressBarWidth.value = '0%';
+        setTimeout(() => {
+            progressBarWidth.value = '100%';
+        }, 50);
+    } else {
+        progressBarWidth.value = '0%';
+    }
+};
+
+// Observer to trigger text animation
+const handleIntersection = (entries: IntersectionObserverEntry[]): void => {
     entries.forEach((entry) => {
-      if (entry.target === textContainer.value && entry.isIntersecting) {
-        isTextVisible.value = true;
-      }
-      if (entry.target === titleContainer.value && entry.isIntersecting) {
-        isTitleVisible.value = true;
-      }
+        if (entry.target === textContainer.value && entry.isIntersecting) {
+            isTextVisible.value = true;
+        }
     });
-  };
-  
-  onMounted(() => {
+};
+
+onMounted(() => {
     startAutoSlide();
     resetProgress();
-  
-    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.3 });
+
+    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.6 });
     if (textContainer.value) observer.observe(textContainer.value);
-    if (titleContainer.value) observer.observe(titleContainer.value);
-  });
-  
-  onUnmounted(() => {
+});
+
+onUnmounted(() => {
     clearInterval(autoSlideInterval);
-  });
-  </script>
-  
-  
-  <style scoped>
-  /* Import Custom Font */
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
-  
-  .font-cormorant {
-    font-family: 'Cormorant Garamond', serif;
-  }
-  
-  /* Smooth Fade-in Effect */
-  .fade-enter-active, .fade-leave-active {
+});
+</script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.fade-enter-active,
+.fade-leave-active {
     transition: opacity 0.8s ease-in-out;
-  }
-  .fade-enter, .fade-leave-to {
+}
+
+.fade-enter,
+.fade-leave-to {
     opacity: 0;
-  }
-  
-  /* Scroll-based Text Animation */
-  .opacity-0 {
+}
+
+.opacity-0 {
     opacity: 0;
     transform: translateY(20px);
-  }
-  .fade-in {
+}
+
+.fade-in {
     opacity: 1;
     transform: translateY(0);
-  }
-  
-  /* Title Scroll Animation (Slide Down + Fade-in) */
-  .fade-down {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  </style>
-  
+}
+</style>

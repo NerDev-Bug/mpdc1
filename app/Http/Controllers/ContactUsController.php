@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactUs;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -29,21 +30,30 @@ class ContactUsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        // Validate user input
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email|email:rfc,dns',
             'cont_no' => 'required|numeric|digits:11',
             'unit_type' => 'required|string',
         ]);
 
-        ContactUs::create([
-            'name'=> $request->name,
-            'email'=> $request->email,
-            'cont_no' => $request->cont_no,
-            'unit_type' => $request->unit_type,
-        ]);
+        // Save to database
+        ContactUs::create($validated);
 
-        return redirect()->to('/citadines')->with('message', 'Message sent successfully');
+        // Send Email
+        Mail::send([], [], function ($message) use ($validated) {
+            $message->to('inquiries@malvedaproperties.com') // Admin Email
+                ->subject('New Contact Form Submission')
+                ->html(
+                    '<p><strong>Name:</strong> ' . $validated['name'] . '</p>' .
+                    '<p><strong>Email:</strong> ' . $validated['email'] . '</p>' .
+                    '<p><strong>Contact Number:</strong> ' . $validated['cont_no'] . '</p>' .
+                    '<p><strong>Unit Type:</strong> ' . $validated['unit_type'] . '</p>'
+                );
+        });
+        // Redirect with success message
+        return redirect()->to(url('/citadines'))->with('message', 'Message sent successfully');
     }
 
     /**

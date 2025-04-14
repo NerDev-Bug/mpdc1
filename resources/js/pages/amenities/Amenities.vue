@@ -34,7 +34,7 @@
         </div>
         <SlotsAmenities />
 
-        <UnitsAmenities />
+        <!-- <UnitsAmenities /> -->
       </main>
     </div>
   </AppLayout>
@@ -45,7 +45,7 @@ import { ref, onMounted } from 'vue';
 import heroImage from '../../images/ame5.jpg';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SlotsAmenities from './SlotsAmenities.vue';
-import UnitsAmenities from './UnitsAmenities.vue';
+// import UnitsAmenities from './UnitsAmenities.vue';
 
 const showImages = ref<boolean>(false);
 

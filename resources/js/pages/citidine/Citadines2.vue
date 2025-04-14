@@ -1,16 +1,12 @@
 <template>
     <div
         class="bg-white w-full h-fit flex flex-col lg:flex-row items-center justify-center px-10 md:px-12 lg:px-12 py-12">
-<video autoplay loop muted
-    ref="videoElement"
-    class="w-full max-w-[100%] h-[12rem] md:h-[25rem] lg:h-[28rem] opacity-0 translate-y-10 transition-all duration-700 ease-out"
-    :class="{ 'fade-in': isImageVisible }"
-    @mouseover="playVideo"
-    @mouseleave="pauseVideo">
-    <source src="../../images/videos/vid1.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-
+        <video autoplay loop ref="videoElement"
+            class="w-full max-w-[100%] h-[12rem] md:h-[25rem] lg:h-[28rem] opacity-0 translate-y-10 transition-all duration-700 ease-out"
+            :class="{ 'fade-in': isImageVisible }" @mouseover="playVideo" @mouseleave="pauseVideo">
+            <source src="../../images/videos/vid1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
 
         <div ref="imageContainer"
             class="bg-[#98b9da] w-full max-w-[100%] h-[20rem] md:h-[25rem] lg:h-[26.5rem] -mt-1 md:-mt-3 lg:mt-6 opacity-0 translate-y-10 transition-all duration-700 ease-out"

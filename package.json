@@ -35,6 +35,7 @@
         "@vitejs/plugin-vue": "^5.2.1",
         "@vuepic/vue-datepicker": "^11.0.1",
         "@vueuse/core": "^12.0.0",
+        "@vueuse/head": "^2.0.0",
         "autoprefixer": "^10.4.20",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
@@ -51,6 +52,7 @@
         "v-calendar": "^3.1.2",
         "vue": "^3.5.13",
         "vue-cal": "^4.10.2",
+        "vue-router": "^4.5.0",
         "vuetify": "^3.7.0-beta.1",
         "ziggy-js": "^2.5.2"
     },

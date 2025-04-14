@@ -2,14 +2,14 @@
     <div class="w-full min-h-screen bg-gray-200 flex flex-col md:flex-row items-center justify-center p-6 relative">
         <!-- Title Section -->
         <div class="absolute top-12 left-12">
-            <h2 class="text-4xl md:text-5xl text-gray-700 font-cormorant font-bold">Our Conglomerate Map</h2>
+            <h2 class="text-4xl md:text-5xl text-gray-700 font-montserrat font-bold">Our Conglomerate Map</h2>
         </div>
-
+        <br>
         <!-- Left Section: Heading & Paragraph with Scroll Animation -->
         <div ref="textSection"
-            class="md:w-1/2 text-gray-700 text-xl font-cormorant leading-relaxed p-6 text-center md:text-left opacity-0 translate-y-10 transition-all duration-700 ease-out"
+            class="md:w-1/2 text-gray-700 text-2xl font-montserrat leading-relaxed px-8 md:px-12 lg:px-6 py-24 text-center md:text-left opacity-0 translate-y-10 transition-all duration-700 ease-out"
             :class="{ 'fade-in': textVisible }">
-            <p>
+            <p class="text-justify mt-24 sm:mt-4 md:mt-0">
                 LEADS Agricultural Products Corporation, the lead subsidiary of MHC, capitalized on skills in distributing useful
                 and cost-effective farming solutions to grow the business beyond expectations. This opened new doors for expansion
                 into other industries where plans to establish a head office turned into an opportunity to go into real estate.
@@ -58,10 +58,10 @@ onMounted(() => {
 
 <style scoped>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-.font-cormorant {
-    font-family: 'Cormorant Garamond', serif;
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Initial State */

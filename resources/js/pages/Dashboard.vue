@@ -15,7 +15,7 @@
               class="absolute top-1/4 md:top-[30%] right-4 sm:right-8 md:right-16 lg:right-32 py-8 text-white text-right font-montserrat px-4 sm:px-6 transition-all duration-700 ease-out"
               :class="{ 'opacity-100 translate-y-0': heroTextVisible, 'opacity-0 translate-y-10': !heroTextVisible }"
             >
-              <h2 class="text-3xl sm:text-[2.5rem] md:text-[2.5rem] lg:text-[4rem] xl:text-[4.5rem] font-bold leading-tight">
+              <h2 class="text-2xl sm:text-[2.5rem] md:text-[2.5rem] lg:text-[4rem] xl:text-[4.5rem] font-bold leading-tight">
                 Enjoy the Revenue of <br>
                  owning a hotel unit <br>
                  with ease!

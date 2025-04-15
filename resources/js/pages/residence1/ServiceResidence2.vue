@@ -30,7 +30,7 @@
                                 <td class="p-2 sm:p-3 text-center text-2xl">41.85 – 52 sqm</td>
                             </tr>
                             <tr class="border border-[#967524]">
-                                <td class="p-2 sm:p-3 border border-black w-1/3 text-2xl">Price Range</td>
+                                <td class="p-2 sm:p-3 border border-[#967524] w-1/3 text-2xl">Price Range</td>
                                 <td class="p-2 sm:p-3 text-center text-2xl">11.7M – 14.6M</td>
                             </tr>
                         </tbody>

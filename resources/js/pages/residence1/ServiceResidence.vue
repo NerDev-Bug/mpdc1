@@ -3,7 +3,7 @@
         <div class="flex flex-col min-h-screen bg-white">
             <!-- Hero Section -->
             <div class="relative bg-white">
-                <div class="w-full h-[50vh] sm:h-[65vh] md:h-[75vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative flex flex-col md:flex-row items-center justify-center"
+                <div class="w-full h-[50vh] sm:h-[100vh] md:h-[75vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative flex flex-col md:flex-row items-center justify-center"
                     :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
 
                     <!-- Separate Black Overlay -->

@@ -4,7 +4,7 @@
       <!-- Hero Section with Responsive Background Image -->
       <main class="relative bg-white">
         <div
-          class="w-full h-[50vh] sm:h-[65vh] md:h-[75vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative flex items-center justify-center"
+          class="w-full h-[50vh] sm:h-[100vh] md:h-[75vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative flex items-center justify-center"
           :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }"
         >
           <div class="absolute inset-0 bg-black bg-opacity-20"></div>

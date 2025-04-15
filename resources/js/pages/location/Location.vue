@@ -3,7 +3,7 @@
       <div class="flex flex-col min-h-screen bg-white">
         <!-- Hero Section with Responsive Background Image -->
         <main class="relative bg-white">
-            <div class="w-full h-[40vh] sm:h-[55vh] md:h-[65vh] lg:h-[80vh] xl:h-[90vh] bg-cover bg-center relative"
+            <div class="w-full h-[40vh] sm:h-[100vh] md:h-[65vh] lg:h-[80vh] xl:h-[90vh] bg-cover bg-center relative"
     :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
 
             <div class="absolute inset-0 bg-black bg-opacity-20"></div>

@@ -32,7 +32,7 @@
             <!-- Section 3: Contact Us -->
             <div class="flex flex-col items-center">
                 <h3 class="text-2xl font-semibold mb-4">Contact Us</h3>
-                <p class="text-md">
+                <p class="text-[14px]">
                     <a href="mailto:inquiries@malvedaproperties.com" class="text-white hover:underline">
                         inquiries@malvedaproperties.com
                     </a>

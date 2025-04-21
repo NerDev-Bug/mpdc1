@@ -2,12 +2,12 @@
     <AppLayout>
         <div class="flex flex-col min-h-screen bg-white">
             <div class="relative bg-white">
-                <div class="w-full h-[40vh] sm:h-[100vh] md:h-[65vh] lg:h-[80vh] xl:h-[90vh] bg-cover bg-center relative"
+                <div class="w-full h-[40vh] sm:h-[100vh] md:h-[90vh] lg:h-[80vh] xl:h-[90vh] bg-cover bg-center relative"
                     :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
                 </div>
 
                 <div ref="textContainer"
-                    class="absolute bottom-[30%] sm:bottom-[40%] left-4 sm:left-8 md:left-16 lg:left-32 text-white text-left font-montserrat px-4 sm:px-6 max-w-[90%] sm:max-w-[80%] md:max-w-[60%] opacity-0 translate-y-10 transition-all duration-700 ease-out"
+                    class="absolute bottom-[30%] sm:bottom-[35%] left-4 sm:left-8 md:left-16 lg:left-32 text-white text-left font-montserrat px-4 sm:px-6 max-w-[90%] sm:max-w-[80%] md:max-w-[60%] opacity-0 translate-y-10 transition-all duration-700 ease-out"
                     :class="{ 'fade-in': isTextVisible }">
                     <h2 class="font-bold leading-tight" style="font-size: clamp(2rem, 6vw, 4.5rem);">
                         For Partners <br> and Brokers

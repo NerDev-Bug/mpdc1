@@ -4,7 +4,7 @@
       <!-- Hero Section with Responsive Background Image -->
       <main class="relative bg-white">
         <div
-          class="w-full h-[50vh] sm:h-[100vh] md:h-[75vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative flex items-center justify-center"
+          class="w-full h-[50vh] sm:h-[100vh] md:h-[90vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative flex items-center justify-center"
           :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }"
         >
           <div class="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -17,7 +17,7 @@
                 src="../../images/logo1.png"
                 alt="Overlay Image 1"
                 class="w-40 sm:w-52 md:w-64 lg:w-72 xl:w-80
-                       md:absolute md:left-[25%] md:top-[35%]"
+                       md:absolute md:left-[15%] lg:left-[25%] md:top-[35%]"
               />
             </transition>
 
@@ -27,7 +27,7 @@
                 src="../../images/logo2.png"
                 alt="Overlay Image 2"
                 class="w-40 sm:w-52 md:w-64 lg:w-72 xl:w-80
-                       md:absolute md:right-[25%] md:top-[35%]"
+                       md:absolute md:right-[15%] lg:right-[25%] md:top-[35%]"
               />
             </transition>
           </div>

@@ -3,18 +3,18 @@
         <div class="flex flex-col min-h-screen bg-white">
             <!-- Hero Section -->
             <div class="relative bg-white">
-                <div class="w-full h-[50vh] sm:h-[100vh] md:h-[75vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative flex flex-col md:flex-row items-center justify-center"
+                <div class="w-full h-[50vh] sm:h-[100vh] md:h-[90vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative flex flex-col md:flex-row items-center justify-center"
                     :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
 
                     <!-- Separate Black Overlay -->
                     <div class="absolute inset-0 bg-blue-950/60"></div>
-                    <div class="flex items-center justify-center py-12 ">
+                    <div class="flex items-center justify-center py-12">
                         <div class="bg-gray-400 w-full h-fit py-12">
                             <!-- Center the heading both vertically and horizontally, with a slight upward shift on smaller screens -->
                             <div class="absolute inset-0 flex items-center justify-center text-center font-montserrat w-full px-4 md:px-8"
                                 style="top: -20%;">
                                 <h2
-                                    class="text-white text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight pt-12">
+                                    class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold leading-tight pt-12">
                                     Serviced <br>
                                     Residences
                                 </h2>
@@ -23,7 +23,7 @@
                             <!-- Buttons Section -->
                             <transition name="fade-buttons" appear>
                                 <div
-                                    class="absolute bottom-4 md:bottom-[36px] left-1/2 transform -translate-x-1/2 flex flex-wrap justify-center gap-4 w-full px-4 min-[648px]:flex-row flex-col items-center">
+                                    class="absolute bottom-4 md:bottom-[26px] left-1/2 transform -translate-x-1/2 flex flex-wrap justify-center gap-4 w-full px-4 min-[648px]:flex-row flex-col items-center">
                                     <button v-for="unit in unitOptions" :key="unit.name"
                                         @click="selectedButton = unit.name"
                                         class="font-montserrat font-semibold text-xs sm:text-sm md:text-base lg:text-xl xl:text-2xl

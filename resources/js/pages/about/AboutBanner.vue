@@ -15,7 +15,7 @@
 
 
         <!-- Two-Column Content (Tightly Packed) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 mt-6">
+        <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 mt-6">
             <!-- Left: Text Section (No Gap) -->
             <div class="bg-[#1E3A5F] bg-opacity-40 text-white p-4 md:p-6 flex items-center">
                 <p class="text-xl md:text-xl leading-tight">

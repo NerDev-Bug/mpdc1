@@ -33,7 +33,7 @@
                         <input v-model="form.first_name" type="text"
                             class="w-full border border-gray-300 rounded-lg p-2 text-gray-900 bg-white"
                             @input="form.first_name = capitalizeFirstLetter(form.first_name)" placeholder="Juan"
-                            @keypress="preventNumbers"
+                            @keydown="preventNumbers"
                             required>
                     </div>
                     <div>
@@ -41,7 +41,7 @@
                         <input v-model="form.last_name" type="text"
                             class="w-full border border-gray-300 rounded-lg p-2 text-gray-900 bg-white"
                             @input="form.last_name = capitalizeFirstLetter(form.last_name)" placeholder="Dela Cruz"
-                            @keypress="preventNumbers"
+                            @keydown="preventNumbers"
                             required>
                     </div>
                 </div>
@@ -216,8 +216,15 @@ const saveInquiry = async () => {
     });
 };
 const preventNumbers = (event: KeyboardEvent) => {
-    const char = String.fromCharCode(event.keyCode || event.which);
-    if (/\d/.test(char)) {
+    const allowedKeys = [
+        'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
+    ];
+
+    // Allow control keys
+    if (allowedKeys.includes(event.key)) return;
+
+    // Allow only letters and spaces
+    if (!/^[a-zA-Z\s]$/.test(event.key)) {
         event.preventDefault();
     }
 };

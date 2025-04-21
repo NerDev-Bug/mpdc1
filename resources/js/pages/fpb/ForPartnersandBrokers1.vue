@@ -27,7 +27,7 @@
                             <input id="first_name" v-model="form.first_name" type="text" placeholder="Juan"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 @input="form.first_name = capitalizeFirstLetter(form.first_name)"
-                                @keypress="preventNumbers"
+                                @keydown="preventNumbers"
                                 required />
                             <div v-if="form.errors.first_name" class="text-red-400 mt-1 text-xs">{{
                                 form.errors.first_name }}</div>
@@ -39,7 +39,7 @@
                             <input id="last_name" v-model="form.last_name" type="text" placeholder="Dela Cruz"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 @input="form.last_name = capitalizeFirstLetter(form.last_name)"
-                                @keypress="preventNumbers"
+                                @keydown="preventNumbers"
                                 required  />
                             <div v-if="form.errors.last_name" class="text-red-400 mt-1 text-xs">{{ form.errors.last_name
                                 }}</div>
@@ -243,8 +243,15 @@ onMounted(() => {
     if (imageSection.value) observer.observe(imageSection.value);
 });
 const preventNumbers = (event: KeyboardEvent) => {
-    const char = String.fromCharCode(event.keyCode || event.which);
-    if (/\d/.test(char)) {
+    const allowedKeys = [
+        'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
+    ];
+
+    // Allow control keys
+    if (allowedKeys.includes(event.key)) return;
+
+    // Allow only letters and spaces
+    if (!/^[a-zA-Z\s]$/.test(event.key)) {
         event.preventDefault();
     }
 };

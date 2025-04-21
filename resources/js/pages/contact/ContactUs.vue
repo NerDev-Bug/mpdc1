@@ -37,7 +37,7 @@
                                             class="w-full border border-black p-2 rounded focus:ring focus:ring-blue-300 text-black"
                                             placeholder="Juan"
                                             @input="form.first_name = capitalizeFirstLetter(form.first_name)"
-                                            @keypress="preventNumbers"
+                                            @keydown="preventNumbers"
                                             required />
                                         <p v-if="errors.firstName" class="text-red-500 text-sm">{{ errors.firstName }}
                                         </p>
@@ -48,7 +48,7 @@
                                             class="w-full border border-black p-2 rounded focus:ring focus:ring-blue-300 text-black"
                                             placeholder="Dela Cruz"
                                             @input="form.last_name = capitalizeFirstLetter(form.last_name)"
-                                            @keypress="preventNumbers"
+                                            @keydown="preventNumbers"
                                             required />
                                         <p v-if="errors.lastName" class="text-red-500 text-sm">{{ errors.lastName }}</p>
                                     </div>
@@ -279,8 +279,15 @@ const submitForm = () => {
     });
 };
 const preventNumbers = (event: KeyboardEvent) => {
-    const char = String.fromCharCode(event.keyCode || event.which);
-    if (/\d/.test(char)) {
+    const allowedKeys = [
+        'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
+    ];
+
+    // Allow control keys
+    if (allowedKeys.includes(event.key)) return;
+
+    // Allow only letters and spaces
+    if (!/^[a-zA-Z\s]$/.test(event.key)) {
         event.preventDefault();
     }
 };

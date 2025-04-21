@@ -81,7 +81,7 @@
                                                 <option value="+49">+49 (DE)</option>
 
                                             </select>
-                                            <input v-model="form.mobile" type="text"
+                                            <input v-model="form.mobile" inputmode="numeric" type="text"
                                                 class="w-full p-2 border-black text-black"
                                                 :placeholder="!hasTyped ? form.country_code : ''"
                                                 @focus="if (!hasTyped) { form.mobile = ''; hasTyped = true; }"

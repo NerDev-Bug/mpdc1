@@ -56,7 +56,7 @@
                         <div>
                             <label class="block text-gray-700 text-sm font-semibold mb-1" for="contact">Contact
                                 Number</label>
-                            <input id="contact" v-model="form.contact_number" type="text" placeholder="+63"
+                            <input id="contact" v-model="form.contact_number" inputmode="numeric" type="text" placeholder="+63"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 maxlength="11" @input="formatContactNumber"
                                 required />

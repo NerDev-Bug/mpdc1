@@ -27,6 +27,7 @@
                             <input id="first_name" v-model="form.first_name" type="text" placeholder="Juan"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 @input="form.first_name = capitalizeFirstLetter(form.first_name)"
+                                inputmode="text"
                                 @keydown="preventNumbers"
                                 required />
                             <div v-if="form.errors.first_name" class="text-red-400 mt-1 text-xs">{{
@@ -39,6 +40,7 @@
                             <input id="last_name" v-model="form.last_name" type="text" placeholder="Dela Cruz"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 @input="form.last_name = capitalizeFirstLetter(form.last_name)"
+                                inputmode="text"
                                 @keydown="preventNumbers"
                                 required  />
                             <div v-if="form.errors.last_name" class="text-red-400 mt-1 text-xs">{{ form.errors.last_name
@@ -56,7 +58,7 @@
                         <div>
                             <label class="block text-gray-700 text-sm font-semibold mb-1" for="contact">Contact
                                 Number</label>
-                            <input id="contact" v-model="form.contact_number" inputmode="numeric" type="text" placeholder="+63"
+                            <input id="contact" v-model="form.contact_number" inputmode="numeric" type="tel" placeholder="+63"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 maxlength="11" @input="formatContactNumber"
                                 required />
@@ -124,8 +126,13 @@ const form = useForm({
     }
 });
 
-const capitalizeFirstLetter = (text: string) => {
-    return text.replace(/\b\w/g, char => char.toUpperCase());
+const capitalizeFirstLetter = (value: string) => {
+    const cleaned = value.replace(/[^a-zA-Z\s]/g, '');
+    return cleaned
+        .split(' ')
+        .filter(word => word.length > 0)
+        .map(word => word[0].toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
 };
 
 

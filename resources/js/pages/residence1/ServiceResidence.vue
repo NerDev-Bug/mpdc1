@@ -58,7 +58,7 @@
             </div>
 
             <SRimage />
-            <slideimages />
+            <slideimages :selectedButton="selectedButton" />
             <!-- <div class="bg-gray-900">
                 <SRForm />
             </div> -->
@@ -67,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, provide } from 'vue';
 import heroImage from '../../images/contactimage12.jpg';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ServiceResidence1 from './ServiceResidence1.vue';
@@ -82,6 +82,8 @@ import goldbutton from '../../images/goldbuttondefault.jpg';
 const showImages = ref(false);
 // const selectedButton = ref<string | null>(null);
 const selectedButton = ref<string>('SR Studio Unit'); // Default selection
+// Provide the selected unit to child components
+provide('selectedUnit', selectedButton);
 
 const unitOptions = [
     { name: "SR Studio Unit" },

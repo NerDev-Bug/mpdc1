@@ -57,7 +57,7 @@
                     <input
                     v-model="form.contact"
                     inputmode="numeric"
-                    type="text"
+                    type="tel"
                     @input="validateContact"
                         class="w-full border border-gray-300 rounded-lg p-2 text-gray-900 bg-white" placeholder="+63"
                         required>

@@ -36,7 +36,8 @@
                                         <input v-model="form.first_name" type="text"
                                             class="w-full border border-black p-2 rounded focus:ring focus:ring-blue-300 text-black"
                                             placeholder="Juan"
-                                            @input="form.first_name = capitalizeFirstLetter(form.first_name)"
+                                            @input="form.first_name = sanitizeName(form.first_name)"
+                                            inputmode="text"
                                             @keydown="preventNumbers"
                                             required />
                                         <p v-if="errors.firstName" class="text-red-500 text-sm">{{ errors.firstName }}
@@ -47,7 +48,8 @@
                                         <input v-model="form.last_name" type="text"
                                             class="w-full border border-black p-2 rounded focus:ring focus:ring-blue-300 text-black"
                                             placeholder="Dela Cruz"
-                                            @input="form.last_name = capitalizeFirstLetter(form.last_name)"
+                                            @input="form.last_name =  sanitizeName(form.last_name)"
+                                            inputmode="text"
                                             @keydown="preventNumbers"
                                             required />
                                         <p v-if="errors.lastName" class="text-red-500 text-sm">{{ errors.lastName }}</p>
@@ -81,7 +83,7 @@
                                                 <option value="+49">+49 (DE)</option>
 
                                             </select>
-                                            <input v-model="form.mobile" inputmode="numeric" type="text"
+                                            <input v-model="form.mobile" inputmode="numeric" type="tel"
                                                 class="w-full p-2 border-black text-black"
                                                 :placeholder="!hasTyped ? form.country_code : ''"
                                                 @focus="if (!hasTyped) { form.mobile = ''; hasTyped = true; }"
@@ -186,9 +188,15 @@ onMounted(() => {
     if (textContainer.value) observer.observe(textContainer.value);
 });
 
-const capitalizeFirstLetter = (text: string) => {
-    return text.replace(/\b\w/g, char => char.toUpperCase());
+const sanitizeName = (value: string) => {
+    const cleaned = value.replace(/[^a-zA-Z\s]/g, '');
+    return cleaned
+        .split(' ')
+        .filter(word => word.length > 0)
+        .map(word => word[0].toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
 };
+
 
 
 const form = useForm({

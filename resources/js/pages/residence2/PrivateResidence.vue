@@ -55,7 +55,7 @@
                 <PrivateResidence3 v-if="selectedButton === 'PR 2 Bedroom Unit'" />
             </div>
 
-            <slideimages />
+            <slideimages :selectedButton="selectedButton"/>
 
             <!-- <div class="bg-gray-900">
         <PRForm />
@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, provide} from 'vue';
 import heroImage from '../../images/contactimage12.jpg';
 import AppLayout from '@/layouts/AppLayout.vue';
 import PrivateResidence1 from './PrivateResidence1.vue';
@@ -78,6 +78,8 @@ import goldbutton from '../../images/goldbuttondefault.jpg';
 
 const showImages = ref(false);
 const selectedButton = ref<string>('PR Studio Unit'); // Default selection
+// Provide the selected unit to child components
+provide('selectedUnit', selectedButton);
 
 const unitOptions = [
     { name: "PR Studio Unit" },

@@ -33,6 +33,7 @@ watchEffect(() => {
     loading.value = false;
   }, 800); // Smooth and subtle loading effect
 });
+
 </script>
 
 <style>

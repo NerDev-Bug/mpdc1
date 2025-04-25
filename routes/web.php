@@ -51,6 +51,10 @@ Route::get('/contact-us', function () {
     return Inertia::render('contact/ContactUs'); // Or whatever the appropriate controller is
 })->name('ContactUs');
 
+Route::get('/data-privacy', function () {
+    return Inertia::render('dpc/DataPrivacy'); // Or whatever the appropriate controller is
+})->name('DataPrivacy');
+
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

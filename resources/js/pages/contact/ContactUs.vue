@@ -287,18 +287,16 @@ const submitForm = () => {
     });
 };
 const preventNumbers = (event: KeyboardEvent) => {
-    const allowedKeys = [
+    const isLetterOrSpace = /^[a-zA-Z\s]$/.test(event.key);
+    const isControlKey = [
         'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
-    ];
+    ].includes(event.key);
 
-    // Allow control keys
-    if (allowedKeys.includes(event.key)) return;
-
-    // Allow only letters and spaces
-    if (!/^[a-zA-Z\s]$/.test(event.key)) {
+    if (!isLetterOrSpace && !isControlKey) {
         event.preventDefault();
     }
 };
+
 </script>
 
 

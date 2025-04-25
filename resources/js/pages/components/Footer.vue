@@ -25,7 +25,8 @@
                     <li><a href="/" class="text-white hover:underline">Home</a></li>
                     <li><a href="/about" class="text-white hover:underline">About Us</a></li>
                     <li><a href="/citadines" class="text-white hover:underline">Citadines <br> Southwoods Binan</a></li>
-                    <li><a href="/contact" class="text-white hover:underline">Contact Us</a></li>
+                    <li><a href="/contact-us" class="text-white hover:underline">Contact Us</a></li>
+                    <li><a href="/data-privacy" class="text-white hover:underline">Data Privacy</a></li>
                 </ul>
             </div>
 

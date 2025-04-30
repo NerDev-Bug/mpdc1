@@ -188,13 +188,17 @@ onMounted(() => {
     if (textContainer.value) observer.observe(textContainer.value);
 });
 
-const sanitizeName = (value: string) => {
-    const cleaned = value.replace(/[^a-zA-Z\s]/g, '');
-    return cleaned
-        .split(' ')
-        .filter(word => word.length > 0)
-        .map(word => word[0].toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ');
+// const sanitizeName = (value: string) => {
+//     const cleaned = value.replace(/[^a-zA-Z\s]/g, '');
+//     return cleaned
+//         .split(' ')
+//         .filter(word => word.length > 0)
+//         .map(word => word[0].toUpperCase() + word.slice(1).toLowerCase())
+//         .join(' ');
+// };
+
+const sanitizeName = (text: string) => {
+    return text.replace(/\b\w/g, char => char.toUpperCase());
 };
 
 
@@ -286,13 +290,27 @@ const submitForm = () => {
         }
     });
 };
-const preventNumbers = (event: KeyboardEvent) => {
-    const isLetterOrSpace = /^[a-zA-Z\s]$/.test(event.key);
-    const isControlKey = [
-        'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
-    ].includes(event.key);
+// const preventNumbers = (event: KeyboardEvent) => {
+//     const isLetterOrSpace = /^[a-zA-Z\s]$/.test(event.key);
+//     const isControlKey = [
+//         'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End',
+//     ].includes(event.key);
 
-    if (!isLetterOrSpace && !isControlKey) {
+//     if (!isLetterOrSpace && !isControlKey) {
+//         event.preventDefault();
+//     }
+// };
+
+const preventNumbers = (event: KeyboardEvent) => {
+    const allowedKeys = [
+        'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
+    ];
+
+    // Allow control keys
+    if (allowedKeys.includes(event.key)) return;
+
+    // Allow only letters and spaces
+    if (!/^[a-zA-Z\s]$/.test(event.key)) {
         event.preventDefault();
     }
 };

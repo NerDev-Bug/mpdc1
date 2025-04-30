@@ -126,13 +126,17 @@ const form = useForm({
     }
 });
 
-const capitalizeFirstLetter = (value: string) => {
-    const cleaned = value.replace(/[^a-zA-Z\s]/g, '');
-    return cleaned
-        .split(' ')
-        .filter(word => word.length > 0)
-        .map(word => word[0].toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ');
+// const capitalizeFirstLetter = (value: string) => {
+//     const cleaned = value.replace(/[^a-zA-Z\s]/g, '');
+//     return cleaned
+//         .split(' ')
+//         .filter(word => word.length > 0)
+//         .map(word => word[0].toUpperCase() + word.slice(1).toLowerCase())
+//         .join(' ');
+// };
+
+const capitalizeFirstLetter = (text: string) => {
+    return text.replace(/\b\w/g, char => char.toUpperCase());
 };
 
 
@@ -249,6 +253,20 @@ onMounted(() => {
     if (textSection.value) observer.observe(textSection.value);
     if (imageSection.value) observer.observe(imageSection.value);
 });
+// const preventNumbers = (event: KeyboardEvent) => {
+//     const allowedKeys = [
+//         'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
+//     ];
+
+//     // Allow control keys
+//     if (allowedKeys.includes(event.key)) return;
+
+//     // Allow only letters and spaces
+//     if (!/^[a-zA-Z\s]$/.test(event.key)) {
+//         event.preventDefault();
+//     }
+// };
+
 const preventNumbers = (event: KeyboardEvent) => {
     const allowedKeys = [
         'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'

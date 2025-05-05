@@ -35,11 +35,8 @@
                                         <label class="block text-[#1C2852] text-[20px] font-medium">First Name</label>
                                         <input v-model="form.first_name" type="text"
                                             class="w-full border border-black p-2 rounded focus:ring focus:ring-blue-300 text-black"
-                                            placeholder="Juan"
-                                            @input="form.first_name = sanitizeName(form.first_name)"
-                                            inputmode="text"
-                                            @keydown="preventNumbers"
-                                            required />
+                                            placeholder="Juan" @input="form.first_name = sanitizeName(form.first_name)"
+                                            inputmode="text" @keydown="preventNumbers" required />
                                         <p v-if="errors.firstName" class="text-red-500 text-sm">{{ errors.firstName }}
                                         </p>
                                     </div>
@@ -48,10 +45,8 @@
                                         <input v-model="form.last_name" type="text"
                                             class="w-full border border-black p-2 rounded focus:ring focus:ring-blue-300 text-black"
                                             placeholder="Dela Cruz"
-                                            @input="form.last_name =  sanitizeName(form.last_name)"
-                                            inputmode="text"
-                                            @keydown="preventNumbers"
-                                            required />
+                                            @input="form.last_name = sanitizeName(form.last_name)" inputmode="text"
+                                            @keydown="preventNumbers" required />
                                         <p v-if="errors.lastName" class="text-red-500 text-sm">{{ errors.lastName }}</p>
                                     </div>
                                 </div>
@@ -121,8 +116,7 @@
                                 <div class="flex items-center space-x-2">
                                     <input type="checkbox" v-model="form.agree_terms" class="w-4 h-4" required />
                                     <label class="text-[#1C2852] text-[20px]">
-                                        I agree to the <a href="#" class="text-blue-500">Terms and Conditions</a> and <a
-                                            href="#" class="text-blue-500">Privacy Notice</a>
+                                        I agree to the <a href="/data-privacy" class="text-blue-500">Data Privacy</a>
                                     </label>
                                 </div>
 
@@ -323,7 +317,7 @@ const preventNumbers = (event: KeyboardEvent) => {
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .font-montserrat {
-  font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* Initial State */

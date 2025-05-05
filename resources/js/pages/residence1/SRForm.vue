@@ -86,8 +86,8 @@
                     <input v-model="form.agree_to_privacy" type="checkbox" id="privacyPolicy" class="mr-2" required>
                     <label for="privacyPolicy" class="text-sm text-gray-600">
                         I agree to receive communications and have read the
-                        <a href="https://privacy.gov.ph/data-privacy-act/" target="_blank"
-                            class="text-blue-600 underline">Data Privacy Policy</a>.
+                        <a href="/data-privacy"
+                            class="text-blue-600 underline">Data Privacy</a>.
                     </label>
                 </div>
 

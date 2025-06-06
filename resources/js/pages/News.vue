@@ -6,7 +6,7 @@
                 <div class="relative group">
                     <transition name="fade" mode="out-in">
                         <img :key="currentIndex" :src="images[currentIndex].src" :alt="images[currentIndex].alt"
-                            class="w-full max-w-[1300px] h-[750px] max-h-[750px] object-cover transition-transform duration-500 transform" />
+                            class="w-full max-w-[1300px] h-auto xs:h-auto sm:h-auto md:h-[750px] max-h-[750px] object-cover transition-transform duration-500 transform" />
                     </transition>
                     <div ref="textContainer" class="absolute top-[50%] left-[10%] text-white font-cormorant
                      opacity-0 transform translate-y-10 transition-all duration-700 ease-out"

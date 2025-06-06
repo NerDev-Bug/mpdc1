@@ -6,7 +6,7 @@
                 <div class="relative group">
                     <transition name="fade" mode="out-in">
                         <img :key="currentIndex" :src="images[currentIndex].src" :alt="images[currentIndex].alt"
-                            class="w-full max-w-[1300px] h-auto max-h-[750px] object-cover transition-transform duration-500 transform" />
+                            class="w-full max-w-[1300px] h-[750px] max-h-[750px] object-cover transition-transform duration-500 transform" />
                     </transition>
                     <div ref="textContainer" class="absolute top-[50%] left-[10%] text-white font-cormorant
                      opacity-0 transform translate-y-10 transition-all duration-700 ease-out"
@@ -29,9 +29,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import temu1 from '../images/indulge_adjusted.jpg';
-import temu2 from '../images/let your  property work for you_adjusted.jpg';
-import temu3 from '../images/discover first rate amenities_adjusted.jpg';
+// import temu1 from '../images/indulge_adjusted.jpg';
+// import temu2 from '../images/let your  property work for you_adjusted.jpg';
+// import temu3 from '../images/discover first rate amenities_adjusted.jpg';
+import temu1 from '../images/promotion/promo-1.jpg';
+import temu2 from '../images/promotion/promo-2.jpg';
+import temu3 from '../images/promotion/promo-3.jpg';
+import temu4 from '../images/promotion/promo-4.jpg';
+
 // import temu5 from '../images/dash_bg.jpg';
 import heroImage from '../images/pattbg.png'
 
@@ -46,6 +51,7 @@ const images = ref<Image[]>([
     { src: temu1, alt: '', title: '', description: '' },
     { src: temu2, alt: '', title: '', description: '' },
     { src: temu3, alt: '', title: '', description: '' },
+    { src: temu4, alt: '', title: '', description: '' },
     // { src: temu5, alt: '', title: '', description: '' },
 ]);
 

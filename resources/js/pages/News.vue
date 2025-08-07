@@ -32,10 +32,17 @@ import { ref, onMounted, onUnmounted } from 'vue';
 // import temu1 from '../images/indulge_adjusted.jpg';
 // import temu2 from '../images/let your  property work for you_adjusted.jpg';
 // import temu3 from '../images/discover first rate amenities_adjusted.jpg';
-import temu1 from '../images/promotion/promo-1.jpg';
-import temu2 from '../images/promotion/promo-2.jpg';
-import temu3 from '../images/promotion/promo-3.jpg';
-import temu4 from '../images/promotion/promo-4.jpg';
+// import temu1 from '../images/promotion/promo-1.jpg';
+// import temu2 from '../images/promotion/promo-2.jpg';
+// import temu3 from '../images/promotion/promo-3.jpg';
+// import temu4 from '../images/promotion/promo-4.jpg';
+
+import temu1 from '../images/promotion/august_promo_1.jpg';
+import temu2 from '../images/promotion/august_promo_2.jpg';
+import temu3 from '../images/promotion/august_promo_3.jpg';
+import temu4 from '../images/promotion/august_promo_4.jpg';
+import temu5 from '../images/promotion/august_promo_5.jpg';
+import temu6 from '../images/promotion/august_promo_6.jpg';
 
 // import temu5 from '../images/dash_bg.jpg';
 import heroImage from '../images/pattbg.png'
@@ -52,7 +59,8 @@ const images = ref<Image[]>([
     { src: temu2, alt: '', title: '', description: '' },
     { src: temu3, alt: '', title: '', description: '' },
     { src: temu4, alt: '', title: '', description: '' },
-    // { src: temu5, alt: '', title: '', description: '' },
+    { src: temu5, alt: '', title: '', description: '' },
+    { src: temu6, alt: '', title: '', description: '' },
 ]);
 
 const currentIndex = ref<number>(0);

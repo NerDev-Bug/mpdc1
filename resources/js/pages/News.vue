@@ -29,9 +29,17 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import temu1 from '../images/indulge_adjusted.jpg';
-import temu2 from '../images/let your  property work for you_adjusted.jpg';
-import temu3 from '../images/discover first rate amenities_adjusted.jpg';
+// import temu1 from '../images/indulge_adjusted.jpg';
+// import temu2 from '../images/let your  property work for you_adjusted.jpg';
+// import temu3 from '../images/discover first rate amenities_adjusted.jpg';
+
+import slide1 from '../images/slide_1.jpg';
+import slide2 from '../images/slide_2.jpg';
+import slide3 from '../images/slide_3.jpg';
+import slide4 from '../images/slide_4.jpg';
+import slide5 from '../images/slide_5.jpg';
+import slide6 from '../images/slide_6.jpg';
+
 // import temu5 from '../images/dash_bg.jpg';
 import heroImage from '../images/pattbg.png'
 
@@ -43,9 +51,12 @@ interface Image {
 }
 
 const images = ref<Image[]>([
-    { src: temu1, alt: '', title: '', description: '' },
-    { src: temu2, alt: '', title: '', description: '' },
-    { src: temu3, alt: '', title: '', description: '' },
+    { src: slide1, alt: '', title: '', description: '' },
+    { src: slide2, alt: '', title: '', description: '' },
+    { src: slide3, alt: '', title: '', description: '' },
+    { src: slide4, alt: '', title: '', description: '' },
+    { src: slide5, alt: '', title: '', description: '' },
+    { src: slide6, alt: '', title: '', description: '' },
     // { src: temu5, alt: '', title: '', description: '' },
 ]);
 

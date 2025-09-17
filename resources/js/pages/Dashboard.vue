@@ -8,10 +8,9 @@
   class="
     w-full
     h-[26vh] sm:h-[60vh] md:h-[80vh] lg:h-[90vh] xl:h-screen
-    bg-gray-100
     bg-no-repeat
-    bg-center md:bg-center
-    bg-[length:contain] sm:bg-[length:cover]
+    bg-center
+    bg-cover          /* use cover instead of contain */
     relative flex items-center
     mt-[60px] sm:mt-0
   "

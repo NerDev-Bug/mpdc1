@@ -4,15 +4,16 @@
       <!-- Hero Section -->
       <main class="relative bg-white">
         <transition name="fade-out" appear>
- <div
+<div
   class="
     w-full
     h-[26vh] sm:h-[60vh] md:h-[80vh] lg:h-[90vh] xl:h-screen
-    bg-gray-100               /* fallback background */
+    bg-gray-100
     bg-no-repeat
     bg-center md:bg-center
     bg-[length:contain] sm:bg-[length:cover]
     relative flex items-center
+    mt-[60px] sm:mt-0
   "
   :style="{ backgroundImage: `url(${heroImage})` }"
 >

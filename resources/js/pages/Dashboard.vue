@@ -4,14 +4,22 @@
       <!-- Hero Section -->
       <main class="relative bg-white">
         <transition name="fade-out" appear>
-          <div
-            class="w-full h-[50vh] sm:h-[100vh] md:h-[90vh] lg:h-[90vh] xl:h-screen bg-cover bg-center relative"
-            :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }"
-          >
+ <div
+  class="
+    w-full
+    h-[26vh] sm:h-[60vh] md:h-[80vh] lg:h-[90vh] xl:h-screen
+    bg-gray-100               /* fallback background */
+    bg-no-repeat
+    bg-center md:bg-center
+    bg-[length:contain] sm:bg-[length:cover]
+    relative flex items-center
+  "
+  :style="{ backgroundImage: `url(${heroImage})` }"
+>
             <div class="absolute inset-0 bg-black bg-opacity-20"></div>
 
             <!-- Responsive Positioned Text with Scroll Animation -->
-            <div ref="heroText"
+            <!-- <div ref="heroText"
               class="absolute top-1/4 md:top-[30%] right-4 sm:right-8 md:right-16 lg:right-32 py-8 text-white text-right font-montserrat px-4 sm:px-6 transition-all duration-700 ease-out"
               :class="{ 'opacity-100 translate-y-0': heroTextVisible, 'opacity-0 translate-y-10': !heroTextVisible }"
             >
@@ -20,9 +28,12 @@
                  owning a hotel unit <br>
                  with ease!
               </h2>
-            </div>
+            </div> -->
           </div>
         </transition>
+        <div class="w-full h-min-screen">
+          <img :src="awardBanner" alt="">
+        </div>
 
         <!-- Imported White Section -->
         <Banner />
@@ -36,7 +47,8 @@
 
 <script lang="ts">
 import { ref, onMounted } from "vue";
-import heroImage from '../images/ame1.jpg';
+import heroImage from '../images/homepage.jpg';
+import awardBanner from '../images/award.jpg';
 import Banner from '../pages/Banner.vue';
 import News from '../pages/News.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -71,6 +83,7 @@ export default {
 
     return {
       heroImage,
+      awardBanner,
       heroText,
       heroTextVisible,
     };

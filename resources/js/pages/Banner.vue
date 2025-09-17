@@ -10,6 +10,7 @@
             </div>
 
             <!-- Text Box with Scroll-based Fade-in Effect -->
+            
             <div ref="textContainer"
                 class="relative w-full lg:w-1/2 flex flex-col order-2 lg:order-none opacity-0 translate-y-10 transition-all duration-700 ease-out"
                 :class="{ 'fade-in': isTextVisible }">

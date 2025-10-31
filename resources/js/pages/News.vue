@@ -33,12 +33,12 @@ import { ref, onMounted, onUnmounted } from 'vue';
 // import temu2 from '../images/let your  property work for you_adjusted.jpg';
 // import temu3 from '../images/discover first rate amenities_adjusted.jpg';
 
-import slide1 from '../images/slide_1.jpg';
-import slide2 from '../images/slide_2.jpg';
-import slide3 from '../images/slide_3.jpg';
-import slide4 from '../images/slide_4.jpg';
-import slide5 from '../images/slide_5.jpg';
-import slide6 from '../images/slide_6.jpg';
+import slide1 from '../images/nov_slide_1.jpg';
+import slide2 from '../images/nov_slide_2.jpg';
+import slide3 from '../images/nov_slide_3.jpg';
+import slide4 from '../images/nov_slide_4.jpg';
+import slide5 from '../images/nov_slide_5.jpg';
+import slide6 from '../images/nov_slide_6.jpg';
 
 // import temu5 from '../images/dash_bg.jpg';
 import heroImage from '../images/pattbg.png'

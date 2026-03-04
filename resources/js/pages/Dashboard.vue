@@ -39,7 +39,7 @@
         <Banner />
 
         <!-- Latest News & Updates Section -->
-        <News />
+        <News :slides="newsSlides" />
       </main>
     </div>
   </AppLayout>
@@ -53,27 +53,39 @@ import Banner from '../pages/Banner.vue';
 import News from '../pages/News.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 
+interface SlideData {
+  id: number;
+  title: string;
+  description: string;
+  src: string;
+  alt: string;
+}
+
 export default {
   components: {
     Banner,
     News,
     AppLayout
   },
+  props: {
+    newsSlides: {
+      type: Array as () => SlideData[],
+      default: () => [],
+    },
+  },
   setup() {
     const heroTextVisible = ref(false);
-    const heroText = ref<HTMLElement | null>(null); // Ensure ref is correctly typed
+    const heroText = ref<HTMLElement | null>(null);
 
-    // Intersection Observer for Scroll Animation
     onMounted(() => {
       const observer = new IntersectionObserver(
         (entries) => {
-          console.log("Observed:", entries[0].isIntersecting); // Debugging log
           if (entries[0].isIntersecting) {
             heroTextVisible.value = true;
-            observer.disconnect(); // Ensures it only runs once
+            observer.disconnect();
           }
         },
-        { threshold: 0.2 } // Lowered threshold for quicker visibility
+        { threshold: 0.2 }
       );
 
       if (heroText.value) {

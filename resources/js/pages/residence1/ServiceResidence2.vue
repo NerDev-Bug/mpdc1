@@ -31,8 +31,7 @@
                             </tr>
                             <tr class="border border-[#967524]">
                                 <td class="p-2 sm:p-3 border border-[#967524] w-1/3 text-2xl">Price Range</td>
-                                <td class="p-2 sm:p-3 text-center text-2xl">10.2M – 12.6M</td>
-                                <!-- test -->
+                                <td class="p-2 sm:p-3 text-center text-2xl">11.7M – 14.6M</td>
                             </tr>
                         </tbody>
                     </table>

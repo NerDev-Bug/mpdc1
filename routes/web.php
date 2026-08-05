@@ -5,9 +5,25 @@ use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\Inquiry1Controller;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\NewsController as PublicNewsController;
+use App\Http\Controllers\NewsImageController;
 use App\Models\News;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+Route::withoutMiddleware([
+    \Illuminate\Cookie\Middleware\EncryptCookies::class,
+    \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    \Illuminate\Session\Middleware\StartSession::class,
+    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+])->group(function () {
+    // A working public/storage link is served by the web server before Laravel.
+    // This scoped fallback handles the same URL when that deployment link is
+    // missing, while taking precedence over Laravel's private storage catch-all.
+    Route::get('/storage/news/{filename}', NewsImageController::class)
+        ->where('filename', '[A-Za-z0-9][A-Za-z0-9._-]*')
+        ->name('news.image');
+});
 
 Route::get('/', function () {
     $newsSlides = News::where('is_active', true)
@@ -17,7 +33,7 @@ Route::get('/', function () {
             'id' => $item->id,
             'title' => $item->title,
             'description' => $item->description,
-            'src' => asset('storage/'.$item->image_path),
+            'src' => $item->imageUrlPath(),
             'alt' => $item->alt_text ?? '',
             'url' => $item->isPublished()
                 ? route('news.show', ['news' => $item->slug], absolute: false)

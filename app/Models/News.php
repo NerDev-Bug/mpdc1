@@ -82,6 +82,23 @@ class News extends Model
             || $this->hasText($this->meta_description);
     }
 
+    public function imageUrlPath(): ?string
+    {
+        $path = str_replace('\\', '/', trim((string) $this->image_path));
+
+        if (! str_starts_with($path, 'news/')) {
+            return null;
+        }
+
+        $filename = substr($path, strlen('news/'));
+
+        if (! preg_match('/\A[A-Za-z0-9][A-Za-z0-9._-]*\z/', $filename)) {
+            return null;
+        }
+
+        return route('news.image', ['filename' => $filename], absolute: false);
+    }
+
     /**
      * Explicit slug bindings are public article bindings. Default ID bindings
      * (used by the admin routes) retain their existing behavior.

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\News;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
@@ -112,9 +113,62 @@ class NewsSeoTest extends TestCase
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
                 ->where('newsSlides.0.id', $published->id)
+                ->where('newsSlides.0.src', '/storage/news/example.jpg')
                 ->where('newsSlides.0.url', '/news/published-update')
                 ->where('newsSlides.1.url', null)
                 ->where('newsSlides.2.url', null));
+    }
+
+    public function test_news_images_are_retrievable_without_a_public_storage_symlink(): void
+    {
+        Storage::fake('public');
+        $image = base64_decode(
+            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+        );
+
+        Storage::disk('public')->put('news/retrievable.png', $image);
+
+        $response = $this->get('/storage/news/retrievable.png')
+            ->assertOk()
+            ->assertHeader('Content-Type', 'image/png')
+            ->assertHeader('X-Content-Type-Options', 'nosniff');
+
+        $cacheControl = (string) $response->headers->get('Cache-Control');
+        $this->assertStringContainsString('public', $cacheControl);
+        $this->assertStringContainsString('max-age=31536000', $cacheControl);
+        $this->assertStringContainsString('immutable', $cacheControl);
+        $this->assertSame($image, $response->streamedContent());
+
+        Storage::disk('public')->put('news/not-an-image.txt', 'not an image');
+        $this->get('/storage/news/not-an-image.txt')->assertNotFound();
+        $this->get('/storage/news/missing.png')->assertNotFound();
+    }
+
+    public function test_an_admin_upload_is_immediately_retrievable(): void
+    {
+        Storage::fake('public');
+        $admin = User::factory()->create(['is_admin' => true]);
+
+        $this->actingAs($admin)
+            ->post(route('admin.news.store'), [
+                'title' => 'Uploaded promotion',
+                'image' => UploadedFile::fake()->image('promotion.png', 20, 10),
+                'alt_text' => 'Uploaded promotion image',
+                'is_active' => true,
+            ])
+            ->assertRedirect(route('admin.news.index'));
+
+        $news = News::query()->sole();
+
+        $this->assertMatchesRegularExpression(
+            '/\Anews\/[0-9a-f-]+\.jpg\z/',
+            $news->image_path,
+        );
+        Storage::disk('public')->assertExists($news->image_path);
+
+        $this->get($news->imageUrlPath())
+            ->assertOk()
+            ->assertHeader('Content-Type', 'image/jpeg');
     }
 
     public function test_public_article_uses_the_uploaded_images_real_dimensions(): void
@@ -136,6 +190,7 @@ class NewsSeoTest extends TestCase
         $this->get('/news/measured-image')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
+                ->where('article.image_url', 'https://example.test/storage/news/measured.png')
                 ->where('article.image_width', 1)
                 ->where('article.image_height', 1));
     }
@@ -170,21 +225,26 @@ class NewsSeoTest extends TestCase
             'sort_order' => 4,
         ]);
 
+        $this->actingAs($admin)
+            ->get(route('admin.news.index'))
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->where('news.0.image_url', '/storage/news/example.jpg'));
+
         $publishedAt = now()->subMinute()->format('Y-m-d H:i:s');
 
-        $this->actingAs($admin)
-            ->post(route('admin.news.update', $news), [
-                'title' => 'Complete Article',
-                'slug' => 'Complete Article',
-                'description' => 'Existing summary',
-                'body' => 'The complete, plain-text article body.',
-                'alt_text' => 'Existing image description',
-                'sort_order' => 4,
-                'is_active' => true,
-                'published_at' => $publishedAt,
-                'meta_title' => 'Complete Article Details',
-                'meta_description' => 'A concise description of this complete article.',
-            ])
+        $this->post(route('admin.news.update', $news), [
+            'title' => 'Complete Article',
+            'slug' => 'Complete Article',
+            'description' => 'Existing summary',
+            'body' => 'The complete, plain-text article body.',
+            'alt_text' => 'Existing image description',
+            'sort_order' => 4,
+            'is_active' => true,
+            'published_at' => $publishedAt,
+            'meta_title' => 'Complete Article Details',
+            'meta_description' => 'A concise description of this complete article.',
+        ])
             ->assertRedirect(route('admin.news.index'));
 
         $news->refresh();

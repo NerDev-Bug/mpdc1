@@ -35,7 +35,7 @@ class NewsController extends Controller
             'description' => $item->description,
             'body' => $item->body,
             'image_path' => $item->image_path,
-            'image_url' => $item->image_path ? asset('storage/'.$item->image_path) : null,
+            'image_url' => $item->imageUrlPath(),
             'alt_text' => $item->alt_text,
             'sort_order' => $item->sort_order,
             'is_active' => $item->is_active,

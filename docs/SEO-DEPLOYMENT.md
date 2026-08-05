@@ -19,7 +19,10 @@ php artisan storage:link
 php artisan optimize
 ```
 
-The storage link is required for news images uploaded through the admin area.
+The storage link lets the web server deliver uploaded files directly and should
+be kept healthy. News images also have an application fallback at
+`/storage/news/{filename}` so a missing link does not leave the homepage or admin
+preview blank.
 
 ## Keep SSR running
 
@@ -37,6 +40,7 @@ Without this process, the site falls back to client rendering and the initial re
 curl --fail https://www.malvedaproperties.com/
 curl --fail https://www.malvedaproperties.com/sitemap.xml
 curl --fail -I https://www.malvedaproperties.com/login
+curl --fail -I https://www.malvedaproperties.com/storage/news/REPLACE_WITH_A_REAL_FILENAME.jpg
 ```
 
 Confirm the homepage response contains one `<title>`, one `<h1>`, a description, a canonical URL, and JSON inside an `application/ld+json` script. Confirm private routes return an `X-Robots-Tag: noindex` header.

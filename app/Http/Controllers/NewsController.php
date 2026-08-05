@@ -38,7 +38,8 @@ class NewsController extends Controller
         $canonicalPath = route('news.show', ['news' => $article->slug], absolute: false);
         $siteUrl = rtrim((string) config('app.url'), '/');
         $canonicalUrl = $siteUrl.$canonicalPath;
-        $imageUrl = $siteUrl.'/storage/'.ltrim($article->image_path, '/');
+        $imagePath = $article->imageUrlPath();
+        $imageUrl = $imagePath ? $siteUrl.$imagePath : null;
         [$imageWidth, $imageHeight] = $this->imageDimensions($article);
 
         $data = [

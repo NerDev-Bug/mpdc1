@@ -4,12 +4,34 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\Inquiry1Controller;
+use App\Models\News;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Dashboard');
+    $newsSlides = News::where('is_active', true)
+        ->orderBy('sort_order')
+        ->get()
+        ->map(fn ($item) => [
+            'id' => $item->id,
+            'title' => $item->title,
+            'description' => $item->description,
+            'src' => asset('storage/' . $item->image_path),
+            'alt' => $item->alt_text ?? '',
+        ]);
+
+    return Inertia::render('Dashboard', [
+        'newsSlides' => $newsSlides,
+    ]);
 })->name('home');
+
+Route::get('/dashboard', function () {
+    if (auth()->check() && auth()->user()->is_admin) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    return redirect()->route('home');
+})->name('dashboard');
 
 Route::resource('contacts', ContactsController::class);
 

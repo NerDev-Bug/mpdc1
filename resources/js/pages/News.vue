@@ -6,17 +6,17 @@
                 <div class="relative group">
                     <transition name="fade" mode="out-in">
                         <img :key="currentIndex" :src="images[currentIndex].src" :alt="images[currentIndex].alt"
-                            class="w-full max-w-[1300px] h-auto max-h-[750px] object-cover transition-transform duration-500 transform" />
+                            class="w-full max-w-[1300px] h-auto xs:h-auto sm:h-auto md:h-[750px] max-h-[750px] object-cover transition-transform duration-500 transform" />
                     </transition>
                     <div ref="textContainer" class="absolute top-[50%] left-[10%] text-white font-cormorant
                      opacity-0 transform translate-y-10 transition-all duration-700 ease-out"
                         :class="{ 'fade-in': isTextVisible }">
-                        <h3 class="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
+                        <!-- <h3 class="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
                             {{ images[currentIndex].title }}
                         </h3>
                         <p class="mt-3 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed">
                             {{ images[currentIndex].description }}
-                        </p>
+                        </p> -->
                     </div>
                     <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-[100%]">
                         <div class="transition-all duration-[3000ms]" :style="{ width: progressBarWidth }"></div>
@@ -28,37 +28,45 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-// import temu1 from '../images/indulge_adjusted.jpg';
-// import temu2 from '../images/let your  property work for you_adjusted.jpg';
-// import temu3 from '../images/discover first rate amenities_adjusted.jpg';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 
-import slide1 from '../images/nov_slide_1.jpg';
-import slide2 from '../images/nov_slide_2.jpg';
-import slide3 from '../images/nov_slide_3.jpg';
-import slide4 from '../images/nov_slide_4.jpg';
-import slide5 from '../images/nov_slide_5.jpg';
-import slide6 from '../images/nov_slide_6.jpg';
+import slide1 from '../images/dec_1.jpg';
+import slide2 from '../images/dec_2.jpg';
+import slide3 from '../images/dec_3.jpg';
+import slide4 from '../images/dec_4.jpg';
+import slide5 from '../images/dec_5.jpg';
+import slide6 from '../images/dec_6.jpg';
 
-// import temu5 from '../images/dash_bg.jpg';
 import heroImage from '../images/pattbg.png'
 
-interface Image {
+interface SlideData {
+    id?: number;
     src: string;
     alt: string;
     title: string;
     description: string;
 }
 
-const images = ref<Image[]>([
+const props = withDefaults(defineProps<{
+    slides?: SlideData[];
+}>(), {
+    slides: () => [],
+});
+
+// Fallback static images
+const staticImages: SlideData[] = [
     { src: slide1, alt: '', title: '', description: '' },
     { src: slide2, alt: '', title: '', description: '' },
     { src: slide3, alt: '', title: '', description: '' },
     { src: slide4, alt: '', title: '', description: '' },
     { src: slide5, alt: '', title: '', description: '' },
     { src: slide6, alt: '', title: '', description: '' },
-    // { src: temu5, alt: '', title: '', description: '' },
-]);
+];
+
+// Use dynamic slides from DB if available, otherwise fall back to static
+const images = computed(() => {
+    return props.slides && props.slides.length > 0 ? props.slides : staticImages;
+});
 
 const currentIndex = ref<number>(0);
 const progressBarWidth = ref<string>('0%');

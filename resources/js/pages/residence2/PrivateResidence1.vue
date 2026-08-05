@@ -5,24 +5,20 @@
 
             <!-- Left Section: Heading & Image -->
             <div class="flex flex-col items-center md:items-start pl-0 md:pl-8 lg:pl-12">
-                <transition name="slide-up-text" appear>
-                    <h2 class="font-montserrat text-4xl sm:text-5xl font-serif mb-12 text-center md:text-left text-white">
+                <h2 class="residence-text-appear font-montserrat text-4xl sm:text-5xl font-serif mb-12 text-center md:text-left text-white">
                         Studio Unit
-                    </h2>
-                </transition>
+                </h2>
 
-                <transition name="slide-up-image" appear>
-                    <div class="w-full md:w-auto flex justify-center">
-                        <img src="../../images/primagessss.jpg" alt="Studio Floor Plan"
+                <div class="residence-image-appear w-full md:w-auto flex justify-center">
+                        <img src="../../images/primagessss.jpg" alt="Private residence studio unit floor plan"
+                            width="429" height="619" loading="lazy" decoding="async"
                             class="shadow-2xl drop-shadow-lg w-[80%] sm:w-[70%] md:w-auto max-w-[250px] sm:max-w-[300px] md:max-w-none mt-0 sm:mt-8">
-                    </div>
-                </transition>
+                </div>
             </div>
 
 
             <!-- Information Section with Slide-Up Transition -->
-            <transition name="slide-up-text" appear>
-                <div class="w-full text-white px-6 md:px-8 lg:px-12 py-10 text-center md:text-right">
+            <div class="residence-text-appear w-full text-white px-6 md:px-8 lg:px-12 py-10 text-center md:text-right">
                     <table class="border-4 border-[#967524] w-full text-left font-montserrat mb-6 text-sm sm:text-base">
                         <tbody>
                             <tr class="border border-[#967524]">
@@ -31,7 +27,7 @@
                             </tr>
                             <tr class="border border-[#967524]">
                                 <td class="p-2 sm:p-3 border border-[#967524] w-1/3 text-2xl">Price Range</td>
-                                <td class="p-2 sm:p-3 text-center text-2xl">6.9M – 9M</td>
+                                <td class="p-2 sm:p-3 text-center text-2xl">₱6.9M – ₱9M</td>
                             </tr>
                         </tbody>
                     </table>
@@ -80,15 +76,14 @@
                     </div>
 
 
-                </div>
-            </transition>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 export default {
-    name: "ServiceResidence",
+    name: "PrivateResidenceStudio",
 };
 </script>
 
@@ -97,8 +92,6 @@ import fpbbg from '../../images/fpb_bg_blue.jpg';
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }
@@ -109,41 +102,43 @@ img {
 }
 
 
-/* Slide-Up Animation for Image (Appears First) */
-.slide-up-image-enter-active,
-.slide-up-image-appear-active {
-    transition: opacity 1s ease-out, transform 1s ease-out;
+/* Preserve the former appear effects without SSR-inert Transition wrappers. */
+.residence-image-appear {
+    animation: residence-image-appear 1s ease-out both;
 }
 
-.slide-up-image-enter-from,
-.slide-up-image-appear-from {
-    opacity: 0;
-    transform: translateY(80px);
+.residence-text-appear {
+    animation: residence-text-appear 1s ease-out 0.5s both;
 }
 
-.slide-up-image-enter-to,
-.slide-up-image-appear-to {
-    opacity: 1;
-    transform: translateY(0);
+@keyframes residence-image-appear {
+    from {
+        opacity: 0;
+        transform: translateY(80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Slide-Up Animation for Text (Delayed by 0.5s) */
-.slide-up-text-enter-active,
-.slide-up-text-appear-active {
-    transition: opacity 1s ease-out, transform 1s ease-out;
-    transition-delay: 0.5s;
-    /* Staggered effect */
+@keyframes residence-text-appear {
+    from {
+        opacity: 0;
+        transform: translateY(80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.slide-up-text-enter-from,
-.slide-up-text-appear-from {
-    opacity: 0;
-    transform: translateY(80px);
-}
-
-.slide-up-text-enter-to,
-.slide-up-text-appear-to {
-    opacity: 1;
-    transform: translateY(0);
+@media (prefers-reduced-motion: reduce) {
+    .residence-image-appear,
+    .residence-text-appear {
+        animation: none;
+    }
 }
 </style>

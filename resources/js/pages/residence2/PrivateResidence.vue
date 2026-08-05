@@ -1,5 +1,16 @@
 <template>
     <AppLayout>
+        <SeoHead
+            title="Private Residences at The Cerise Tower"
+            description="Explore studio, one-bedroom, and two-bedroom private residence options at The Cerise Tower in Southwoods City, Biñan."
+            canonical-path="/private-residence"
+            :image="heroImage"
+            image-alt="Private Residences at The Cerise Tower"
+            :structured-data="{
+                '@type': 'WebPage',
+                name: 'Private Residences at The Cerise Tower',
+            }"
+        />
         <div class="flex flex-col min-h-screen bg-white">
             <!-- Hero Section -->
             <div class="relative bg-white">
@@ -12,18 +23,21 @@
                     <!-- Center the heading both vertically and horizontally, with a slight upward shift on smaller screens -->
                     <div class="absolute inset-0 flex items-center justify-center text-center font-montserrat w-full px-4 md:px-8"
                         style="top: -20%;">
-                        <h2
+                        <h1
                             class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold leading-tight pt-12">
                             Private <br>
                             Residences
-                        </h2>
+                        </h1>
                     </div>
 
                     <!-- Buttons Section -->
-                    <transition name="fade-buttons" appear>
-                        <div
-                            class="absolute bottom-4 md:bottom-[26px] left-1/2 transform -translate-x-1/2 flex flex-wrap justify-center gap-4 w-full px-4 min-[648px]:flex-row flex-col items-center">
-                            <button v-for="unit in unitOptions" :key="unit.name" @click="selectedButton = unit.name"
+                    <div
+                        role="tablist"
+                        aria-label="Private residence unit types"
+                        class="residence-buttons-appear absolute bottom-4 md:bottom-[26px] left-1/2 transform -translate-x-1/2 flex flex-wrap justify-center gap-4 w-full px-4 min-[648px]:flex-row flex-col items-center">
+                            <button v-for="unit in unitOptions" :key="unit.name" :id="unit.tabId" type="button"
+                                role="tab" :aria-controls="unit.panelId" :aria-selected="selectedButton === unit.name"
+                                @click="selectedButton = unit.name"
                                 class="font-montserrat font-semibold text-xs sm:text-sm md:text-base lg:text-xl xl:text-2xl
                        px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16 py-2 sm:py-3 md:py-4 lg:py-5 xl:py-6
                        rounded-full shadow-xl transition-all duration-300
@@ -42,17 +56,21 @@
                                 }">
                                 {{ unit.name }}
                             </button>
-                        </div>
-                    </transition>
+                    </div>
 
                 </div>
             </div>
 
             <!-- Service Residence Section -->
             <div class="">
-                <PrivateResidence1 v-if="selectedButton === 'PR Studio Unit' || selectedButton === null" />
-                <PrivateResidence2 v-if="selectedButton === 'PR 1 Bedroom Unit'" />
-                <PrivateResidence3 v-if="selectedButton === 'PR 2 Bedroom Unit'" />
+                <PrivateResidence1 id="private-studio-panel" role="tabpanel" aria-labelledby="private-studio-tab"
+                    tabindex="0" v-show="selectedButton === 'PR Studio Unit' || selectedButton === null" />
+                <PrivateResidence2 id="private-one-bedroom-panel" role="tabpanel"
+                    aria-labelledby="private-one-bedroom-tab" tabindex="0"
+                    v-show="selectedButton === 'PR 1 Bedroom Unit'" />
+                <PrivateResidence3 id="private-two-bedroom-panel" role="tabpanel"
+                    aria-labelledby="private-two-bedroom-tab" tabindex="0"
+                    v-show="selectedButton === 'PR 2 Bedroom Unit'" />
             </div>
 
             <slideimages :selectedButton="selectedButton"/>
@@ -67,6 +85,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, provide} from 'vue';
 import heroImage from '../../images/contactimage12.jpg';
+import SeoHead from '@/components/SeoHead.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import PrivateResidence1 from './PrivateResidence1.vue';
 import slideimages from './slideimages1.vue';
@@ -82,9 +101,9 @@ const selectedButton = ref<string>('PR Studio Unit'); // Default selection
 provide('selectedUnit', selectedButton);
 
 const unitOptions = [
-    { name: "PR Studio Unit" },
-    { name: "PR 1 Bedroom Unit" },
-    { name: "PR 2 Bedroom Unit" }
+    { name: "PR Studio Unit", tabId: 'private-studio-tab', panelId: 'private-studio-panel' },
+    { name: "PR 1 Bedroom Unit", tabId: 'private-one-bedroom-tab', panelId: 'private-one-bedroom-panel' },
+    { name: "PR 2 Bedroom Unit", tabId: 'private-two-bedroom-tab', panelId: 'private-two-bedroom-panel' }
 ];
 
 onMounted(() => {
@@ -118,8 +137,6 @@ onUnmounted(() => {
 
 <style scoped>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
     font-family: 'Montserrat', sans-serif;
 }
@@ -136,20 +153,19 @@ onUnmounted(() => {
     transform: translateY(20px);
 }
 
-/* Fade-In Animation for Buttons */
-.fade-buttons-enter-active,
-.fade-buttons-appear-active {
-    transition: opacity 1s ease-in-out;
-    transition-delay: 0.4s;
+/* Preserve the former appear effect without an SSR-inert Transition wrapper. */
+.residence-buttons-appear {
+    animation: residence-buttons-appear 1s ease-in-out 0.4s both;
 }
 
-.fade-buttons-enter-from,
-.fade-buttons-appear-from {
-    opacity: 0;
+@keyframes residence-buttons-appear {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.fade-buttons-enter-to,
-.fade-buttons-appear-to {
-    opacity: 1;
+@media (prefers-reduced-motion: reduce) {
+    .residence-buttons-appear {
+        animation: none;
+    }
 }
 </style>

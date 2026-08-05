@@ -3,7 +3,8 @@ import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -20,7 +21,8 @@ const sidebarNavItems: NavItem[] = [
     },
 ];
 
-const currentPath = window.location.pathname;
+const page = usePage();
+const currentPath = computed(() => page.url.split('?')[0]);
 </script>
 
 <template>

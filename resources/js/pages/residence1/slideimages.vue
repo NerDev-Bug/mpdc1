@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-fit text-white py-12 px-4 md:px-12"
+    <section class="w-full h-fit text-white py-12 px-4 md:px-12" aria-label="Serviced residence interior gallery"
       :style="{ backgroundImage: `url(${SRbg})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
       <div class="max-w-screen-4xl mx-auto w-[95%]">
         <!-- News Container -->
@@ -11,6 +11,7 @@
               <transition name="fade" mode="out-in">
                 <template v-if="filteredSlides[currentIndex].type === 'image'">
                   <img :key="currentIndex" :src="filteredSlides[currentIndex].src" :alt="filteredSlides[currentIndex].alt"
+                    width="1161" height="653" loading="lazy" decoding="async"
                     class="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 transform group-hover:scale-105" />
                 </template>
               </transition>
@@ -20,7 +21,7 @@
             <div class="absolute inset-0 bg-black opacity-40"></div>
 
             <!-- Text Content (Only for images) -->
-            <div v-if="filteredSlides[currentIndex].type === 'image'" ref="textContainer" class="absolute top-[50%] left-[10%] text-white font-montserrat px-4 sm:px-6 max-w-[80%] sm:max-w-[60%] opacity-0 transform translate-y-10 transition-all duration-700 ease-out"
+            <div v-if="filteredSlides[currentIndex].type === 'image'" ref="textContainer" aria-live="polite" class="absolute top-[50%] left-[10%] text-white font-montserrat px-4 sm:px-6 max-w-[80%] sm:max-w-[60%] opacity-0 transform translate-y-10 transition-all duration-700 ease-out"
               :class="{ 'fade-in': isTextVisible }">
               <h3 class="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
                 {{ filteredSlides[currentIndex].title }}
@@ -30,10 +31,27 @@
               </p>
             </div>
 
+            <button type="button" aria-label="Show previous serviced residence image"
+              class="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/60 px-4 py-3 text-2xl hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
+              @click="previousImage">
+              <span aria-hidden="true">‹</span>
+            </button>
+            <button type="button" aria-label="Show next serviced residence image"
+              class="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/60 px-4 py-3 text-2xl hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
+              @click="nextImage">
+              <span aria-hidden="true">›</span>
+            </button>
+            <button type="button" :aria-label="isPaused ? 'Play serviced residence gallery' : 'Pause serviced residence gallery'"
+              class="absolute right-3 top-3 z-10 rounded bg-black/60 px-3 py-2 text-sm hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
+              @click="toggleAutoplay">
+              {{ isPaused ? 'Play' : 'Pause' }}
+            </button>
+
             <!-- Progress Bar (Only for images) -->
             <div v-if="filteredSlides[currentIndex].type === 'image'" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-[40%]">
               <div class="h-[4px] bg-opacity-50">
-                <div class="h-full transition-all duration-[3000ms]" :style="{ width: progressBarWidth }">
+                <div class="h-full transition-all"
+                  :style="{ width: progressBarWidth, transitionDuration: '3000ms' }">
                 </div>
               </div>
             </div>
@@ -44,11 +62,11 @@
           <SRForm />
         </div>
       </div>
-    </div>
+    </section>
   </template>
 
   <script setup lang="ts">
-  import { ref, onMounted, onUnmounted, defineProps, computed } from 'vue';
+  import { ref, onMounted, onUnmounted, defineProps, computed, watch } from 'vue';
   import SRForm from './SRForm.vue';
   import SRbg from '../../images/SR-bg.png';
 
@@ -69,9 +87,9 @@
   interface Slide {
     type: 'image';
     src: string;
-    alt?: string;
-    title?: string;
-    description?: string;
+    alt: string;
+    title: string;
+    description: string;
   }
 
   // Define the selected unit passed from the parent component
@@ -81,21 +99,21 @@
 
   const slides = ref<Slide[]>([
     // Studio Unit Slides
-    { type: 'image', src: SR1, alt: '', title: 'Studio Unit', description: 'Serviced Residences' },
-    { type: 'image', src: SR2, alt: '', title: 'Studio Unit', description: 'Serviced Residences' },
-    { type: 'image', src: SR3, alt: '', title: 'Studio Unit', description: 'Serviced Residences' },
+    { type: 'image', src: SR1, alt: 'Serviced residence studio unit interior, view 1', title: 'Studio Unit', description: 'Serviced Residences' },
+    { type: 'image', src: SR2, alt: 'Serviced residence studio unit interior, view 2', title: 'Studio Unit', description: 'Serviced Residences' },
+    { type: 'image', src: SR3, alt: 'Serviced residence studio unit interior, view 3', title: 'Studio Unit', description: 'Serviced Residences' },
 
     // 1-Bedroom Unit Slides
-    { type: 'image', src: SR1B, alt: '', title: '1-Bedroom', description: 'Serviced Residences' },
-    { type: 'image', src: SR2B, alt: '', title: '1-Bedroom', description: 'Serviced Residences' },
-    { type: 'image', src: SR3B, alt: '', title: '1-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR1B, alt: 'Serviced residence one-bedroom unit interior, view 1', title: '1-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR2B, alt: 'Serviced residence one-bedroom unit interior, view 2', title: '1-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR3B, alt: 'Serviced residence one-bedroom unit interior, view 3', title: '1-Bedroom', description: 'Serviced Residences' },
 
     // 2-Bedroom Unit Slides
-    { type: 'image', src: SR1D, alt: '', title: '2-Bedroom', description: 'Serviced Residences' },
-    { type: 'image', src: SR2D, alt: '', title: '2-Bedroom', description: 'Serviced Residences' },
-    { type: 'image', src: SR3D, alt: '', title: '2-Bedroom', description: 'Serviced Residences' },
-    { type: 'image', src: SR4D, alt: '', title: '2-Bedroom', description: 'Serviced Residences' },
-    { type: 'image', src: SR5D, alt: '', title: '2-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR1D, alt: 'Serviced residence two-bedroom unit interior, view 1', title: '2-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR2D, alt: 'Serviced residence two-bedroom unit interior, view 2', title: '2-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR3D, alt: 'Serviced residence two-bedroom unit interior, view 3', title: '2-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR4D, alt: 'Serviced residence two-bedroom unit interior, view 4', title: '2-Bedroom', description: 'Serviced Residences' },
+    { type: 'image', src: SR5D, alt: 'Serviced residence two-bedroom unit interior, view 5', title: '2-Bedroom', description: 'Serviced Residences' },
   ]);
 
   // Filter slides based on the selected unit type
@@ -108,34 +126,50 @@
       case 'SR 2 Bedroom Unit':
         return slides.value.slice(6, 11); // 2-Bedroom Unit
       default:
-        return [];
+        return slides.value.slice(0, 3);
     }
   });
 
   const currentIndex = ref<number>(0);
   const progressBarWidth = ref<string>('0%');
-  let autoSlideInterval: NodeJS.Timeout;
+  const isPaused = ref<boolean>(false);
+  let autoSlideInterval: ReturnType<typeof setInterval> | undefined;
   const isTextVisible = ref<boolean>(false);
   const textContainer = ref<HTMLElement | null>(null);
 
   // Show next slide
   const nextImage = (): void => {
+    if (!filteredSlides.value.length) return;
     currentIndex.value = (currentIndex.value + 1) % filteredSlides.value.length;
+    resetProgress();
+  };
+
+  const previousImage = (): void => {
+    if (!filteredSlides.value.length) return;
+    currentIndex.value = (currentIndex.value - 1 + filteredSlides.value.length) % filteredSlides.value.length;
     resetProgress();
   };
 
   // Auto-slide only images
   const startAutoSlide = (): void => {
+    if (autoSlideInterval) clearInterval(autoSlideInterval);
+    if (isPaused.value || filteredSlides.value.length < 2) return;
+
     autoSlideInterval = setInterval(() => {
-      if (filteredSlides.value[currentIndex.value].type === 'image') {
+      if (filteredSlides.value[currentIndex.value]?.type === 'image') {
         nextImage();
       }
     }, 4000);
   };
 
+  const toggleAutoplay = (): void => {
+    isPaused.value = !isPaused.value;
+    startAutoSlide();
+  };
+
   // Reset progress bar for images only
   const resetProgress = (): void => {
-    if (filteredSlides.value[currentIndex.value].type === 'image') {
+    if (filteredSlides.value[currentIndex.value]?.type === 'image') {
       progressBarWidth.value = '0%';
       setTimeout(() => {
         progressBarWidth.value = '100%';
@@ -155,6 +189,7 @@
   };
 
   onMounted(() => {
+    isPaused.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     startAutoSlide();
     resetProgress();
 
@@ -163,13 +198,17 @@
   });
 
   onUnmounted(() => {
-    clearInterval(autoSlideInterval);
+    if (autoSlideInterval) clearInterval(autoSlideInterval);
+  });
+
+  watch(() => props.selectedButton, () => {
+    currentIndex.value = 0;
+    resetProgress();
+    startAutoSlide();
   });
   </script>
 
   <style scoped>
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
   .font-montserrat {
     font-family: 'Montserrat', sans-serif;
   }

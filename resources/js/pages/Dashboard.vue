@@ -1,9 +1,28 @@
 <template>
   <AppLayout>
+    <SeoHead
+      title="Malveda Properties and Development Corporation"
+      description="Discover MPDC and The Cerise Tower's serviced and private residences in Southwoods City, Biñan, Laguna."
+      canonical-path="/"
+      :image="heroImage"
+      image-alt="The Cerise Tower by Malveda Properties and Development Corporation"
+      :structured-data="{
+        '@type': 'Organization',
+        name: 'Malveda Properties and Development Corporation',
+        alternateName: 'MPDC',
+        logo: '/icon.png',
+        email: 'inquiries@malvedaproperties.com',
+        telephone: '+63 917 515 0123',
+        sameAs: [
+          'https://www.facebook.com/cerisetower/',
+          'https://www.instagram.com/thecerisetower/',
+        ],
+      }"
+    />
     <div class="flex flex-col min-h-screen bg-white">
       <!-- Hero Section -->
       <main class="relative bg-white">
-        <transition name="fade-out" appear>
+        <h1 class="sr-only">Malveda Properties and Development Corporation</h1>
 <div
   class="
     w-full
@@ -17,22 +36,11 @@
   :style="{ backgroundImage: `url(${heroImage})` }"
 >
             <div class="absolute inset-0 bg-black bg-opacity-20"></div>
-
-            <!-- Responsive Positioned Text with Scroll Animation -->
-            <!-- <div ref="heroText"
-              class="absolute top-1/4 md:top-[30%] right-4 sm:right-8 md:right-16 lg:right-32 py-8 text-white text-right font-montserrat px-4 sm:px-6 transition-all duration-700 ease-out"
-              :class="{ 'opacity-100 translate-y-0': heroTextVisible, 'opacity-0 translate-y-10': !heroTextVisible }"
-            >
-              <h2 class="text-2xl sm:text-[2.5rem] md:text-[2.5rem] lg:text-[4rem] xl:text-[4.5rem] font-bold leading-tight">
-                Enjoy the Revenue of <br>
-                 owning a hotel unit <br>
-                 with ease!
-              </h2>
-            </div> -->
           </div>
-        </transition>
         <div class="w-full h-min-screen">
-          <img :src="awardBanner" alt="">
+          <img :src="awardBanner"
+            alt="Citadines Southwoods Biñan at The Cerise Tower, Best Serviced Apartment at the 2025 Dot Property Philippines Awards"
+            width="1920" height="989" loading="lazy" decoding="async" class="h-auto w-full">
         </div>
 
         <!-- Imported White Section -->
@@ -46,11 +54,11 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from "vue";
 import heroImage from '../images/homepage.jpg';
 import awardBanner from '../images/award.jpg';
 import Banner from '../pages/Banner.vue';
 import News from '../pages/News.vue';
+import SeoHead from '@/components/SeoHead.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 
 interface SlideData {
@@ -65,6 +73,7 @@ export default {
   components: {
     Banner,
     News,
+    SeoHead,
     AppLayout
   },
   props: {
@@ -74,30 +83,9 @@ export default {
     },
   },
   setup() {
-    const heroTextVisible = ref(false);
-    const heroText = ref<HTMLElement | null>(null);
-
-    onMounted(() => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            heroTextVisible.value = true;
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.2 }
-      );
-
-      if (heroText.value) {
-        observer.observe(heroText.value);
-      }
-    });
-
     return {
       heroImage,
       awardBanner,
-      heroText,
-      heroTextVisible,
     };
   }
 };
@@ -105,8 +93,6 @@ export default {
 
 <style>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }

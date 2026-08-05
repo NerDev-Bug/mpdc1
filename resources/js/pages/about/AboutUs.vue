@@ -1,5 +1,16 @@
 <template>
     <AppLayout>
+        <SeoHead
+            title="About Malveda Properties and Development Corporation"
+            description="Learn about MPDC's purpose, history, milestones, and commitment to thoughtfully designed real estate developments in the Philippines."
+            canonical-path="/about"
+            :image="heroImage"
+            image-alt="Purposeful living redefined by Malveda Properties and Development Corporation"
+            :structured-data="{
+                '@type': 'AboutPage',
+                name: 'About Malveda Properties and Development Corporation',
+            }"
+        />
         <div class="flex flex-col min-h-screen bg-white">
             <!-- Hero Section -->
             <main class="relative bg-white">
@@ -11,12 +22,12 @@
                     <!-- Hero Title with Scroll Effect -->
                     <div ref="heroText"
                         class="relative z-10 w-full max-w-4xl opacity-0 translate-y-10 transition-all duration-1000 ease-out pt-24 lg:pt-0">
-                        <h2
+                        <h1
                             class="text-white font-montserrat text-center md:text-left text-2xl sm:text-[3rem] md:text-[3.5rem] lg:text-[4rem] xl:text-[4.5rem] font-bold leading-tight">
                             Purposeful
                             Living <br>
                             Redefined
-                        </h2>
+                        </h1>
                     </div>
 
                     <!-- Text Box with Scroll Effect -->
@@ -51,6 +62,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import heroImage from '../../images/ame3.jpg';
+import SeoHead from '@/components/SeoHead.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import AboutBanner from './AboutBanner.vue';
 import AboutBanner1 from './AboutBanner1.vue';
@@ -86,8 +98,6 @@ onMounted(() => {
 
 <style scoped>
 /* Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }

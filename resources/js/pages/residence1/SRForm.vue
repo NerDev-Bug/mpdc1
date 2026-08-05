@@ -1,7 +1,7 @@
 <template>
     <div class="w-full flex justify-center">
         <!-- Button to open modal -->
-        <button @click="openModal"
+        <button type="button" @click="openModal" aria-haspopup="dialog" aria-controls="sr-computations-dialog"
             class=" text-black font-montserrat text-lg font-semibold py-3 px-6 rounded-lg hover:bg-opacity-80 transition"
             :style="{ backgroundImage: `url(${goldbutton})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
             REQUEST COMPUTATIONS
@@ -9,35 +9,36 @@
     </div>
 
     <!-- Modal Overlay -->
-    <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div
+    <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        @click.self="closeModal" @keydown.esc="closeModal">
+        <div id="sr-computations-dialog" role="dialog" aria-modal="true" aria-labelledby="sr-computations-title"
     class="bg-white w-[95%] sm:w-[90%] md:w-[500px] p-4 sm:p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto"
     @click.stop>
 
             <!-- Close Button -->
-            <button
+            <button type="button" aria-label="Close serviced residence computation request"
     class="absolute top-4 right-2 text-gray-700 text-4xl w-12 h-12 flex items-center justify-center rounded-full hover:text-black hover:bg-gray-200 transition"
     @click="closeModal">
     &times;
 </button>
 
             <!-- Modal Title -->
-            <h2 class="text-2xl font-semibold text-center mb-4">Request for an Computations</h2>
+            <h2 id="sr-computations-title" class="text-2xl font-semibold text-center mb-4">Request for Computations</h2>
 
             <!-- Form -->
             <form @submit.prevent="saveInquiry()">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="text-gray-700">First Name*</label>
-                        <input v-model="form.first_name" type="text"
+                        <label for="sr-first-name" class="text-gray-700">First Name*</label>
+                        <input id="sr-first-name" v-model="form.first_name" type="text" autocomplete="given-name"
                             class="w-full border border-gray-300 rounded-lg p-2 text-gray-900 bg-white"
                             @input="form.first_name = capitalizeFirstLetter(form.first_name)" placeholder="Juan"
                             @keydown="preventNumbers"
                             required>
                     </div>
                     <div>
-                        <label class="text-gray-700">Last Name*</label>
-                        <input v-model="form.last_name" type="text"
+                        <label for="sr-last-name" class="text-gray-700">Last Name*</label>
+                        <input id="sr-last-name" v-model="form.last_name" type="text" autocomplete="family-name"
                             class="w-full border border-gray-300 rounded-lg p-2 text-gray-900 bg-white"
                             @input="form.last_name = capitalizeFirstLetter(form.last_name)" placeholder="Dela Cruz"
                             @keydown="preventNumbers"
@@ -46,16 +47,18 @@
                 </div>
 
                 <div class="mt-4">
-                    <label class="text-gray-700">Email*</label>
-                    <input v-model="form.email" type="email"
+                    <label for="sr-email" class="text-gray-700">Email*</label>
+                    <input id="sr-email" v-model="form.email" type="email" autocomplete="email"
                         class="w-full border border-gray-300 rounded-lg p-2 text-gray-900 bg-white"
                         placeholder="example@gmail.com" required>
                 </div>
 
                 <div class="mt-4">
-                    <label class="text-gray-700">Contact No.*</label>
+                    <label for="sr-contact" class="text-gray-700">Contact No.*</label>
                     <input
+                    id="sr-contact"
                     v-model="form.contact"
+                    autocomplete="tel"
                     inputmode="numeric"
                     type="tel"
                     @input="validateContact"
@@ -64,8 +67,8 @@
                 </div>
 
                 <div class="mt-4">
-                    <label class="text-gray-700 font-semibold">Unit Type*</label>
-                    <select v-model="form.unit_type"
+                    <label for="sr-unit-type" class="text-gray-700 font-semibold">Unit Type*</label>
+                    <select id="sr-unit-type" v-model="form.unit_type"
                         class="w-full border border-gray-400 rounded-lg p-3 text-gray-900 bg-white focus:ring-2 focus:ring-black focus:outline-none"
                         required>
                         <option value="" selected disabled class="text-gray-500">— Please choose an option —</option>
@@ -76,15 +79,15 @@
                 </div>
 
                 <div class="mt-4">
-                    <label class="text-gray-700">Message*</label>
-                    <textarea v-model="form.message"
+                    <label for="sr-message" class="text-gray-700">Message*</label>
+                    <textarea id="sr-message" v-model="form.message" required
                         class="w-full border border-gray-300 rounded-lg p-2 h-20 text-gray-900 bg-white"
                         placeholder="Enter your message"></textarea>
                 </div>
 
                 <div class="mt-4 flex items-start">
-                    <input v-model="form.agree_to_privacy" type="checkbox" id="privacyPolicy" class="mr-2" required>
-                    <label for="privacyPolicy" class="text-sm text-gray-600">
+                    <input id="sr-privacy-policy" v-model="form.agree_to_privacy" type="checkbox" class="mr-2" required>
+                    <label for="sr-privacy-policy" class="text-sm text-gray-600">
                         I agree to receive communications and have read the
                         <a href="/data-privacy"
                             class="text-blue-600 underline">Data Privacy</a>.
@@ -234,8 +237,6 @@ const preventNumbers = (event: KeyboardEvent) => {
 
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }

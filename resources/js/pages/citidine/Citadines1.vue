@@ -5,10 +5,10 @@
             <div class="flex items-center justify-center flex-col-reverse lg:flex-row w-full px-4">
                 <div class="w-full h-fit py-4 lg:py-12 px-2">
                     <div class="px-12">
-                        <h2
+                        <h1
                             class="font-montserrat text-white text-[20px] md:text-3xl lg:text-[40px] text-center md:text-justify font-bold mb-4 sm:mb-6 md:mb-8">
                             Citadines Southwoods <br> Biñan at the Cerise Tower
-                        </h2>
+                        </h1>
                     </div>
                     <div class="w-full h-fit px-4 mt-12 lg:mt-14">
                         <p class=" text-white text-sm sm:text-base md:text-lg lg:text-[24px] xl:text-[24px] text-justify">
@@ -48,6 +48,8 @@
                         <div
                             class="bg-[#0b1021] w-full max-w-lg sm:max-w-xl md:max-w-[550px] lg:max-w-1xl xl:max-w-[700px] p-4 sm:p-3 flex justify-center">
                             <img src="../../images/citadines_normal-view.jpg"
+                                alt="Architectural rendering of Citadines Southwoods Biñan at The Cerise Tower"
+                                width="990" height="995" loading="lazy" decoding="async"
                                 class="w-full h-auto shadow-lg object-cover rounded-lg translate-x-2 translate-y-2">
                         </div>
                     </div>
@@ -92,9 +94,6 @@ onMounted(() => {
 
 
 <style scoped>
-/* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }

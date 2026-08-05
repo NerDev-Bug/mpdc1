@@ -2,9 +2,9 @@
     <div class="flex items-center justify-center">
         <div class="py-8 mt-12 lg:mt-20">
             <div>
-                <h2
+                <h1
                     class="flex items-center justify-center text-blue-900 font-montserrat font-semibold text-[20px] md:text-[45px] lg:text-[55px] xl:text-[57px]">
-                    Privacy Policy</h2>
+                    Privacy Policy</h1>
                 <div class="py-8 px-2 md:px-12 lg:px-32">
                     <p class="text-blue-900 text-[12px] md:text-[14px] lg:text-[17px] font-light">
                         This Privacy Policy describes Our policies and procedures on the collection, use, and
@@ -108,8 +108,8 @@
                     <ul class="list-disc list-inside pl-6 lg:pl-8">
                         <li class="text-blue-900 text-[12px] md:text-[14px] lg:text-[17px] font-light">
                             refers to Malveda Properties and Development Corporation, accessible from
-                            <a class="text-blue-500 hover:text-black transition-colors duration-200" target="_blank"
-                                rel="noopener noreferrer" href="/">malvedaproperties.com</a>
+                            <a class="text-blue-500 hover:text-black transition-colors duration-200"
+                                href="/">malvedaproperties.com</a>
                         </li>
                         <li class="text-blue-900 text-[12px] md:text-[14px] lg:text-[17px] pt-2 font-light">
                             means the individual accessing or using the Service, or the company, or other legal
@@ -585,8 +585,7 @@
                 <div class="px-2 md:px-12 lg:px-32 ">
                     <ul class="list-disc list-inside pl-6 lg:pl-8">
                         <li class="text-blue-900 text-[12px] md:text-[14px] lg:text-[17px] md:pt-4 font-light">
-                            By email: <a href="https://mail.google.com/mail/?view=cm&to=inquiries@malvedaproperties.com"
-                                target="_blank" rel="noopener noreferrer"
+                            By email: <a href="mailto:inquiries@malvedaproperties.com"
                                 class="text-blue-500 hover:text-black transition-colors duration-200">
                                 inquiries@malvedaproperties.com
                             </a>

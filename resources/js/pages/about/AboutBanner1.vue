@@ -2,7 +2,8 @@
     <div class="relative w-full min-h-screen bg-black flex flex-col justify-center items-center px-2 py-4 md:py-12">
         <!-- Background Image -->
         <div class="absolute inset-0">
-            <img src="../../images/ame7.jpg" alt="Milestone Background" class="w-full h-full object-cover">
+            <img src="../../images/ame7.jpg" alt="" width="1920" height="1035" loading="lazy" decoding="async"
+                aria-hidden="true" class="w-full h-full object-cover">
         </div>
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black opacity-70"></div>
@@ -19,7 +20,7 @@
 
                 <!-- Timeline Section -->
                 <div ref="milestoneContainer" class="relative w-full max-w-6xl px-4 md:px-16 lg:px-32 py-12 text-white">
-                    <div class="relative grid grid-cols-1 md:grid-cols-5 gap-x-10 gap-y-4 md:gap-y-10">
+                    <div class="relative grid grid-cols-1 md:grid-cols-4 gap-x-10 gap-y-4 md:gap-y-10">
                         <!-- Timeline Events (Fade in together on Scroll) -->
                         <div v-for="(event, index) in milestones" :key="index"
                             class="relative flex flex-col items-center text-center opacity-0 translate-y-10 transition-all duration-700 ease-out"
@@ -54,12 +55,6 @@ const milestones = ref([
         ], visible: false
     },
     { year: "2021", descriptions: ["MPDC and PMI Contract Signing"], visible: false },
-    {
-        year: "2022", descriptions: [
-            "MPDC and The Ascott Limited contract signing for Citadines Southwoods Biñan",
-            "Groundbreaking ceremony and blessing of MPDC’s Citadines Southwoods Biñan"
-        ], visible: false
-    },
     { year: "2024", descriptions: ["Citadines Southwoods Biñan at The Cerise Tower’s Topping Off Ceremony"], visible: false }
 ]);
 
@@ -91,9 +86,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
     font-family: 'Montserrat', sans-serif;
 }

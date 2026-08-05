@@ -6,24 +6,26 @@
                 <div ref="textContainer"
                     class="relative w-full lg:w-1/2 flex flex-col order-2 lg:order-none opacity-0 translate-y-10 transition-all duration-700 ease-out"
                     :class="{ 'fade-in': isTextVisible }">
-                    <h2
+                    <h1
                         class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold font-montserrat text-white px-4 sm:px-6 py-4 mb-4">
                         Amenities
-                    </h2>
+                    </h1>
                 </div>
                 <!-- Grid Layout for Cards -->
                 <div ref="imageContainer"
                     class="grid grid-cols-1 sm:grid-cols-2 gap-6 opacity-0 translate-y-10 transition-all duration-700 ease-out"
                     :class="{ 'fade-in': isImageVisible }">
 
-                    <a href="#" v-for="(amenity, index) in amenities" :key="index"
-                        @click.prevent="openPreview(amenity.image, amenity.title)">
+                    <button v-for="amenity in amenities" :key="amenity.title" type="button" aria-haspopup="dialog"
+                        :aria-label="`View a larger photo of the ${amenity.title}`"
+                        class="w-full text-left" @click="openPreview(amenity)">
                         <div class="bg-[#8a7965] shadow-lg rounded-lg p-6 cursor-pointer">
-                            <img :src="amenity.image" :alt="amenity.title"
+                            <img :src="amenity.image" :alt="`${amenity.title} at The Cerise Tower`"
+                                :width="amenity.width" :height="amenity.height" loading="lazy" decoding="async"
                                 class="w-full h-[285px] object-cover rounded-md">
                             <p class="text-2xl font-semibold font-montserrat text-white mt-3">{{ amenity.title }}</p>
                         </div>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -31,9 +33,10 @@
         <!-- Image Preview Modal -->
         <div v-if="showPreview" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
             @click.self="closePreview">
-            <div class="relative bg-white rounded-lg p-8 max-w-5xl w-11/12 shadow-lg">
+            <div role="dialog" aria-modal="true" :aria-label="`${previewTitle} image preview`"
+                class="relative bg-white rounded-lg p-8 max-w-5xl w-11/12 shadow-lg">
                 <!-- Close Button -->
-                <button
+                <button type="button" aria-label="Close image preview"
                     class="absolute top-1 right-2 text-gray-700 text-3xl font-bold hover:text-gray-900 transition-transform transform hover:scale-110"
                     @click="closePreview">
                     &times;
@@ -41,9 +44,10 @@
 
 
                 <!-- Image & Title -->
-                <img :src="previewImage" :alt="previewTitle"
+                <img :src="previewImage" :alt="`${previewTitle} at The Cerise Tower`" :width="previewWidth"
+                    :height="previewHeight" decoding="async"
                     class="w-full h-auto max-h-[80vh] object-contain rounded-lg">
-                <p class="text-center text-2xl font-semibold text-gray-900 mt-6">{{ previewTitle }}</p>
+                <h2 class="text-center text-2xl font-semibold text-gray-900 mt-6">{{ previewTitle }}</h2>
             </div>
         </div>
         <div>
@@ -53,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import UnitsAmenities from './UnitsAmenities.vue';
 import bgsilk from '../../images/bg silk1.jpg';
 
@@ -74,27 +78,40 @@ const textContainer = ref<HTMLElement | null>(null);
 const showPreview = ref(false);
 const previewImage = ref('');
 const previewTitle = ref('');
+const previewWidth = ref(0);
+const previewHeight = ref(0);
+
+interface Amenity {
+    image: string;
+    title: string;
+    width: number;
+    height: number;
+}
 
 // Amenity Data
-const amenities = ref([
-    { image: amenities1, title: 'Hotel Lobby' },
-    { image: amenities2, title: 'Indoor Pool' },
-    { image: amenities3, title: 'Gym' },
-    { image: amenities4, title: 'Function Room' },
-    { image: amenities5, title: 'Roof Deck Bar' },
-    { image: amenities6, title: 'Roof Deck Pool' },
+const amenities = ref<Amenity[]>([
+    { image: amenities1, title: 'Hotel Lobby', width: 1920, height: 979 },
+    { image: amenities2, title: 'Indoor Pool', width: 1920, height: 973 },
+    { image: amenities3, title: 'Gym', width: 1920, height: 973 },
+    { image: amenities4, title: 'Function Room', width: 1920, height: 979 },
+    { image: amenities5, title: 'Roof Deck Bar', width: 1920, height: 985 },
+    { image: amenities6, title: 'Roof Deck Pool', width: 1920, height: 967 },
 ]);
 
 // Open Image Preview
-const openPreview = (image: string, title: string) => {
-    previewImage.value = image;
-    previewTitle.value = title;
+const openPreview = (amenity: Amenity) => {
+    previewImage.value = amenity.image;
+    previewTitle.value = amenity.title;
+    previewWidth.value = amenity.width;
+    previewHeight.value = amenity.height;
     showPreview.value = true;
+    document.body.style.overflow = 'hidden';
 };
 
 // Close Image Preview
 const closePreview = () => {
     showPreview.value = false;
+    document.body.style.overflow = '';
 };
 
 // Close Modal on ESC Key
@@ -124,12 +141,14 @@ onMounted(() => {
     if (imageContainer.value) observer.observe(imageContainer.value);
     if (textContainer.value) observer.observe(textContainer.value);
 });
+
+onUnmounted(() => {
+    document.removeEventListener('keydown', handleKeydown);
+    document.body.style.overflow = '';
+});
 </script>
 
 <style scoped>
-/* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }

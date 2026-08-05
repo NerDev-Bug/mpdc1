@@ -4,11 +4,12 @@
         <div class="w-full h-fit py-12 px-4">
             <div class="flex items-center justify-center flex-col lg:flex-row gap-12">
                 <div class="w-full h-fit flex items-center justify-center">
-                    <img src="../../images/partnerspic1.jpg" alt="Selfie" class="max-w-full h-fit">
+                    <img src="../../images/partnerspic1.jpg" alt="MPDC partners beside the Citadines Southwoods Biñan scale model"
+                        width="611" height="374" loading="lazy" decoding="async" class="max-w-full h-fit">
                 </div>
                 <div class="w-full h-fit">
                     <div class="mb-8">
-                        <h2 class="text-white text-3xl md:text-4xl lg:text-5xl font-montserrat font-semibold">Be one of Our Partners</h2>
+                        <h2 class="text-white text-3xl md:text-4xl lg:text-5xl font-montserrat font-semibold">Become One of Our Partners</h2>
                     </div>
                     <div class="">
                         <p class="font-montserrat text-1xl md:text-1xl lg:text-2xl text-justify text-white">
@@ -59,9 +60,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }

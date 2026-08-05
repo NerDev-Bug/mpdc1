@@ -6,7 +6,9 @@
             <div ref="imageContainer"
                 class="w-full lg:w-1/2 flex relative order-1 lg:order-none opacity-0 translate-y-10 transition-all duration-700 ease-out"
                 :class="{ 'fade-in': isImageVisible }">
-                <img src="../images/ame2.jpg" alt="Community View" class="w-full h-full object-cover rounded-l-lg" />
+                <img src="../images/ame2.jpg" alt="Aerial view of Southwoods City near The Cerise Tower" width="835"
+                    height="771" loading="lazy" decoding="async"
+                    class="w-full h-full object-cover rounded-l-lg" />
             </div>
 
             <!-- Text Box with Scroll-based Fade-in Effect -->
@@ -20,26 +22,24 @@
                     class="bg-gray-300 p-8 md:p-12 w-full flex flex-col justify-between md:min-h-[450px] lg:min-h-[592px] relative z-10 rounded-r-lg">
 
                     <!-- Title -->
-                    <h4 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold font-montserrat text-blue-900">
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold font-montserrat text-blue-900">
                         Location
-                    </h4>
+                    </h2>
 
                     <!-- Text Content -->
                     <div class="flex-grow">
                         <p class="text-black text-lg md:text-xl mt-10 leading-relaxed font-montserrat">
-                            Nestled in a master planned estate in close proximity to techno-industrial parks, Citadines
+                            Nestled in a master-planned estate in close proximity to techno-industrial parks, Citadines
                             Southwoods
-                            Binan is made suitable for
+                            Biñan is suitable for
                             both short-term and long-term accommodation for corporate guests such as expats working
                             around the area.
                             It is also conveniently situated
                             at roughly 10 kilometers from Alabang.
                         </p>
-                        <a href="/location">
-                            <button
-                                class="mt-12 px-10 py-3 bg-blue-900 text-white text-lg font-semibold rounded-lg hover:bg-blue-800 transition block mx-auto">
-                                Visit our Showroom
-                            </button>
+                        <a href="/location"
+                            class="mt-12 px-10 py-3 bg-blue-900 text-white text-lg font-semibold rounded-lg hover:bg-blue-800 transition block w-fit mx-auto">
+                            Visit our Showroom
                         </a>
 
 
@@ -82,9 +82,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }

@@ -25,6 +25,7 @@
                             <label class="block text-gray-700 text-sm font-semibold mb-1" for="first_name">First
                                 Name</label>
                             <input id="first_name" v-model="form.first_name" type="text" placeholder="Juan"
+                                autocomplete="given-name"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 @input="form.first_name = capitalizeFirstLetter(form.first_name)"
                                 inputmode="text"
@@ -38,6 +39,7 @@
                             <label class="block text-gray-700 text-sm font-semibold mb-1" for="last_name">Last
                                 Name</label>
                             <input id="last_name" v-model="form.last_name" type="text" placeholder="Dela Cruz"
+                                autocomplete="family-name"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 @input="form.last_name = capitalizeFirstLetter(form.last_name)"
                                 inputmode="text"
@@ -50,6 +52,7 @@
                         <div>
                             <label class="block text-gray-700 text-sm font-semibold mb-1" for="email">Email</label>
                             <input id="email" v-model="form.email" type="email" placeholder="example@gmail.com"
+                                autocomplete="email"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 required  />
                             <div v-if="form.errors.email" class="text-red-400 mt-1 text-xs">{{ form.errors.email }}
@@ -59,6 +62,7 @@
                             <label class="block text-gray-700 text-sm font-semibold mb-1" for="contact">Contact
                                 Number</label>
                             <input id="contact" v-model="form.contact_number" inputmode="numeric" type="tel" placeholder="+63"
+                                autocomplete="tel"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 maxlength="11" @input="formatContactNumber"
                                 required />
@@ -77,8 +81,8 @@
                             <div v-if="form.errors.date" class="text-red-400 mt-1 text-xs">{{ form.errors.date }}</div>
                         </div>
                         <div>
-                            <label class="block text-gray-700 text-sm font-semibold mb-1">Pick a Time</label>
-                            <input type="time" v-model="selectedTime"
+                            <label for="booking-time" class="block text-gray-700 text-sm font-semibold mb-1">Pick a Time</label>
+                            <input id="booking-time" type="time" v-model="selectedTime"
                                 class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md transition"
                                 required />
                             <div v-if="form.errors.time" class="text-red-400 mt-1 text-xs">{{ form.errors.time }}</div>
@@ -284,8 +288,6 @@ const preventNumbers = (event: KeyboardEvent) => {
 
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }

@@ -1,5 +1,16 @@
 <template>
     <AppLayout>
+        <SeoHead
+            title="Serviced Residences at The Cerise Tower"
+            description="Explore studio, one-bedroom, and two-bedroom serviced residence options at The Cerise Tower in Southwoods City, Biñan."
+            canonical-path="/serviced-residence"
+            :image="heroImage"
+            image-alt="Serviced Residences at The Cerise Tower"
+            :structured-data="{
+                '@type': 'WebPage',
+                name: 'Serviced Residences at The Cerise Tower',
+            }"
+        />
         <div class="flex flex-col min-h-screen bg-white">
             <!-- Hero Section -->
             <div class="relative bg-white">
@@ -13,18 +24,21 @@
                             <!-- Center the heading both vertically and horizontally, with a slight upward shift on smaller screens -->
                             <div class="absolute inset-0 flex items-center justify-center text-center font-montserrat w-full px-4 md:px-8"
                                 style="top: -20%;">
-                                <h2
+                                <h1
                                     class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold leading-tight pt-12">
                                     Serviced <br>
                                     Residences
-                                </h2>
+                                </h1>
                             </div>
 
                             <!-- Buttons Section -->
-                            <transition name="fade-buttons" appear>
-                                <div
-                                    class="absolute bottom-4 md:bottom-[26px] left-1/2 transform -translate-x-1/2 flex flex-wrap justify-center gap-4 w-full px-4 min-[648px]:flex-row flex-col items-center">
+                            <div
+                                role="tablist"
+                                aria-label="Serviced residence unit types"
+                                class="residence-buttons-appear absolute bottom-4 md:bottom-[26px] left-1/2 transform -translate-x-1/2 flex flex-wrap justify-center gap-4 w-full px-4 min-[648px]:flex-row flex-col items-center">
                                     <button v-for="unit in unitOptions" :key="unit.name"
+                                        :id="unit.tabId" type="button" role="tab"
+                                        :aria-controls="unit.panelId" :aria-selected="selectedButton === unit.name"
                                         @click="selectedButton = unit.name"
                                         class="font-montserrat font-semibold text-xs sm:text-sm md:text-base lg:text-xl xl:text-2xl
                          px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16 py-2 sm:py-3 md:py-4 lg:py-5 xl:py-6
@@ -43,8 +57,7 @@
                                     }">
                                         {{ unit.name }}
                                     </button>
-                                </div>
-                            </transition>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,9 +65,14 @@
 
             <!-- Service Residence Section -->
             <div class="">
-                <ServiceResidence1 v-if="selectedButton === 'SR Studio Unit' || selectedButton === null" />
-                <ServiceResidence2 v-if="selectedButton === 'SR 1 Bedroom Unit'" />
-                <ServiceResidence3 v-if="selectedButton === 'SR 2 Bedroom Unit'" />
+                <ServiceResidence1 id="serviced-studio-panel" role="tabpanel" aria-labelledby="serviced-studio-tab"
+                    tabindex="0" v-show="selectedButton === 'SR Studio Unit' || selectedButton === null" />
+                <ServiceResidence2 id="serviced-one-bedroom-panel" role="tabpanel"
+                    aria-labelledby="serviced-one-bedroom-tab" tabindex="0"
+                    v-show="selectedButton === 'SR 1 Bedroom Unit'" />
+                <ServiceResidence3 id="serviced-two-bedroom-panel" role="tabpanel"
+                    aria-labelledby="serviced-two-bedroom-tab" tabindex="0"
+                    v-show="selectedButton === 'SR 2 Bedroom Unit'" />
             </div>
 
             <SRimage />
@@ -69,6 +87,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, provide } from 'vue';
 import heroImage from '../../images/contactimage12.jpg';
+import SeoHead from '@/components/SeoHead.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ServiceResidence1 from './ServiceResidence1.vue';
 import SRimage from './srimage.vue';
@@ -86,9 +105,9 @@ const selectedButton = ref<string>('SR Studio Unit'); // Default selection
 provide('selectedUnit', selectedButton);
 
 const unitOptions = [
-    { name: "SR Studio Unit" },
-    { name: "SR 1 Bedroom Unit" },
-    { name: "SR 2 Bedroom Unit" }
+    { name: "SR Studio Unit", tabId: 'serviced-studio-tab', panelId: 'serviced-studio-panel' },
+    { name: "SR 1 Bedroom Unit", tabId: 'serviced-one-bedroom-tab', panelId: 'serviced-one-bedroom-panel' },
+    { name: "SR 2 Bedroom Unit", tabId: 'serviced-two-bedroom-tab', panelId: 'serviced-two-bedroom-panel' }
 ];
 
 onMounted(() => {
@@ -122,8 +141,6 @@ onUnmounted(() => {
 
 <style scoped>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
     font-family: 'Montserrat', sans-serif;
 }
@@ -140,22 +157,20 @@ onUnmounted(() => {
     transform: translateY(20px);
 }
 
-/* Fade-In Animation for Buttons */
-.fade-buttons-enter-active,
-.fade-buttons-appear-active {
-    transition: opacity 1s ease-in-out;
-    transition-delay: 0.4s;
-    /* Adjust delay as needed */
+/* Preserve the former appear effect without an SSR-inert Transition wrapper. */
+.residence-buttons-appear {
+    animation: residence-buttons-appear 1s ease-in-out 0.4s both;
 }
 
-.fade-buttons-enter-from,
-.fade-buttons-appear-from {
-    opacity: 0;
+@keyframes residence-buttons-appear {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.fade-buttons-enter-to,
-.fade-buttons-appear-to {
-    opacity: 1;
+@media (prefers-reduced-motion: reduce) {
+    .residence-buttons-appear {
+        animation: none;
+    }
 }
 
 </style>

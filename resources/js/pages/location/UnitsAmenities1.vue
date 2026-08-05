@@ -4,7 +4,7 @@
         <h2 ref="textContainer"
             class="font-montserrat font-semibold text-[#1c3459] text-center text-3xl sm:text-4xl md:text-5xl font-serif leading-tight opacity-0 translate-y-10 transition-all duration-700 ease-out"
             :class="{ 'fade-in': isTextVisible }">
-            Explore Our Unit
+            Explore Our Units
         </h2>
         <div ref="textContainer"
             class="flex flex-wrap justify-center gap-4 mt-4 md:mt-0 opacity-0 translate-y-10 transition-all duration-700 ease-out"
@@ -50,9 +50,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }

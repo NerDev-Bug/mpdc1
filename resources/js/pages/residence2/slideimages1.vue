@@ -1,5 +1,5 @@
 <template>
-    <div class="text-white py-12 px-4 md:px-12"
+    <section class="text-white py-12 px-4 md:px-12" aria-label="Private residence interior gallery"
       :style="{ backgroundImage: `url(${SRbg})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
       <div class="max-w-screen-4xl mx-auto w-[95%]">
 
@@ -10,8 +10,9 @@
             <div class="relative aspect-[16/9] sm:aspect-[16/9] md:aspect-[21/9] lg:aspect-[21/9] w-full overflow-hidden">
               <!-- Image or Video Display -->
               <transition name="fade" mode="out-in">
-                <template  v-if="filteredImages[currentIndex]">
-                    <img :key="currentIndex" :src="filteredImages[currentIndex].src" :alt="filteredImages[currentIndex].alt"
+                <template v-if="currentImage">
+                    <img :key="currentIndex" :src="currentImage.src" :alt="currentImage.alt" width="1920"
+                    height="1080" loading="lazy" decoding="async"
                     class="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 transform group-hover:scale-105" />
                 </template>
               </transition>
@@ -21,20 +22,37 @@
             <div class="absolute inset-0 bg-black opacity-40"></div>
 
             <!-- Transition for News Content (Fade-in + Slide-up) -->
-            <div ref="textContainer" class="absolute top-[50%] left-[10%] text-white font-montserrat px-4 sm:px-6 max-w-[80%] sm:max-w-[60%]
+            <div ref="textContainer" aria-live="polite" class="absolute top-[50%] left-[10%] text-white font-montserrat px-4 sm:px-6 max-w-[80%] sm:max-w-[60%]
               opacity-0 transform translate-y-10 transition-all duration-700 ease-out"
               :class="{ 'fade-in': isTextVisible }">
               <h3 class="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
-                {{ filteredImages[currentIndex].title }}
+                {{ currentImage.title }}
               </h3>
               <p class="mt-3 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed">
-                {{ filteredImages[currentIndex].description }}
+                {{ currentImage.description }}
               </p>
             </div>
 
+            <button type="button" aria-label="Show previous private residence image"
+              class="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/60 px-4 py-3 text-2xl hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
+              @click="previousImage">
+              <span aria-hidden="true">‹</span>
+            </button>
+            <button type="button" aria-label="Show next private residence image"
+              class="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/60 px-4 py-3 text-2xl hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
+              @click="nextImage">
+              <span aria-hidden="true">›</span>
+            </button>
+            <button type="button" :aria-label="isPaused ? 'Play private residence gallery' : 'Pause private residence gallery'"
+              class="absolute right-3 top-3 z-10 rounded bg-black/60 px-3 py-2 text-sm hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
+              @click="toggleAutoplay">
+              {{ isPaused ? 'Play' : 'Pause' }}
+            </button>
+
             <!-- Auto-Play Progress Bar -->
             <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-[40%]">
-              <div class="transition-all duration-[3000ms]" :style="{ width: progressBarWidth }"></div>
+              <div class="transition-all"
+                :style="{ width: progressBarWidth, transitionDuration: '3000ms' }"></div>
             </div>
 
           </div>
@@ -44,11 +62,11 @@
       <div class="mt-12">
         <PRForm />
       </div>
-    </div>
+    </section>
   </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import SRbg from '../../images/SR-bg.png';
 
 // ✅ Import images properly
@@ -91,36 +109,17 @@ interface Image {
   description: string;
 }
 
+const createImages = (sources: string[], title: string): Image[] => sources.map((src, index) => ({
+  src,
+  alt: `Private residence ${title.toLowerCase()} interior, view ${index + 1}`,
+  title,
+  description: 'Private Residences',
+}));
+
 const allImages = ref<Image[]>([
-  // Studio Unit
-  { src: PR1, alt: '', title: 'Studio Unit', description: 'Private Residences' },
-  { src: PR2, alt: '', title: 'Studio Unit', description: 'Private Residences' },
-  { src: PR3, alt: '', title: 'Studio Unit', description: 'Private Residences' },
-  { src: PR4, alt: '', title: 'Studio Unit', description: 'Private Residences' },
-  { src: PR5, alt: '', title: 'Studio Unit', description: 'Private Residences' },
-  { src: PR6, alt: '', title: 'Studio Unit', description: 'Private Residences' },
-
-  // 1-Bedroom Unit
-  { src: PR1B, alt: '', title: '1-Bedroom', description: 'Private Residences' },
-  { src: PR2B, alt: '', title: '1-Bedroom', description: 'Private Residences' },
-  { src: PR3B, alt: '', title: '1-Bedroom', description: 'Private Residences' },
-  { src: PR4B, alt: '', title: '1-Bedroom', description: 'Private Residences' },
-  { src: PR5B, alt: '', title: '1-Bedroom', description: 'Private Residences' },
-  { src: PR6B, alt: '', title: '1-Bedroom', description: 'Private Residences' },
-  { src: PR7B, alt: '', title: '1-Bedroom', description: 'Private Residences' },
-  { src: PR8B, alt: '', title: '1-Bedroom', description: 'Private Residences' },
-  { src: PR9B, alt: '', title: '1-Bedroom', description: 'Private Residences' },
-  { src: PR10B, alt: '', title: '1-Bedroom', description: 'Private Residences' },
-
-  // 2-Bedroom Unit
-  { src: PR1D, alt: '', title: '2-Bedroom', description: 'Private Residences' },
-  { src: PR2D, alt: '', title: '2-Bedroom', description: 'Private Residences' },
-  { src: PR3D, alt: '', title: '2-Bedroom', description: 'Private Residences' },
-  { src: PR4D, alt: '', title: '2-Bedroom', description: 'Private Residences' },
-  { src: PR5D, alt: '', title: '2-Bedroom', description: 'Private Residences' },
-  { src: PR6D, alt: '', title: '2-Bedroom', description: 'Private Residences' },
-  { src: PR7D, alt: '', title: '2-Bedroom', description: 'Private Residences' },
-  { src: PR8D, alt: '', title: '2-Bedroom', description: 'Private Residences' },
+  ...createImages([PR1, PR2, PR3, PR4, PR5, PR6], 'Studio Unit'),
+  ...createImages([PR1B, PR2B, PR3B, PR4B, PR5B, PR6B, PR7B, PR8B, PR9B, PR10B], '1-Bedroom'),
+  ...createImages([PR1D, PR2D, PR3D, PR4D, PR5D, PR6D, PR7D, PR8D], '2-Bedroom'),
 ]);
 
 // Filter images based on selectedButton
@@ -133,27 +132,44 @@ const filteredImages = computed(() => {
     case 'PR 2 Bedroom Unit':
       return allImages.value.slice(16, 24); // 2-Bedroom images
     default:
-      return []; // No images if no selection
+      return allImages.value.slice(0, 6);
   }
 });
 
 const currentIndex = ref<number>(0);
+const currentImage = computed(() => filteredImages.value[currentIndex.value] ?? allImages.value[0]);
 const progressBarWidth = ref<string>('0%');
-let autoSlideInterval: NodeJS.Timeout;
+const isPaused = ref<boolean>(false);
+let autoSlideInterval: ReturnType<typeof setInterval> | undefined;
 const isTextVisible = ref<boolean>(false);
 const textContainer = ref<HTMLElement | null>(null);
 
 // Function to navigate to the next image
 const nextImage = (): void => {
+  if (!filteredImages.value.length) return;
   currentIndex.value = (currentIndex.value + 1) % filteredImages.value.length;
+  resetProgress();
+};
+
+const previousImage = (): void => {
+  if (!filteredImages.value.length) return;
+  currentIndex.value = (currentIndex.value - 1 + filteredImages.value.length) % filteredImages.value.length;
   resetProgress();
 };
 
 // Auto-slide every 3 seconds
 const startAutoSlide = (): void => {
+  if (autoSlideInterval) clearInterval(autoSlideInterval);
+  if (isPaused.value || filteredImages.value.length < 2) return;
+
   autoSlideInterval = setInterval(() => {
     nextImage();
   }, 4000);
+};
+
+const toggleAutoplay = (): void => {
+  isPaused.value = !isPaused.value;
+  startAutoSlide();
 };
 
 // Reset progress bar
@@ -174,6 +190,7 @@ const handleIntersection = (entries: IntersectionObserverEntry[]): void => {
 };
 
 onMounted(() => {
+  isPaused.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   startAutoSlide();
   resetProgress();
 
@@ -182,14 +199,17 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  clearInterval(autoSlideInterval);
+  if (autoSlideInterval) clearInterval(autoSlideInterval);
+});
+
+watch(() => props.selectedButton, () => {
+  currentIndex.value = 0;
+  resetProgress();
+  startAutoSlide();
 });
 </script>
 
   <style scoped>
-  /* Import Custom Font */
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
   .font-montserrat {
     font-family: 'Montserrat', sans-serif;
   }

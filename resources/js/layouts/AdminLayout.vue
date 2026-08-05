@@ -1,4 +1,5 @@
 <template>
+    <Head :title="title || 'Admin'" />
     <div class="min-h-screen bg-gray-100">
         <!-- Sidebar -->
         <div class="flex">
@@ -102,7 +103,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { Link, usePage } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 
 defineProps<{
     title?: string;

@@ -21,16 +21,6 @@ defineProps<{
                         <img :src="logo" alt="MPDC Logo" class="h-12 w-auto" />
                     </Link>
                 </div>
-                <div class="font-cormorant">
-                    <h2 class="text-4xl xl:text-5xl font-bold leading-tight mb-4">
-                        Enjoy the Revenue of<br />
-                        owning a hotel unit<br />
-                        with ease!
-                    </h2>
-                    <p class="text-lg text-white/70 font-montserrat">
-                        Malveda Properties Development Corporation
-                    </p>
-                </div>
                 <div class="text-sm text-white/50 font-montserrat">
                     &copy; {{ new Date().getFullYear() }} Malveda Properties. All rights reserved.
                 </div>
@@ -75,8 +65,6 @@ defineProps<{
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap');
-
 .font-cormorant {
     font-family: 'Cormorant Garamond', serif;
 }

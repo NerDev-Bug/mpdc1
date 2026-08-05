@@ -15,7 +15,8 @@
                     <div ref="imageRef"
                         class="px-4 md:px-6 lg:px-8 opacity-0 translate-y-10 transition-all duration-700 ease-out"
                         :class="{ 'fade-in': isImageVisible }">
-                        <img src="../../images/Cerise.png"
+                        <img src="../../images/Cerise.png" alt="Reception lobby at The Cerise Tower" width="514"
+                            height="406" loading="lazy" decoding="async"
                             class="w-[300px] md:w-[450px] lg:w-[600px] h-[200px] md:h-[300px] lg:h-[400px] rounded-lg">
                     </div>
 
@@ -27,8 +28,8 @@
 
                             <!-- Name Field -->
                             <div>
-                                <label class="text-white text-xl font-cormorant">Name</label>
-                                <input type="text" v-model="form.name"
+                                <label for="citadines-contact-name" class="text-white text-xl font-cormorant">Name</label>
+                                <input id="citadines-contact-name" type="text" v-model="form.name" autocomplete="name"
                                     class="w-full border border-gray-200 rounded-lg p-2 text-black"
                                     placeholder="Juan Dela Cruz jr.">
                                 <div v-if="form.errors.name" class="text-red-500">{{ form.errors.name }}</div>
@@ -36,8 +37,8 @@
 
                             <!-- Email Field -->
                             <div>
-                                <label class="text-white text-xl font-cormorant">Email</label>
-                                <input type="email" v-model="form.email"
+                                <label for="citadines-contact-email" class="text-white text-xl font-cormorant">Email</label>
+                                <input id="citadines-contact-email" type="email" v-model="form.email" autocomplete="email"
                                     class="w-full border border-gray-200 rounded-lg p-2 text-black"
                                     placeholder="example@gmail.com">
                                 <div v-if="form.errors.email" class="text-red-500">{{ form.errors.email }}</div>
@@ -47,8 +48,8 @@
                             <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
                                 <!-- Contact Field -->
                                 <div class="w-full md:w-1/2">
-                                    <label class="text-white text-xl font-cormorant">Contact</label>
-                                    <input type="text" v-model="form.cont_no"
+                                    <label for="citadines-contact-number" class="text-white text-xl font-cormorant">Contact</label>
+                                    <input id="citadines-contact-number" type="tel" v-model="form.cont_no" autocomplete="tel"
                                         class="w-full border border-gray-200 rounded-lg p-2 text-black"
                                         placeholder="0987654321" maxlength="11" @input="formatContactNumber">
                                     <div v-if="form.errors.cont_no" class="text-red-500">{{ form.errors.cont_no }}</div>
@@ -57,8 +58,8 @@
 
                                 <!-- Unit Type Dropdown -->
                                 <div class="w-full md:w-1/2">
-                                    <label class="text-white text-xl font-cormorant">Unit type</label>
-                                    <select v-model="form.unit_type"
+                                    <label for="citadines-unit-type" class="text-white text-xl font-cormorant">Unit type</label>
+                                    <select id="citadines-unit-type" v-model="form.unit_type"
                                         class="w-full border border-gray-200 rounded-lg p-2 text-black">
                                         <option value="" selected disabled hidden>Select a unit type</option>
                                         <option value="penthouse">Penthouse</option>
@@ -176,9 +177,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
-
 .font-cormorant {
     font-family: 'Cormorant Garamond', serif;
 }

@@ -2,8 +2,9 @@
     <header
         class="fixed top-0 left-0 w-full bg-gradient-to-r from-[#1f2455] to-[#060e29] text-white p-4 z-50 transition-all duration-300">
         <div class="container mx-auto flex justify-between items-center px-4 md:px-6">
-            <a href="/" class="block">
-                <img src="../../images/logo.png" alt="MPDC Logo"
+            <a href="/" class="block" aria-label="MPDC home">
+                <img src="../../images/logo.png" alt="Malveda Properties and Development Corporation" width="1830"
+                    height="436" decoding="async"
                     class="h-10 sm:h-10 md:h-10 lg:h-12 w-auto min-w-[60px] sm:min-w-[80px] md:min-w-[100px] cursor-pointer" />
             </a>
 
@@ -14,7 +15,8 @@
                             class="relative block px-4 py-2 transition-all duration-300 underline-effect">About us</a>
                     </li>
                     <li class="relative dropdown-container">
-                        <button @click="toggleDropdown"
+                        <button type="button" @click="toggleDropdown" aria-haspopup="true"
+                            :aria-expanded="isDropdownOpen" aria-controls="citadines-menu"
                             class="relative block px-4 py-2 transition-all duration-300 text-center underline-effect focus:outline-none">
                             Citadines <br class="hidden sm:block" /> Southwoods
                             <span class="inline-block text-xs transform transition-transform"
@@ -23,7 +25,7 @@
                             </span>
                         </button>
 
-                        <ul v-show="isDropdownOpen"
+                        <ul id="citadines-menu" v-show="isDropdownOpen"
                             class="absolute left-0 top-full w-48 bg-gradient-to-r from-[#1f2455] to-[#060e29] shadow-lg transition-all duration-300 mt-4 z-50">
 
                             <!-- Added Citadines Southwoods button -->
@@ -58,10 +60,12 @@
             </nav>
 
          <!-- Mobile Menu Button -->
-<button
+<button type="button"
     class="relative w-6 h-6 flex flex-col justify-center items-center lg:hidden focus:outline-none z-50"
     @click="toggleMenu"
-    aria-label="Toggle Menu"
+    :aria-label="isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'"
+    :aria-expanded="isMenuOpen"
+    aria-controls="mobile-navigation"
 >
     <span
         :class="[
@@ -90,7 +94,7 @@
 
         <!-- Mobile Dropdown -->
         <transition name="slide">
-            <nav v-if="isMenuOpen"
+            <nav v-if="isMenuOpen" id="mobile-navigation" aria-label="Mobile navigation"
                 class="fixed top-[68px] left-0 right-0 max-h-[80vh] overflow-y-auto w-full bg-gradient-to-r from-[#1f2455] to-[#0f132c] sm:backdrop-blur-sm text-white p-6 lg:hidden z-50">
                 <ul class="flex flex-col text-center antialiased text-lg space-y-4">
                     <li><a href="/about" class="block px-4 py-2 transition-all duration-300" @click="closeMenu">About
@@ -101,16 +105,20 @@
                             @click="closeMenu">Citadines Southwoods</a>
                         <ul class="ml-4 mt-2 space-y-1">
                             <li><a href="/location"
-                                    class="block px-6 py-3 text-white text-xs sm:text-sm underline-effect">Location</a>
+                                    class="block px-6 py-3 text-white text-xs sm:text-sm underline-effect"
+                                    @click="closeMenu">Location</a>
                             </li>
                             <li><a href="/amenities"
-                                    class="block px-6 py-3 text-white text-xs sm:text-sm underline-effect">Amenities</a>
+                                    class="block px-6 py-3 text-white text-xs sm:text-sm underline-effect"
+                                    @click="closeMenu">Amenities</a>
                             </li>
                             <li><a href="/serviced-residence"
-                                    class="block px-6 py-3 text-white text-xs sm:text-sm underline-effect">Serviced
+                                    class="block px-6 py-3 text-white text-xs sm:text-sm underline-effect"
+                                    @click="closeMenu">Serviced
                                     Residences</a></li>
                             <li><a href="/private-residence"
-                                    class="block px-6 py-3 text-white text-xs sm:text-sm underline-effect">Private
+                                    class="block px-6 py-3 text-white text-xs sm:text-sm underline-effect"
+                                    @click="closeMenu">Private
                                     Residences</a></li>
                         </ul>
                         <hr class="border-white opacity-30 w-full mx-auto mt-2">
@@ -161,16 +169,25 @@ const closeDropdown = (event: MouseEvent): void => {
     }
 };
 
+const closeMenusOnEscape = (event: KeyboardEvent): void => {
+    if (event.key !== 'Escape') return;
+
+    closeMenu();
+    isDropdownOpen.value = false;
+};
+
 // Attach event listeners
 onMounted(() => {
     window.addEventListener('click', closeDropdown);
     window.addEventListener('scroll', closeDropdownOnScroll);
+    window.addEventListener('keydown', closeMenusOnEscape);
 });
 
 // Cleanup on unmount
 onUnmounted(() => {
     window.removeEventListener('click', closeDropdown);
     window.removeEventListener('scroll', closeDropdownOnScroll);
+    window.removeEventListener('keydown', closeMenusOnEscape);
     document.body.style.overflow = 'auto';
 });
 </script>

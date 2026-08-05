@@ -1,5 +1,16 @@
 <template>
     <AppLayout>
+      <SeoHead
+        title="The Cerise Tower Location in Southwoods City"
+        description="View the location of Citadines Southwoods Biñan at The Cerise Tower, near techno-industrial parks and approximately 10 kilometers from Alabang."
+        canonical-path="/location"
+        :image="heroImage"
+        image-alt="The Cerise Tower location in Southwoods City, Biñan"
+        :structured-data="{
+          '@type': 'WebPage',
+          name: 'The Cerise Tower Location in Southwoods City',
+        }"
+      />
       <div class="flex flex-col min-h-screen bg-white">
         <!-- Hero Section with Responsive Background Image -->
         <main class="relative bg-white">
@@ -17,6 +28,7 @@
 
   <script setup lang="ts">
   import heroImage from '../../images/amey2.jpg';
+  import SeoHead from '@/components/SeoHead.vue';
   import AppLayout from '@/layouts/AppLayout.vue';
   import Location1 from '../location/Location1.vue';
   import UnitsAmenities1 from './UnitsAmenities1.vue';
@@ -24,8 +36,6 @@
 
   <style>
   /* Add Custom Font */
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
-
   .font-cormorant {
     font-family: 'Cormorant Garamond', serif;
   }

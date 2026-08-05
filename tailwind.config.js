@@ -13,6 +13,8 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Instrument Sans', ...defaultTheme.fontFamily.sans],
+                montserrat: ['Montserrat', ...defaultTheme.fontFamily.sans],
+                cormorant: ['Cormorant Garamond', ...defaultTheme.fontFamily.serif],
             },
             borderRadius: {
                 lg: 'var(--radius)',

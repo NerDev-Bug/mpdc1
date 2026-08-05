@@ -1,22 +1,31 @@
 import '../css/app.css';
-import '@fortawesome/fontawesome-free/css/all.min.css'; // Add this line
-import 'tailwindcss/tailwind.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
-import { createApp, h } from 'vue';
+import { createApp, createSSRApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { initializeTheme } from './composables/useAppearance';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+type ZiggyConfig = NonNullable<Parameters<typeof ZiggyVue.install>[1]>;
+type SerializedZiggyConfig = Omit<ZiggyConfig, 'location'> & { location: string };
+
+const appName = import.meta.env.VITE_APP_NAME || 'MPDC';
 
 createInertiaApp({
-    title: (title) => title ? `${title} - ${appName}` : appName,
+    title: (title) => (title ? `${title} - ${appName}` : appName),
     resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
+        const serializedZiggy = props.initialPage.props.ziggy as SerializedZiggyConfig;
+        const ziggy: ZiggyConfig = {
+            ...serializedZiggy,
+            location: new URL(serializedZiggy.location),
+        };
+        const createVueApp = el.hasChildNodes() ? createSSRApp : createApp;
+
+        createVueApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(ZiggyVue)
+            .use(ZiggyVue, ziggy)
             .mount(el);
     },
     progress: {

@@ -1,5 +1,16 @@
 <template>
     <AppLayout>
+        <SeoHead
+            title="Contact Malveda Properties and Development Corporation"
+            description="Contact MPDC to inquire about serviced or private residences at The Cerise Tower in Southwoods City, Biñan."
+            canonical-path="/contact-us"
+            :image="heroImage"
+            image-alt="The Cerise Tower lobby"
+            :structured-data="{
+                '@type': 'ContactPage',
+                name: 'Contact Malveda Properties and Development Corporation',
+            }"
+        />
         <div>
             <!-- Hero Image -->
             <div class="w-full h-fit px-4 bg-cover bg-center relative"
@@ -8,11 +19,12 @@
                 <!-- <div class="absolute inset-0 bg-black/30"></div> -->
                 <div class="w-full h-fit py-12 flex items-center justify-center flex-col">
                     <div class="mt-24">
-                        <h2 class="text-[#1C2852] text-4xl font-montserrat font-semibold">Contact Us</h2>
+                        <h1 class="text-[#1C2852] text-4xl font-montserrat font-semibold">Contact Us</h1>
                     </div>
                     <div class="w-full h-fit py-4 px-4 lg:px-12 mt-4 flex flex-col lg:flex-row justify-center gap-6">
                         <div class="w-full h-fit flex items-center justify-center">
-                            <img src="../../images/lobbypic1.jpg" alt="Selfie" class="max-w-full h-fit rounded-3xl">
+                            <img src="../../images/lobbypic1.jpg" alt="Lobby seating area at The Cerise Tower" width="486"
+                                height="485" decoding="async" class="max-w-full h-fit rounded-3xl">
                         </div>
                         <div class="w-full h-fit">
                             <form @submit.prevent="submitForm" class="space-y-4">
@@ -150,6 +162,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
+import SeoHead from '@/components/SeoHead.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import heroImage from '../../images/cs_mainlobby.jpg';
 // import ContactUs1 from './ContactUs1.vue';
@@ -314,8 +327,6 @@ const preventNumbers = (event: KeyboardEvent) => {
 
 <style scoped>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
     font-family: 'Montserrat', sans-serif;
 }

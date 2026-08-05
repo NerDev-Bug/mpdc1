@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContactsController;
-use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\Inquiry1Controller;
+use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\NewsController as PublicNewsController;
 use App\Models\News;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,8 +17,11 @@ Route::get('/', function () {
             'id' => $item->id,
             'title' => $item->title,
             'description' => $item->description,
-            'src' => asset('storage/' . $item->image_path),
+            'src' => asset('storage/'.$item->image_path),
             'alt' => $item->alt_text ?? '',
+            'url' => $item->isPublished()
+                ? route('news.show', ['news' => $item->slug], absolute: false)
+                : null,
         ]);
 
     return Inertia::render('Dashboard', [
@@ -33,13 +37,17 @@ Route::get('/dashboard', function () {
     return redirect()->route('home');
 })->name('dashboard');
 
-Route::resource('contacts', ContactsController::class);
+Route::post('/contacts', [ContactsController::class, 'store'])->name('contacts.store');
+Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.store');
+Route::post('/inquiry1s', [Inquiry1Controller::class, 'store'])->name('inquiry1s.store');
+Route::post('/table_booking', [BookingController::class, 'store'])->name('table_booking.store');
 
-Route::resource('inquiry', InquiryController::class);
-
-Route::resource('inquiry1s', Inquiry1Controller::class);
-
-Route::resource('table_booking', BookingController::class);
+// These prefixes previously exposed empty resource-controller pages. Keep the
+// form POST endpoints above, but make every unsupported crawlable URL a 404.
+foreach (['contacts', 'inquiry', 'inquiry1s', 'table_booking'] as $formEndpoint) {
+    Route::get("/{$formEndpoint}/{path?}", static fn () => abort(404))
+        ->where('path', '.*');
+}
 
 Route::get('/about', function () {
     return Inertia::render('about/AboutUs'); // Adjusted to match the folder structure
@@ -77,6 +85,70 @@ Route::get('/data-privacy', function () {
     return Inertia::render('dpc/DataPrivacy'); // Or whatever the appropriate controller is
 })->name('DataPrivacy');
 
+Route::get('/news', [PublicNewsController::class, 'index'])->name('news.index');
+Route::get('/news/{news:slug}', [PublicNewsController::class, 'show'])->name('news.show');
+
+Route::get('/sitemap.xml', function () {
+    $siteUrl = rtrim((string) config('app.url'), '/');
+    $publicRoutes = [
+        'home',
+        'about',
+        'citadines',
+        'Location',
+        'Amenities',
+        'ServiceResidence',
+        'PrivateServiceResidence',
+        'FBP',
+        'ContactUs',
+        'DataPrivacy',
+    ];
+
+    $publishedArticles = News::published()
+        ->orderBy('id')
+        ->get(['slug']);
+
+    if ($publishedArticles->isNotEmpty()) {
+        $publicRoutes[] = 'news.index';
+    }
+
+    $urls = array_map(
+        static fn (string $routeName): string => $siteUrl.route($routeName, absolute: false),
+        $publicRoutes,
+    );
+
+    $articleUrls = $publishedArticles
+        ->pluck('slug')
+        ->map(
+            static fn (string $slug): string => $siteUrl.route(
+                'news.show',
+                ['news' => $slug],
+                absolute: false,
+            ),
+        )
+        ->all();
+
+    $urls = [...$urls, ...$articleUrls];
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
+
+    foreach ($urls as $url) {
+        $xml .= '    <url><loc>'.htmlspecialchars($url, ENT_XML1 | ENT_QUOTES, 'UTF-8').'</loc></url>'."\n";
+    }
+
+    $xml .= '</urlset>'."\n";
+
+    return response($xml, 200, [
+        'Cache-Control' => 'public, max-age=3600',
+        'Content-Type' => 'application/xml; charset=UTF-8',
+    ]);
+})->withoutMiddleware([
+    \Illuminate\Cookie\Middleware\EncryptCookies::class,
+    \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    \Illuminate\Session\Middleware\StartSession::class,
+    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+])->name('sitemap');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

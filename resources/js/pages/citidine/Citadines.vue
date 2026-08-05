@@ -1,5 +1,16 @@
 <template>
   <AppLayout>
+    <SeoHead
+      title="Citadines Southwoods Biñan at The Cerise Tower"
+      description="Explore Citadines Southwoods Biñan at The Cerise Tower, MPDC's mixed-use development in Southwoods City, Biñan, Laguna."
+      canonical-path="/citadines"
+      :image="heroImage"
+      image-alt="Citadines Southwoods Biñan at The Cerise Tower"
+      :structured-data="{
+        '@type': 'WebPage',
+        name: 'Citadines Southwoods Biñan at The Cerise Tower',
+      }"
+    />
     <div class="flex flex-col min-h-screen bg-white">
       <!-- Hero Section with Responsive Background Image -->
       <main class="relative bg-white">
@@ -37,6 +48,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import heroImage from '../../images/ame43.jpg';
+import SeoHead from '@/components/SeoHead.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import Citadines1 from './Citadines1.vue';
 // import Citadines2 from './Citadines2.vue';
@@ -54,8 +66,6 @@ onMounted(() => {
 
 <style scoped>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
-
 .font-cormorant {
   font-family: 'Cormorant Garamond', serif;
 }

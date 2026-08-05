@@ -116,8 +116,6 @@ onMounted(() => {
 
 <style scoped>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
-
 .font-cormorant {
     font-family: 'Cormorant Garamond', serif;
 }

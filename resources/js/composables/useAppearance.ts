@@ -3,6 +3,8 @@ import { onMounted, ref } from 'vue';
 type Appearance = 'light' | 'dark' | 'system';
 
 export function updateTheme(value: Appearance) {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
     if (value === 'system') {
         const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         document.documentElement.classList.toggle('dark', systemTheme === 'dark');
@@ -11,20 +13,22 @@ export function updateTheme(value: Appearance) {
     }
 }
 
-const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
 const handleSystemThemeChange = () => {
+    if (typeof window === 'undefined') return;
+
     const currentAppearance = localStorage.getItem('appearance') as Appearance | null;
     updateTheme(currentAppearance || 'system');
 };
 
 export function initializeTheme() {
+    if (typeof window === 'undefined') return;
+
     // Initialize theme from saved preference or default to system...
     const savedAppearance = localStorage.getItem('appearance') as Appearance | null;
     updateTheme(savedAppearance || 'system');
 
     // Set up system theme change listener...
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', handleSystemThemeChange);
 }
 
 export function useAppearance() {
@@ -42,7 +46,11 @@ export function useAppearance() {
 
     function updateAppearance(value: Appearance) {
         appearance.value = value;
-        localStorage.setItem('appearance', value);
+
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('appearance', value);
+        }
+
         updateTheme(value);
     }
 

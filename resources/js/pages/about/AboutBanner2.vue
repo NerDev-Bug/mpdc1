@@ -20,7 +20,8 @@
         <div ref="imageSection"
             class="md:w-1/2 flex justify-center p-6 opacity-0 translate-y-10 transition-all duration-700 ease-out"
             :class="{ 'fade-in': imageVisible }">
-            <img src="../../images/logo3.png" alt="Conglomerate Map" class="max-w-full h-auto">
+            <img src="../../images/logo3.png" alt="Malveda Holistic Group conglomerate map" width="693"
+                height="690" loading="lazy" decoding="async" class="max-w-full h-auto">
         </div>
     </div>
 </template>
@@ -57,9 +58,6 @@ onMounted(() => {
 
 
 <style scoped>
-/* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }

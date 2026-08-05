@@ -1,5 +1,16 @@
 <template>
     <AppLayout>
+        <SeoHead
+            title="For Partners and Brokers"
+            description="Learn how to become an accredited MPDC partner or broker and book a private call for accreditation assistance."
+            canonical-path="/for-partners-and-brokers"
+            :image="heroImage"
+            image-alt="MPDC partners and brokers"
+            :structured-data="{
+                '@type': 'WebPage',
+                name: 'For Partners and Brokers',
+            }"
+        />
         <div class="flex flex-col min-h-screen bg-white">
             <div class="relative bg-white">
                 <div class="w-full h-[40vh] sm:h-[100vh] md:h-[90vh] lg:h-[80vh] xl:h-[90vh] bg-cover bg-center relative"
@@ -9,9 +20,9 @@
                 <div ref="textContainer"
                     class="absolute bottom-[30%] sm:bottom-[35%] left-4 sm:left-8 md:left-16 lg:left-32 text-white text-left font-montserrat px-4 sm:px-6 max-w-[90%] sm:max-w-[80%] md:max-w-[60%] opacity-0 translate-y-10 transition-all duration-700 ease-out"
                     :class="{ 'fade-in': isTextVisible }">
-                    <h2 class="font-bold leading-tight" style="font-size: clamp(2rem, 6vw, 4.5rem);">
+                    <h1 class="font-bold leading-tight" style="font-size: clamp(2rem, 6vw, 4.5rem);">
                         For Partners <br> and Brokers
-                    </h2>
+                    </h1>
                 </div>
             </div>
             <ForPartnersandBrokers />
@@ -23,6 +34,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import heroImage from '../../images/partner1.png';
+import SeoHead from '@/components/SeoHead.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ForPartnersandBrokers from './ForPartnersandBrokers.vue';
 import ForPartnersandBrokers1 from './ForPartnersandBrokers1.vue';
@@ -57,8 +69,6 @@ onMounted(() => {
 
 <style scoped>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .font-montserrat {
     font-family: 'Montserrat', sans-serif;
 }

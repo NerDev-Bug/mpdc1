@@ -1,30 +1,51 @@
 <template>
-    <div class="w-full h-fit p-6 md:p-10 lg:p-16 flex justify-center items-center"
+    <section class="w-full h-fit p-6 md:p-10 lg:p-16 flex justify-center items-center"
+        aria-labelledby="news-carousel-heading"
         :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
+        <h2 id="news-carousel-heading" class="sr-only">Latest news and property updates</h2>
         <div class="mx-auto h-full">
             <div class="relative w-full overflow-hidden flex justify-center items-center">
-                <div class="relative group">
+                <figure class="relative group max-w-[1300px]" aria-roledescription="carousel"
+                    :aria-label="`Slide ${currentIndex + 1} of ${images.length}`">
                     <transition name="fade" mode="out-in">
-                        <img :key="currentIndex" :src="images[currentIndex].src" :alt="images[currentIndex].alt"
+                        <img :key="currentIndex" :src="currentSlide.src" :alt="currentSlide.alt || currentSlide.title"
+                            width="1920" height="1079" loading="lazy" decoding="async"
                             class="w-full max-w-[1300px] h-auto xs:h-auto sm:h-auto md:h-[750px] max-h-[750px] object-cover transition-transform duration-500 transform" />
                     </transition>
-                    <div ref="textContainer" class="absolute top-[50%] left-[10%] text-white font-cormorant
-                     opacity-0 transform translate-y-10 transition-all duration-700 ease-out"
-                        :class="{ 'fade-in': isTextVisible }">
-                        <!-- <h3 class="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
-                            {{ images[currentIndex].title }}
+                    <figcaption v-if="currentSlide.title || currentSlide.description"
+                        class="bg-[#0b1021] px-5 py-4 text-white font-cormorant">
+                        <h3 v-if="currentSlide.title" class="text-2xl sm:text-3xl font-bold leading-tight">
+                            <a v-if="currentSlide.url" :href="currentSlide.url" class="hover:underline">
+                                {{ currentSlide.title }}
+                            </a>
+                            <template v-else>{{ currentSlide.title }}</template>
                         </h3>
-                        <p class="mt-3 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed">
-                            {{ images[currentIndex].description }}
-                        </p> -->
+                        <p v-if="currentSlide.description" class="mt-2 text-base sm:text-lg leading-relaxed">
+                            {{ currentSlide.description }}
+                        </p>
+                    </figcaption>
+
+                    <button v-if="images.length > 1" type="button" aria-label="Show previous update"
+                        class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 px-4 py-3 text-2xl text-white hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
+                        @click="previousImage">
+                        <span aria-hidden="true">‹</span>
+                    </button>
+                    <button v-if="images.length > 1" type="button" aria-label="Show next update"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 px-4 py-3 text-2xl text-white hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
+                        @click="nextImage">
+                        <span aria-hidden="true">›</span>
+                    </button>
+                    <div v-if="images.length > 1" class="absolute right-3 top-3">
+                        <button type="button" :aria-label="isPaused ? 'Play updates' : 'Pause updates'"
+                            class="rounded bg-black/60 px-3 py-2 text-sm text-white hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
+                            @click="toggleAutoplay">
+                            {{ isPaused ? 'Play' : 'Pause' }}
+                        </button>
                     </div>
-                    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-[100%]">
-                        <div class="transition-all duration-[3000ms]" :style="{ width: progressBarWidth }"></div>
-                    </div>
-                </div>
+                </figure>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script setup lang="ts">
@@ -45,6 +66,7 @@ interface SlideData {
     alt: string;
     title: string;
     description: string;
+    url?: string;
 }
 
 const props = withDefaults(defineProps<{
@@ -55,12 +77,42 @@ const props = withDefaults(defineProps<{
 
 // Fallback static images
 const staticImages: SlideData[] = [
-    { src: slide1, alt: '', title: '', description: '' },
-    { src: slide2, alt: '', title: '', description: '' },
-    { src: slide3, alt: '', title: '', description: '' },
-    { src: slide4, alt: '', title: '', description: '' },
-    { src: slide5, alt: '', title: '', description: '' },
-    { src: slide6, alt: '', title: '', description: '' },
+    {
+        src: slide1,
+        alt: 'The Cerise Tower and the 2025 Dot Property Philippines Awards winner plaque',
+        title: 'Best Serviced Apartment at the 2025 Dot Property Philippines Awards',
+        description: 'Citadines Southwoods Biñan at The Cerise Tower received the Best Serviced Apartment award.',
+    },
+    {
+        src: slide2,
+        alt: 'Citadines Southwoods Biñan roof-deck pool reservation promotion',
+        title: 'Citadines Southwoods Biñan campaign archive',
+        description: 'Previously published campaign artwork featuring the roof-deck pool.',
+    },
+    {
+        src: slide3,
+        alt: 'Living area of a Citadines Southwoods Biñan hotel unit',
+        title: 'Own a Citadines hotel unit',
+        description: 'Explore hotel-unit ownership at Citadines Southwoods Biñan at The Cerise Tower.',
+    },
+    {
+        src: slide4,
+        alt: 'Dining and living area in a private residence at The Cerise Tower',
+        title: 'Private residences at The Cerise Tower',
+        description: 'Discover private residence living with hotel-style amenities in Southwoods City, Biñan.',
+    },
+    {
+        src: slide5,
+        alt: 'The Cerise Tower year-end reservation promotion',
+        title: 'The Cerise Tower year-end campaign archive',
+        description: 'Previously published year-end campaign artwork from The Cerise Tower.',
+    },
+    {
+        src: slide6,
+        alt: 'Citadines Southwoods Biñan property-viewing promotion',
+        title: 'The Cerise Tower property-viewing campaign archive',
+        description: 'Previously published property-viewing campaign artwork from The Cerise Tower.',
+    },
 ];
 
 // Use dynamic slides from DB if available, otherwise fall back to static
@@ -69,58 +121,44 @@ const images = computed(() => {
 });
 
 const currentIndex = ref<number>(0);
-const progressBarWidth = ref<string>('0%');
-let autoSlideInterval: NodeJS.Timeout;
-const isTextVisible = ref<boolean>(false);
-const isTitleVisible = ref<boolean>(false);
-const textContainer = ref<HTMLElement | null>(null);
-const titleContainer = ref<HTMLElement | null>(null);
+const isPaused = ref<boolean>(false);
+let autoSlideInterval: ReturnType<typeof setInterval> | undefined;
+
+const currentSlide = computed(() => images.value[currentIndex.value] ?? staticImages[0]);
 
 const nextImage = (): void => {
     currentIndex.value = (currentIndex.value + 1) % images.value.length;
-    resetProgress();
+};
+
+const previousImage = (): void => {
+    currentIndex.value = (currentIndex.value - 1 + images.value.length) % images.value.length;
 };
 
 const startAutoSlide = (): void => {
+    if (autoSlideInterval) clearInterval(autoSlideInterval);
+    if (images.value.length < 2 || isPaused.value) return;
+
     autoSlideInterval = setInterval(() => {
         nextImage();
     }, 5000);
 };
 
-const resetProgress = (): void => {
-    progressBarWidth.value = '0%';
-    setTimeout(() => {
-        progressBarWidth.value = '100%';
-    }, 50);
-};
-
-const handleIntersection = (entries: IntersectionObserverEntry[]): void => {
-    entries.forEach((entry) => {
-        if (entry.target === textContainer.value && entry.isIntersecting) {
-            isTextVisible.value = true;
-        }
-        if (entry.target === titleContainer.value && entry.isIntersecting) {
-            isTitleVisible.value = true;
-        }
-    });
+const toggleAutoplay = (): void => {
+    isPaused.value = !isPaused.value;
+    startAutoSlide();
 };
 
 onMounted(() => {
+    isPaused.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     startAutoSlide();
-    resetProgress();
-    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.6 });
-    if (textContainer.value) observer.observe(textContainer.value);
-    if (titleContainer.value) observer.observe(titleContainer.value);
 });
 
 onUnmounted(() => {
-    clearInterval(autoSlideInterval);
+    if (autoSlideInterval) clearInterval(autoSlideInterval);
 });
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
-
 .font-cormorant {
     font-family: 'Cormorant Garamond', serif;
 }
@@ -135,13 +173,4 @@ onUnmounted(() => {
     opacity: 0;
 }
 
-.opacity-0 {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.fade-in {
-    opacity: 1;
-    transform: translateY(0);
-}
 </style>

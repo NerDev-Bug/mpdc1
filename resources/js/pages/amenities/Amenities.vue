@@ -1,5 +1,16 @@
 <template>
   <AppLayout>
+    <SeoHead
+      title="Amenities at The Cerise Tower"
+      description="Explore The Cerise Tower's hotel lobby, indoor pool, gym, function room, roof deck bar, roof deck pool, and unit amenities."
+      canonical-path="/amenities"
+      :image="heroImage"
+      image-alt="Amenities at The Cerise Tower"
+      :structured-data="{
+        '@type': 'WebPage',
+        name: 'Amenities at The Cerise Tower',
+      }"
+    />
     <div class="flex flex-col min-h-screen bg-white">
       <!-- Hero Section with Responsive Background Image -->
       <main class="relative bg-white">
@@ -43,6 +54,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import heroImage from '../../images/ame5.jpg';
+import SeoHead from '@/components/SeoHead.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SlotsAmenities from './SlotsAmenities.vue';
 // import UnitsAmenities from './UnitsAmenities.vue';
@@ -59,8 +71,6 @@ onMounted(() => {
 
 <style scoped>
 /* Import Custom Font */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap');
-
 .font-cormorant {
   font-family: 'Cormorant Garamond', serif;
 }

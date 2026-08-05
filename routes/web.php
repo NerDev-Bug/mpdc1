@@ -25,6 +25,14 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::get('/dashboard', function () {
+    if (auth()->check() && auth()->user()->is_admin) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    return redirect()->route('home');
+})->name('dashboard');
+
 Route::resource('contacts', ContactsController::class);
 
 Route::resource('inquiry', InquiryController::class);

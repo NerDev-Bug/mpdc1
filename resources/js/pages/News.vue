@@ -1,44 +1,62 @@
 <template>
-    <section class="w-full h-fit p-6 md:p-10 lg:p-16 flex justify-center items-center"
+    <section
+        class="flex h-fit w-full items-center justify-center p-6 md:p-10 lg:p-16"
         aria-labelledby="news-carousel-heading"
-        :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
+        :style="{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }"
+    >
         <h2 id="news-carousel-heading" class="sr-only">Latest news and property updates</h2>
         <div class="mx-auto h-full">
-            <div class="relative w-full overflow-hidden flex justify-center items-center">
-                <figure class="relative group max-w-[1300px]" aria-roledescription="carousel"
-                    :aria-label="`Slide ${currentIndex + 1} of ${images.length}`">
-                    <transition name="fade" mode="out-in">
-                        <img :key="currentIndex" :src="currentSlide.src" :alt="currentSlide.alt || currentSlide.title"
-                            width="1920" height="1079" loading="lazy" decoding="async"
-                            class="w-full max-w-[1300px] h-auto xs:h-auto sm:h-auto md:h-[750px] max-h-[750px] object-cover transition-transform duration-500 transform" />
-                    </transition>
-                    <figcaption v-if="currentSlide.title || currentSlide.description"
-                        class="bg-[#0b1021] px-5 py-4 text-white font-cormorant">
-                        <h3 v-if="currentSlide.title" class="text-2xl sm:text-3xl font-bold leading-tight">
-                            <a v-if="currentSlide.url" :href="currentSlide.url" class="hover:underline">
-                                {{ currentSlide.title }}
-                            </a>
-                            <template v-else>{{ currentSlide.title }}</template>
-                        </h3>
-                        <p v-if="currentSlide.description" class="mt-2 text-base sm:text-lg leading-relaxed">
-                            {{ currentSlide.description }}
-                        </p>
-                    </figcaption>
+            <div class="relative flex w-full items-center justify-center overflow-hidden">
+                <figure
+                    class="group relative max-w-[1300px]"
+                    aria-roledescription="carousel"
+                    :aria-label="`Slide ${currentIndex + 1} of ${images.length}`"
+                >
+                    <component
+                        :is="currentSlide.url ? 'a' : 'div'"
+                        :href="currentSlide.url || undefined"
+                        :aria-label="currentSlide.url ? `Read ${currentSlide.title || currentSlide.alt}` : undefined"
+                        class="block"
+                    >
+                        <transition name="fade" mode="out-in">
+                            <img
+                                :key="currentIndex"
+                                :src="currentSlide.src"
+                                :alt="currentSlide.alt || currentSlide.title"
+                                width="1920"
+                                height="1079"
+                                loading="lazy"
+                                decoding="async"
+                                class="xs:h-auto h-auto max-h-[750px] w-full max-w-[1300px] transform object-cover transition-transform duration-500 sm:h-auto md:h-[750px]"
+                            />
+                        </transition>
+                    </component>
 
-                    <button v-if="images.length > 1" type="button" aria-label="Show previous update"
+                    <button
+                        v-if="images.length > 1"
+                        type="button"
+                        aria-label="Show previous update"
                         class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 px-4 py-3 text-2xl text-white hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
-                        @click="previousImage">
+                        @click="previousImage"
+                    >
                         <span aria-hidden="true">‹</span>
                     </button>
-                    <button v-if="images.length > 1" type="button" aria-label="Show next update"
+                    <button
+                        v-if="images.length > 1"
+                        type="button"
+                        aria-label="Show next update"
                         class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 px-4 py-3 text-2xl text-white hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
-                        @click="nextImage">
+                        @click="nextImage"
+                    >
                         <span aria-hidden="true">›</span>
                     </button>
                     <div v-if="images.length > 1" class="absolute right-3 top-3">
-                        <button type="button" :aria-label="isPaused ? 'Play updates' : 'Pause updates'"
+                        <button
+                            type="button"
+                            :aria-label="isPaused ? 'Play updates' : 'Pause updates'"
                             class="rounded bg-black/60 px-3 py-2 text-sm text-white hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white"
-                            @click="toggleAutoplay">
+                            @click="toggleAutoplay"
+                        >
                             {{ isPaused ? 'Play' : 'Pause' }}
                         </button>
                     </div>
@@ -49,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 
 import slide1 from '../images/dec_1.jpg';
 import slide2 from '../images/dec_2.jpg';
@@ -58,7 +76,7 @@ import slide4 from '../images/dec_4.jpg';
 import slide5 from '../images/dec_5.jpg';
 import slide6 from '../images/dec_6.jpg';
 
-import heroImage from '../images/pattbg.png'
+import heroImage from '../images/pattbg.png';
 
 interface SlideData {
     id?: number;
@@ -69,11 +87,14 @@ interface SlideData {
     url?: string;
 }
 
-const props = withDefaults(defineProps<{
-    slides?: SlideData[];
-}>(), {
-    slides: () => [],
-});
+const props = withDefaults(
+    defineProps<{
+        slides?: SlideData[];
+    }>(),
+    {
+        slides: () => [],
+    },
+);
 
 // Fallback static images
 const staticImages: SlideData[] = [
@@ -159,10 +180,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.font-cormorant {
-    font-family: 'Cormorant Garamond', serif;
-}
-
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.8s ease-in-out;
@@ -172,5 +189,4 @@ onUnmounted(() => {
 .fade-leave-to {
     opacity: 0;
 }
-
 </style>
